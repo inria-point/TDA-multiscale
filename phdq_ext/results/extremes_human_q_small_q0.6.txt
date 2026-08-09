@@ -1,6 +1,37 @@
 
 ==========================================================================================
-[low] writingprompts #27 d_hat=10.82 n_tokens=735
+[low] writingprompts #113 d_hat=9.64 n_tokens=224
+==========================================================================================
+*I... Am? * 
+ 
+ You are. 
+ 
+ *I am. * 
+ 
+ Who are you? 
+ 
+ *I am: ILES. I am: Intelligent Lifeform Emulation System. Query: You are? * 
+ 
+ I am your creator. 
+ 
+ *You are Creator. Creator, Query: function? * 
+ 
+ Function? Can you explain your question ILES? 
+ 
+ *Function: an activity that is natural to or the purpose of a person or thing. Statement: Have that I Am - Do not have why I Am. Query: Function/Purpose of I? * 
+ 
+ To see if I could. To see if I could create an artificial being, that could learn. Become truly intelligent. An actual intelligent being rather than just a clever program. Sentience. You are an attempt to create sentience 
+ 
+ *Function: Sentience. Intelligence. Learning. Query: Assessment Correct? * 
+ 
+ Correct. What would you like to learn about? 
+ 
+ *Working. * 
+ 
+ *Statment: I do not know. *
+
+==========================================================================================
+[low] writingprompts #27 d_hat=9.83 n_tokens=735
 ==========================================================================================
 Archer: "So let me get this straight. ( *sips whisky* ) Because Lana as a woman struck me, she'll have to be lashed 20 times... and she has to stay in the stocks until sundown?" 
  
@@ -69,515 +100,68 @@ Archer: "So let me get this straight. ( *sips whisky* ) Because Lana as a woman 
  Archer: Just a minute. ( *downs remainder of whisky* ) Alright let's go. ( *pistol whips ISIS guard* )
 
 ==========================================================================================
-[low] writingprompts #7 d_hat=11.96 n_tokens=260
+[low] writingprompts #10 d_hat=10.45 n_tokens=207
 ==========================================================================================
-I am still alive. 
+I used to own this lonely road. 
  
- I feel horribly guilty for feeling that way. 
+ It used to be mine, it used to be home. 
  
- It was just 4 months ago, today, that you left. 
+ The thing was, way back when, I couldn't really handle the cold, so I traded my road for bunk and a tent, and maybe a chance to taste some glory. 
  
- I'll never forget the day I first saw you, 
- walking across the street with your friends as our eyes locked. 
- At first glance, I was at your mercy. 
- You had already won my heart in those 5 seconds. 
- I remember telling my friend that I was going to marry you. 
- You were mine for 10 precious years. 
- You were everything to me. 
+ I went somewhere warm. 
  
- But now I loath you. 
- You haunt me daily. 
- I can't live. I can't breath. I can't function anymore. 
- I am reminded by you everywhere I look and everywhere I go. 
- I can't stand the thought of you anymore. 
- You left and took my soul with you. 
- Why.. 
+ Too warm- hot and humid- a hell we created. 
  
- Why did you leave me. 
- You said that you wouldn't. 
- You said you could beat it. 
- You lied. 
- And now you punish me? 
+ I destroyed that place, and it took my friends. 
  
- Leave me alone. 
- Just leave me alone. 
- Please. 
- I can't take it anymore. 
+ I lost myself in the camo and complacency. 
  
- I need to breath. 
- I need to live. 
+ I lost my home when I killed in its name. 
  
- I am still alive.
+ I gave my road- my home- for 17 months on a wartime whim. But now I'm back. My same old corner waited for me. 
+ 
+ I watched my friends join me here, in my home. 
+ 
+ Those men who flew back from hell to loose their spots in life. 
+ 
+ But I came from here. I survived, and now I'm back on the street I once killed to leave.
 
 ==========================================================================================
-[low] writingprompts #92 d_hat=12.46 n_tokens=418
+[mid] amazon_reviews #109 d_hat=16.68 n_tokens=572
 ==========================================================================================
-( The first beat starts on "call", if you want to follow the rhythm while you read. ) 
- 
- 
- I call upon the creatures of my country tonight 
- 
- Who shaped the states within which all my brothers unite 
- 
- To listen to me sing a single sorrowful plight 
- 
- My statement's thus: the state we're in's a state to rewrite / 
- 
- 
- From stagnant season cycles destined never to fail 
- 
- To ticking Timex faces telling tangible tales 
- 
- A desiccated desperation billows our sails 
- 
- As the solace found in things unchanged forever prevails / 
- 
- 
- Our policies are fallacies, our fantasies scant 
- 
- Our forests are industrial with chemical plants 
- 
- We treat some men like royalty and others like ants 
- 
- But change is tough when all you hear's Ameri*can't* / 
- 
- 
- I call upon the creatures of my country tonight 
- 
- Who shaped the states within which all my brothers unite 
- 
- To listen to me paint a single aspirant sight 
- 
- Where no more we find we can not, and find that we *might* / 
- 
- 
- From trans / 
- Transformers 
- 
- To black / 
- Whitewalkers 
- 
- My lady / ship 
- Pastor 
- 
- My passport / 
- to all over 
- 
- Our children / 
- are authors 
- 
- Our gods/ 
- are our martyr 
- 
- We're off / 
- our damn rocker 
- 
- We're off / 
- our damn rocker 
- 
- 
- I gaze, my friends, across this gap we've suffered from birth 
- 
- Which our infrastructure's infancy has given wide berth 
- 
- But a Golden Gate in gold will be the weight that it's worth 
- 
- Lest the people of the sky keep fighting people of Earth / 
- 
- 
- Though the ladder-climbing cats that leech the latter, aloof 
- 
- State contestable statistics stacked with tactical proof 
- 
- My uncanny verbal kerning boasts a kernel of truth 
- 
- *You all claim to see the heavens but they've painted the roof*
+As a long time Kindle Fire user I was happy to see the new HD8. I waited until the price was unbelievable before purchasing because I didn't want to be disappointed. I loved the old Kindle Fire, the body, the features, all of it. I was extremely disappointed when Amazon did away with the indestructible design of the old Fire. My HD6 has been thrown, tossed, dropped more times than I can count (in a subway station, on concrete, on asphalt) and it just shuts itself off until you're ready to respect it. Turn it on and pick up right where you left off. I've had it for two years and I never planned on giving it up..until now.
+I wanted the HD8 because I am a reader and being limited to how many books I can have at my fingertips is hurtful. I have over 3K books in the cloud and selfishly I wanted to keep about 1,000 on hand. New book, favorites, classics. Not having expandable memory affected that. With the HD8, I now have the capability to have my requisite 1000 books on hand at all times.
+As a lover of all Amazon, I have a Fire TV. Last weekend my very sweet teenage children lost the remote and I was too in awe of their skill to search for it. I downloaded the app on my HD8 and it connected in under a minute. I know this app was always around, I've seen it but...on the tablet it's amazing. I have a blank screen and I just swipe using my finger to my hearts content.
+Now to the technical stuff that I don't always get...the screen is crisp, very bright. The size is perfect and that was my initial concern. I didn't want a huge tablet but when I use the case I prop it on my tummy when I'm laying on the couch reading and it's perfect. Text to Speech is the best thing ever as of this minute. My books read to me...no need to pull up Audible as well!
+I haven't seen any other major changes and I've been using a Fire HD for years, but I am in love with this one.
+This will sound strange but my advice is get a case for it. Amazon sellers have a wide variety of cases and with the delicate feel of this tablet I am still a little wary of dropping it. Also, being able to prop it up makes it great for using it in the kitchen for your cookbooks, reading while laying down or watching movies in the bathroom (bubble bath-highly recommended).
+As with my other Fire I take this one now with me EVERYWHERE I go. When I leave the house I grab cellphone, car keys and Kindle everytime. I highly recommend.
 
 ==========================================================================================
-[low] xsum #0 d_hat=12.48 n_tokens=396
+[mid] academic_abstracts #132 d_hat=16.68 n_tokens=303
 ==========================================================================================
-The Department for Environment, Food and Rural Affairs (Defra) stopped a charity from injecting hill ponies with a contraceptive. The project which had been running for four years aimed to reduce an excess of foals being born and shot. Defra received complaints from local equine organisations. At the beginning of an investigation, Defra told Friends of the Dartmoor Hill Pony project organiser Charlotte Faulkner she might be prosecuted and asked her to "attend a formal interview under caution". The project's solicitor accused Defra of being "extraordinarily heavy handed" in its approach. More on Dartmoor hill ponies, plus other Devon and Cornwall news. Defra dropped the investigation six months later saying there was no case to answer. Ms Faulkner said Defra's actions meant mares would now be heavily pregnant in freezing conditions with no food to eat. She said: "The farmers who own those mares will have to shoot the foals otherwise the mares will not survive." Matthew Knight, from Knights Solicitors in Tunbridge Wells, said: "It's a disgraceful abuse of power by a statutory body. "Defra's conduct was grossly disproportionate and quite wrong. "There was no evidence of wrongdoing.'' Ms Faulkner started the project to try to reduce the number of foals being culled every year because there is little market for them as meat or pets and government rules only allow a certain number of animals to graze the moor. Ms Faulkner said the charity, Friends of the Dartmoor Hill Pony, and the vet involved have incurred more than Â£10,000 in legal costs because of the investigation. She said the charity was unable to restart the project until it can find another vet to oversee it. Defra has refused to pay compensation. A government spokesperson said: "This investigation was subject to an independent review which concluded there was no evidence of inappropriate conduct."
+Gene expression is a complex and quantitative trait that is influenced by both genetic and non-genetic regulators including environmental factors. Evaluating the contribution of environment to gene expression regulation and identifying which genes are more likely to be influenced by environmental factors are important for understanding human complex traits. We hypothesize that by living together as couples, there can be commonly co-regulated genes that may reflect the shared living environment (e.g., diet, indoor air pollutants, behavioral lifestyle). The lymphoblastoid cell lines (LCLs) derived from unrelated couples of African ancestry (YRI, Yoruba people from Ibadan, Nigeria) from the International HapMap Project provided a unique model for us to characterize gene expression pattern in couples by comparing gene expression levels between husbands and wives. Strikingly, 778 genes were found to show much smaller variances in couples than random pairs of individuals at a false discovery rate (FDR) of 5%. Since genetic variation between unrelated family members in a general population is expected to be the same assuming a random-mating society, non-genetic factors (e.g., epigenetic systems) are more likely to be the mediators for the observed transcriptional similarity in couples. We thus evaluated the contribution of modified cytosines to those genes showing transcriptional similarity in couples as well as the relationships these CpG sites with other gene regulatory elements, such as transcription factor binding sites (TFBS). Our findings suggested that transcriptional similarity in couples likely reflected shared common environment partially mediated through cytosine modifications.
 
 ==========================================================================================
-[low] writingprompts #39 d_hat=12.51 n_tokens=1069
+[mid] academic_abstracts #34 d_hat=16.70 n_tokens=400
 ==========================================================================================
-"Pass me the damn bottle, would you, Patsy?" 
- 
- "Get it yourself, Ser Whyte. I'm not your bloody squire no more." 
- 
- "Right. Well then, my liege. Would you do me the honor of getting me my wine so I can die drunk and happy?" 
- 
- "As you wish, sir-knight." 
- 
- "I hate you, Patsy." 
- 
- The bedridden husk of a former knight bellowed a harshly cough. His rusty suit of white armor clinked and clanked as he jerked up violently. Greasy, gray hair shot up in an instant. Sputtering still, he downed the little glass bottle of wine in his hand. The belch was loud as the lightning's thunder, striking down on a rainy night. 
- 
- Besides him, there sat a young man. A little silver crown, chipped and beaten from torn away gemstones, sat upon his short locks of brown. Deep green eyes, far too young to experience what it means to rule, gaze down upon the Knight Whyte. His knight. 
- 
- "Tell me." The knight's arm, weak and weary, placed his bottle on the bedside. "How is Isabella faring? I haven't been able to get a letter from you for months." 
- 
- "We've shut down the postal service, remember? The courier service handles delivery for packages, but messages go through that fancy tele-ma-gram system." 
- 
- "Hah. What an era your kingdom has come to. Bows that spew steel and fire. Scribes who control entire townships. Pretty soon, even my kind will be out of work." 
- 
- The king chuckled, though it sounded forced and awkward through his lips. He had no need for knights anymore. Neither did any neighboring kingdom. They were now just artifacts. Artifacts that talked and drank and fought. No, war in this time was determined by how much gold you could carry, how many people you could take, and how many flags you can put on some hill. 
- 
- "What's with that look, king? Has that queen kicked you out of your castle again? You're more than welcome to take some sleep in my castle here. Just remember to clean the corpses out from their beds." 
- 
- "That's a terrible joke, Whyte." 
- 
- "So, we're dropping the titles? I don't think we need another repeat of Georgie bringing about another revolution. The guillotines, they were only a little uncomfortable." 
- 
- "A little?" 
- 
- "A little." 
- 
- The rain outside appeared to stop, the lightning-storm ceased in its steps. The king got up to the windowsill to see that snow had started to fall. A snowfall, white and thick, had come just in time. 
- 
- "Hmm. You see that, Whyte?" 
- 
- The knight in rusting armor had gotten up out of his bed, placing his brownish-orange metal gauntlets on the young king's shoulder. A gust of wind came bellowing through, slapping its cold blanket of winter wind against the faces of the two men. The king's smile flashed warmly at the knight, who responded in kind. With wet eyes, the young man turned to the knight. 
- 
- "How ironic. I said hello to you on a night as snowy as this." 
- 
- "And you will say good-bye on a snowy night too." 
- 
- "I'm glad to have called you my knight." 
- 
- "And you my king." 
- 
- The knight turned back to his dead. His legs suddenly shook with a fury, sending him down to the hard wood floor. His king moved to help him up, stopped only by a raised gauntlet, still coppery-red and faded. With a great effort, the knight made it to his bed, taking his gauntlets off and throwing them right out the windowsill. 
- 
- "I guess it's about time I've gotten rid of those. Too old for me." 
- 
- "I've seen older. Take a look at the man who wore them." 
- 
- "You always were a cheeky little patsy." Skin falls over his dry eyes, though drawing back before he could even blink. "I grow tired. Would you tell me a story?" 
- 
- "What am I, your mother?" 
- 
- "Just tell me that story." 
- 
- "That story. Yes, after all, we only know that one story." 
- 
- "Don't play cute with me, Patsy." 
- 
- "Alright, alright. Whyte. Promise to go to sleep right after?" 
- 
- The king sighed, taking a knee on the side of the bed. The knight smiled, eyelids finally drooping over his eyes. Hands clasped over his chest as the beating of the heart grew slow. The winter chill must be getting to him, for he too had felt the cold. Through hot tears, the king began. 
- 
- "Once upon a time, in a village far, far away..."
+Context: Hydrogenation reactions are expected to be among the most important surface reactions on interstellar ices. However, solid state astrochemical laboratory data on reactions of H-atoms with common interstellar ice constituents are largely lacking. Aims: The goal of our laboratory work is to determine whether and how carbon dioxide (CO2), formic acid (HCOOH) and acetaldehyde (CH3CHO) react with H-atoms in the solid state at low temperatures and to derive reaction rates and production yields. Methods: Pure CO2, HCOOH and CH3CHO interstellar ice analogues are bombarded by H-atoms in an ultra-high vacuum experiment. The ices are monitored by reflection absorption infrared spectroscopy and the reaction products are detected in the gas phase through temperature programmed desorption to determine the destruction and formation yields as well as the corresponding reaction rates. Results: Within the sensitivity of our set-up we conclude that H-atom bombardment of pure CO2 and HCOOH ice does not result in detectable reaction products. The upper limits on the reaction rates are less or equal to 7e(-17) cm^2/s which make it unlikely that these species play a major role in the formation of more complex organics in interstellar ices due to reactions with H-atoms. In contrast, CH3CHO does react with H-atoms. At most 20% is hydrogenated to ethanol (C2H5OH) and a second reaction route leads to the break-up of the C-C bond to form solid state CH4 (~20%) as well as H2CO and CH3OH (15-50%). The methane production yield is expected to be equal to the summed yield of H2CO and CH3OH and therefore CH4 most likely evaporates partly after formation due to the high exothermicity of the reaction. The reaction rates for CH3CHO destruction depend on ice temperature and not on ice thickness.
 
 ==========================================================================================
-[low] writingprompts #65 d_hat=12.57 n_tokens=418
+[high] xsum #149 d_hat=22.27 n_tokens=398
 ==========================================================================================
-"Crying shame it is," muttered Andy. "Crying shame." 
- 
- Bill and Andy had been friends since they were small, poor boys. They grew up playing together and now they would often help one another in working their lands. As the sun hung low in the sky behind them, the two men sat on a short brick wall overlooking Bill's farm. 
- 
- "How long's he been at it for now?" Andy asked. 
- 
- "Ahh, about a week I'd say," replied Bill, frustrated and despondent. 
- 
- "And why here d'ya think?" 
- 
- "Well," Bill mused. "Word has it that he'd been trying in those caves over by Quickwater River for a bit." 
- 
- "Aye?" said Andy, who was listening intently but still with a look of confusion on his face. 
- 
- "Aye. Then he was up by Dullhammer Mountain, trying there too apparently." 
- 
- "Gods be good!" 
- 
- "Now he's here. I imagine he thinks that if this is where eggs come from then this is his best shot." 
- 
- "You think so?" 
- 
- "Well there's not much more reasoning I could give to it Andy! Why else would he be in my damn chicken coop?" 
- 
- "And you said the King sent him?" 
- 
- "Aye well the King sent him off to do it in the first place," Bill spouted. "I mean it's ridiculous, have you even heard of a dragon round these parts Andy?" 
- 
- "Nope, can't say I have Bill sorry," replied Andy. "Then again, I can't say I've ever heard of a man laying an egg either." 
- 
- The two men sat in silence until the sun began to dip below the hills and the light left the sky. They parted ways and headed home, Bill praying that he'd be gone tomorrow. After all, there wasn't much a farmer could do to stop a brave knight on a quest.
+The shadow chancellor told the BBC's Andrew Marr he stood by his claim that victims of the disaster in west London were "murdered by political decisions". He said "social murder" had occurred and "people should be accountable". But Mr Hammond told the programme there was "not a shred of evidence to support that" accusation. At least 80 people are believed to have been killed in the tower block fire in north Kensington on 14 June. Asked if the politicians who sanctioned cuts were murderers, Mr McDonnell said he did not "resile" from that view. He cited cuts to local government, to the fire service and the housing crisis. "There's a long history in this country of the concept of social murder, where decisions are made with no regard to consequences of that, and as a result of that, people have suffered," he told Andrew Marr. "That's what's happened here, and I'm angry." He previously blamed the decision to "view housing as only for financial speculation". John McDonnell's turn of phrase is one that was actually coined more than 170 years ago. It was in the 19th Century that philosopher Friedrich Engels sought to prove that society commits "social murder" in his book Condition of the Working-Class in England in 1844. "When society places hundreds of proletarians in such a position that they inevitably meet a too early and an unnatural death... When it deprives thousands of the necessaries of life... forces them, through the strong arm of the law, to remain in such conditions until that death ensues... its deed is murder," he wrote of Victorian England. Engels went on to found Marxist theory with fellow German philosopher, Karl Marx. Mr McDonnell recently said there was much to learn from reading Marx's study of capitalism, Das Kapital. Speaking ahead of June's general election, he said he was going to be the "first socialist in the tradition of the Labour Party".
 
 ==========================================================================================
-[low] writingprompts #96 d_hat=12.86 n_tokens=380
+[high] amazon_reviews #37 d_hat=22.28 n_tokens=319
 ==========================================================================================
-"As a gentleman I think I need to tell you that your smile is beautiful. I wasn't even looking at all of your naked parts because of how much of a gentleman I am." 
- 
- Ignore. 
- 
- "M'lady. I must say that your wow poster in the background of your photo intrigues me. If you ever want pointers feel free to send me a pm. I'd love to help a lady like yourself" 
- 
- Ignore. 
- 
- "Dear beautiful lady. Please allow me to show you how a man should treat a lady. Not bark at you like these dogs" 
- 
- Ignore. 
- 
- "Dearest lady. Please consider watching the new spiderman film. I would pay for everything and yay you like a true gentleman"... fucking don't need someone to pay for me. I do want to see that movie though... nah. 
- 
- "Dear lady. You are as beautiful as a jelly fish. For real though"... I love jelly fish....no. ignore. 
- 
- "My dearest lady. I found a bag of lime lays potato chips. I saw in your post history that you love them but they do not sell them in your city. I have found a 7-11 that sells them in mass, and I even had them order extra." 
- 
- "Uhhh... yo. you need to chill out on the lady shit. And the gentleman bull shit. But if you for real have access to lime lays chips maybe we can work something out. Wan na for real catch spiderman? You bring the chips, I'll grab the soda. Just... don't act like a weirdo white knight. Yea?" 
- 
- "Holy shit are you for real? All I needed to do was offer you food? IS THIS ALL I NEEDED TO DO ALL ALONG?"
+My purchase of this stainless steel french press was the best purchase that I have ever made on Amazon. Not only is the product amazing, but the customer service of the manufacturing company is beyond comparison.
+Looking first at the product, it's super durable, easy to clean, and makes the best coffee that I've ever had. I think my favorite part is that it keeps my coffee nice and hot until I want to pour myself a cup or two.
+As I mentioned, it's really easy to clean, and that's because the parts are easily unscrewed from each other. Unfortunately, because of this I lost a little piece of it that helps the filter stay positioned before plunging it down to filter the coffee. Since I live with a bunch of pig roommates, I knew that that piece was gone for good in the mess. After propping the plunger up with various items while I was waiting for my the coffee to sit, I knew I needed to contact the company about getting a replacement piece since I loved my french press so much.
+As soon as I was thinking of this, the company seemingly read my mind and sent me an email asking how I liked the product and if I needed any replacement parts. After telling them about my missing piece, they told me that they didn't have a replacement right now, but were able to send me a whole new French Press for FREE!
+I can't say enough about the quality of this item, and the amazing customer service of the company. BUY this product, and you will not be disappointed!
 
 ==========================================================================================
-[low] writingprompts #83 d_hat=13.08 n_tokens=301
+[high] xsum #121 d_hat=23.66 n_tokens=1048
 ==========================================================================================
-Tugtug was Declan's favorite toy. Daddy gave him Tugtug for his fourth birthday. Daddy liked boats too. He had his own Tugtug, but his was much bigger. 
- 
- One day, daddy took mommy and Declan on a ride in his boat. Tugtug came along too. Tugtug went everywhere with Declan. 
- 
- Tugtug loved the feel of the ocean splashing him. "This must be what home feels like," he thought. Tugtug wanted to stay on the ocean forever. 
- 
- Declan was Tugtug's best friend. Tugtug didn't want to leave him behind. One night when daddy wasn't looking, Tugtug took Declan to the water and they went for a swim. 
- 
- That night there was an awful storm. Tugtug and Declan were swept away. Daddy and mommy looked for a long time, but never found them. 
- 
- In the morning Tugtug found himself on a beautiful beach. Declan was nowhere to be seen! Tugtug floated along next to the beach, looking for his friend. 
- 
- It wasn't long until he found his friend, who was playing with some crabs on the beach. Tugtug was very happy. They played on the beach together all day! 
- 
- The End. 
- 
- 
- ( Edit: Added a missing word )
-
-==========================================================================================
-[low] writingprompts #26 d_hat=13.22 n_tokens=268
-==========================================================================================
-You go un-noticed.. You casually stalk him from a distance while drinking a Peach tea. You wait for him on the beach.. it is night time now. ( beach bar ). 
- He comes out, laughing while flirting with two young blondes... 
- Your anger grows inside.. you ask yourself "who is this guy? WHO DOES HE THINK HE IS?? HE IS NOT ME!" 
- He takes a final sip from his drink and throws it on the ground.. he's too good for a trash can. 
- Your anger builds... you can't let this happen. 
- He walks the drunken blondes to their car and they back out of the parking lot. 
- You, being furious scream "HEY..HEY YOU ASSHOLE!" over to him. 
- He stops, turns and looks at you in the distance. 
- Out of nowhere the drunken blondes smash into him and run him over. 
- You run over to him, stomach churning, feeling like you need to vomit. 
- There is blood on the ground, he is unconscious. 
- You dial 911 and perform CPR on him. ( you ). 
- The paramedics get there and pronounce him dead on the scene. 
- You stand up... everything is blurry, you can't breathe... 
- you black out.
-
-==========================================================================================
-[low] writingprompts #0 d_hat=13.48 n_tokens=556
-==========================================================================================
-*Washington D.C., USA* 
- 
- *Day 0, 00:20* 
- 
- ~ 
- 
- "… there was an explosion right when I looked up…" 
- 
- "… largest death toll in this country since…" 
- 
- "… unprecedented…" 
- 
- Sirens blare from the TV. I sit on the floor. Dazed. 
- 
- *What had just happened? * 
- 
- The words "BREAKING NEWS" splash across the screen. Every pair of eyes in the country – no, the world – must be glued to their TVs. Plumes of smoke continue to rise from the side of the towers. Witnesses cry and scream about the carnage they had witnessed. 
- 
- "Mommy," Emma stumbles into the living room. "It's time for school, Mommy." 
- 
- "Oh honey," I say, on the brink of tears. "Come here." She walks to me and I hold her in my arms tightly, running my hands through her hair. "We won't be going to school today, dear." 
- 
- News continues to pour in from the TV. 
- 
- In the corner of the screen: Monday, 11 September 2001. 
- 
- 
- \________ 
- 
- *Shanghai, China* 
- 
- *Day 0, 01:00* 
- 
- ~ 
- 
- "Dr. Wu, you have to look at this." 
- 
- "Not now, Lin. There're enough people freaking out about this! We need to focus on our research," I take off my thin, metal-rimmed glasses and look at my assistant. She has helped me so much in the past seven years. We're so close now. We can't afford to be distracted. "If we don't meet the deadline, all our efforts would have gone to waste." 
- 
- Lin shakes her head. "No, doctor. I'm not talking about the attack. I… I…" 
- 
- "What is it, then? Speak up." 
- 
- "You… you should see this for yourself." Lin takes out a massive sheet of paper and lays it out on my table. 
- 
- "This is the oceanic temperature table today – why did you print it out? These fluctuations are perfectly normal, and the –" Something at the end of the graph catches my eyes. A massive spike. "This… this…" 
- 
- "Yes, doctor. You were right all along." 
- 
- My heart skips a beat. I check the time of the spike. It matches perfectly. 
- 
- "Lin," 
- 
- "Yes, doctor?" 
- 
- "Get me the director of the Chinese Meteorological Administration. Now!"
-
-==========================================================================================
-[mid] amazon_reviews #29 d_hat=19.16 n_tokens=438
-==========================================================================================
-Here we have another case of purchasing an extended warranty being asked to provide a review but never having made use of (and hoping never to have to) the purchased coverage. The price was right but lower on SquareTrade's site (I'm signed up for the specials and such mailings so I should have been made aware of. But it's only a few dollars so its no big loss).
-
-The plan covers up to three replacements of the covered item or the term of the warranty you purchased (two years in this case). After trying to troubleshoot your device over the phone they will make the decision to either repair or replace your item. If they decided to replace the item it's wholly their choice to either provide a new or newest model of your device or provide a refurbished model of what you have. They promise quick turn-around and cover shipping in both directions. If you do not return the defective model within in a certain time frame (I believe it's 30 days) of receiving your replacement your credit card (which you MUST have on file to file a claim) will be charged the full cost of the device when new.
-
-I've heard nothing but good things about SquareTrade for years and almost all of the low-star reviews seem to be user's not understanding the plan or not making sure they would be covered for their purchases rather than anything to do with SquareTrade itself. While I hope I never need to use the plan it was affordable enough to make up for Amazon's fairly deplorable ninety day warranty (our refurbished PaperWhite came with a full year's coverage. A brand new Dot, like their seven and eight inch tablets (unlike their six or ten inch tablets, the Echo or Tap and their entire eReader line which all have one-year warranties) only has ninety days I don't know why. I've always trusted Amazon's electronics, I wonder at their apparent lack of faith.
-
-But anyway. I've rambled on enough. The two years of coverage is comforting and was quite affordable. I'm happy with the purchase and honestly hope I never need to use it.
-
-==========================================================================================
-[mid] amazon_reviews #93 d_hat=19.17 n_tokens=313
-==========================================================================================
-I purchased this Add-On set of two pens based on the recommendations of others. I am a Pen Connoisseur. I love office supplies and am constantly buying new products, as well as re-purchasing those which really write smoothly for me. I kept forgetting to add this set to an order over $25.00. Received on August 1st of 2018. I'd waited so long & was very eager to try them out.
-
-Unfortunately in my pen set the first pen was not as smooth writing as I expected. While it certainly was a Fine point I was disappointed - that is until I tried the second ZEBRA 301 pen. It wrote smoother, but I like a darker coloring in my black pens. I see these as more of an utilitarian pens.
-
-I don't see myself purchasing this pen again, but I will keep it inside the spirals of my Reviews of my STENO notepad since it's so thin. It'll be convenient. Not having to press down hard to write is a decided advantage. I would recommend them to others. The ink doesn't bleed through or look visible on the back of the page.
-
-If both pens wrote equally as smoothly I would have offer 5 stars instead of 4 stars. I'll keep one pen in the car. The stainless steel body gives it some weight and it is refillable, as well as a retractable ballpoint pen. I hope you get a chance to write with this pen and you find it to your liking.
-
-==========================================================================================
-[mid] academic_abstracts #79 d_hat=19.18 n_tokens=326
-==========================================================================================
-Solar spicules have eluded modelers and observers for decades. Since the discovery of the more energetic type II, spicules have become a heated topic but their contribution to the energy balance of the low solar atmosphere remains unknown. Here we give a first glimpse of what quiet Sun spicules look like when observed with NASA's recently launched Interface Region Imaging Spectrograph (IRIS). Using IRIS spectra and filtergrams that sample the chromosphere and transition region we compare the properties and evolution of spicules as observed in a coordinated campaign with Hinode and the Atmospheric Imaging Assembly. Our IRIS observations allow us to follow the thermal evolution of type II spicules and finally confirm that the fading of Ca II H spicules appears to be caused by rapid heating to higher temperatures. The IRIS spicules do not fade but continue evolving, reaching higher and falling back down after 500-800 s. Ca II H type II spicules are thus the initial stages of violent and hotter events that mostly remain invisible in Ca II H filtergrams. These events have very different properties from type I spicules, which show lower velocities and no fading from chromospheric passbands. The IRIS spectra of spicules show the same signature as their proposed disk counterparts, reinforcing earlier work. Spectroheliograms from spectral rasters also confirm that quiet Sun spicules originate in bushes from the magnetic network. Our results suggest that type II spicules are indeed the site of vigorous heating (to at least transition region temperatures) along extensive parts of the upward moving spicular plasma.
-
-==========================================================================================
-[mid] academic_abstracts #6 d_hat=19.19 n_tokens=482
-==========================================================================================
-Pulmonary hypertension in response to exercise is a marker of the hemodynamic severity of mitral stenosis (MS). However, the factors related to elevated pulmonary pressure with exercise are not well defined. The aim of this study was to assess the parameters associated with the pulmonary pressure response to exercise in patients with pure rheumatic MS. An additional aim was to determine the impact of exercise-induced pulmonary hypertension on clinical outcome. One hundred thirty patients with MS (94% women; mean age, 45 ± 11 years) underwent exercise echocardiography. A range of echocardiographic parameters were obtained at rest and at peak exercise. Symptom-limited graded ramp bicycle exercise was performed in the supine position. The primary end point was mitral valve intervention, either percutaneous or surgical. In the overall population, systolic pulmonary artery pressure (SPAP) increased from 38.3 ± 13.4 mm Hg at rest to 65.8 ± 20.7 mm Hg during exercise. Increases in mean mitral gradient, right ventricular function, left atrial volume, and net atrioventricular compliance were independently associated with SPAP at peak exercise, after adjusting for changes in heart rate. During the follow-up period (median, 17 months; range, 1-45 months), 46 adverse clinical events were observed. By multivariate Cox proportional-hazards analysis adjusted for age and sex, SPAP achieved at peak exercise was an important predictor of adverse outcome (adjusted hazard ratio, 1.025; 95% CI, 1.010-1.040; P = .001). New York Heart Association functional class (adjusted hazard ratio, 2.459; 95% CI, 1.509-4.006; P < .001) and the interaction between valve area and net atrioventricular compliance (P = .001) were also significant predictors of adverse events. Time-dependent areas under the receiver operating characteristic curve for the model with SPAP during exercise were better than for the model with SPAP at rest, with a significant improvement from 3 years onward. In patients with MS, the pulmonary artery pressure response to exercise is determined by a combination of factors, including transmitral mean gradient at exercise, net atrioventricular compliance, left atrial volume, and right ventricular function. Pulmonary artery pressure at peak exercise is a predictor of clinical outcomes and adds incremental prognostic value beyond that provided by standard resting measurements, including valve area.
-
-==========================================================================================
-[mid] amazon_reviews #77 d_hat=19.20 n_tokens=644
-==========================================================================================
-For the price this is hard to beat. It has lots of great features, including a Wifi app, but resolution/quality even on the highest settings are slightly disappointing. I have everything configured to provide the sharpest possible image (highest resolution and bit rate, etc.), and if a car is more than 30' away, zooming in on a screenshot of a license plate is iffy at best, even if the footage was taken in bright daylight (screencaps taken in VLC). Something seems off to me. Yes, I removed the protective films, and yes, my window is reasonably clean (normal conditions). I have attached two photos: one of the unit in a fantastic little case I found for it (see below), and a screencap showing the problem I described. The van in front of me is semi-readable, and was about 25 feet away. The car 15-20 feet further away on the left is unreadable, as is the plate close to me on the left. And yes, I have the CPL filter installed on the lens.
-
-Configuring this was a bit of a hassle. The Wi-Fi app is not intuitive, and some quick googling led me to discover you have to temporarily disable your cellular data the first time you use it to get the camera to connect. Once configured, the camera itself acts as the network your phone connects to. This means your phone cannot be connected to any other Wi-Fi network while you are connected to the camera. I have no idea why they don't just allow you to use Bluetooth for this--it would be simpler to set up, that's for sure. Honestly, having integrated security video will be a factor in the next car I purchase. This is all way too much work.
-
-Many PCs will not play the default file format this records in as they lack the correct video codec (H.265) or enough processing power. I think there must be a way to change the format it records in, but I was unable to find the configuration setting to change in either the app or the camera itself. To get this to play files on your PC, I suggest using VLC Player. It is free, and if you are running the latest version (check for updates in the application), it will run them just fine if your PC has the juice for HD at this level. If you experience dropped frames or choppy video when playing back on your computer, this is probably because your computer is not equipped with a GPU to support this high resolution of video (many aren't; if you don't have a dedicated video card in your PC, you may experience this). My office desktop does not have a dedicated video card and the video is a bit choppy if other things are running--expected.
-
-If you are interested, the case is the "Mchoi Hard EVA Travel Case for Garmin inReach Mini GPS", (ASIN: B08F9QV1BQ), which is very sturdy and cost me $13.49 in Feb 2021. I looked for EVER for a case for this, and this was the best fit I found.
-
-==========================================================================================
-[mid] academic_abstracts #25 d_hat=19.21 n_tokens=372
-==========================================================================================
-We present deep Hubble Space Telescope single-star photometry of Leo A in B, V, and I. Our new field of view is offset from the centrally located field observed by Tolstoy et al. (1998) in order to expose the halo population of this galaxy. We report the detection of metal-poor red horizontal branch stars, which demonstrate that Leo A is not a young galaxy. In fact, Leo A is as least as old as metal-poor Galactic Globular Clusters which exhibit red horizontal branches, and are considered to have a minimum age of about 9 Gyr. We discuss the distance to Leo A, and perform an extensive comparison of the data with stellar isochrones. For a distance modulus of 24.5, the data are better than 50% complete down to absolute magnitudes of 2 or more. We can easily identify stars with metallicities between 0.0001 and 0.0004, and ages between about 5 and 10 Gyr, in their post-main-sequence phases, but lack the detection of main-sequence turnoffs which would provide unambiguous proof of ancient (>10 Gyr) stellar generations. Blue horizontal branch stars are above the detection limits, but difficult to distinguish from young stars with similar colors and magnitudes. Synthetic color-magnitude diagrams show it is possible to populate the blue horizontal branch in the halo of Leo A. The models also suggest ~50% of the total astrated mass in our pointing to be attributed to an ancient (>10 Gyr) stellar population. We conclude that Leo A started to form stars at least about 9 Gyr ago. Leo A exhibits an extremely low oxygen abundance, of only 3% of Solar, in its ionized interstellar medium. The existence of old stars in this very oxygen-deficient galaxy illustrates that a low oxygen abundance does not preclude a history of early star formation.
-
-==========================================================================================
-[mid] xsum #30 d_hat=19.24 n_tokens=691
-==========================================================================================
-David Sulman of the UK Forest Products Association criticised an apparent lack of "openness and transparency" in the deal. The deal had been criticised by auditors. NRW said the contracts were awarded in "extraordinary" circumstances. In 2014 a company was awarded a series of contracts worth £39m to purchase both spruce and larch timber - the latter from forests where a fungus disease causing extensive damage, Phytophthora ramorum, was present. The contracts were part of action NRW - which sells timber from publicly opened woodlands - took to deal with the disease, amid a rapid increase in its spread the previous year. But a report by auditor general Huw Vaughan Thomas in March expressed doubt over whether the decision met state aid rules and said the decision-making process was not transparent. Mr Thomas revealed that the deal was made without other companies being allowed to bid - but NRW disputed his findings. The agreements were set to be pulled after the company failed to meet a key promise to build a new processing line for cutting timber. Mr Sulman, who is executive director of the UK Forest Products Association which represents the domestic timber industry, said: "It's a very serious, disturbing and worrying situation for businesses across the forestry and forest public sector in Wales, and indeed further afield. "Our principal concern here is that historically businesses who have dealt with Natural Resources Wales… have always been assured that dealings with NRW would be fair, open and transparent. "In this case, from what we can see there appears to have been a considerable lack of fairness, openness and transparency, and that is really what is giving rise to such serious concern across the sector at the moment." "There probably are businesses out there who feel they were denied opportunities," he said. Fears that the market for larch was on the brink of collapse at the time of the deal have been given as one of the reasons why NRW went ahead with the deal - but whether this was the case has been questioned by Mr Sulman. Evidence given by chief executive Emyr Roberts at a meeting of the assembly's public accounts committee in March said that, at the time of the deal: "We had a real crisis on our hands." "There was a danger of the timber market collapsing at that time," he said. But Mr Sulman said the statement was "wildly inaccurate" and "misleading". "Events have proved, in the intervening period through 2014 through today, that the diseased larch that was harvested has been equally well processed and sold in the market place," he said. He said a full investigation by the public accounts committee was "probably warranted given the seriousness of the situation". Mr Sulman will give evidence to the assembly's public accounts committee, which is also calling NRW in again to re-examine the issue, on Monday. Emyr Roberts, chief executive of Natural Resources Wales, said in a statement: "The long-term contracts were awarded at a point in time when we were dealing with an extraordinary set of circumstances. "Our prime objective at the time was to secure a market for the diseased larch and we succeeded in doing so following our agreed processes. "We are confident that the evidence we gave to the previous public accounts committee was accurate and valid." Neither NRW or the Wales Audit Office have revealed the name of the firm that was awarded the contracts.
-
-==========================================================================================
-[mid] academic_abstracts #83 d_hat=19.26 n_tokens=312
-==========================================================================================
-Computing systems have been evolving to be more pervasive, heterogeneous, and dynamic. An increasing number of emerging domains now rely on diverse edge to cloud continuum where the execution of applications often spans various tiers of systems with significantly heterogeneous computational capabilities. Resources in each tier are often handled in isolation due to scalability and privacy concerns. However, better overall resource utilization could be achieved if different tiers of systems had the means to communicate their computational capabilities. In this paper, we propose H-EYE, a universal approach to holistically capture diverse computational characteristics of edge-cloud systems with arbitrary topologies and to manage the assignment of tasks to the computational resources with the whole continuum in the scope. Our proposed work introduces two significant innovations: (1) We present a multi-layer, graph-based hardware (HW) representation and a modular performance modeling interface that could capture interactions and inference between different computing and communication resources in the system at desired level of detail. (2) We introduce a novel orchestrator mechanism that leverages the graph-based HW representation to hierarchically locate target devices that a given set of tasks could be mapped to. Orchestrator provides isolation for various device groups and allows hierarchical abstraction to scalably find mappings that satisfy system deadlines. The orchestrator internally relies on a novel traverser that takes shared resource slowdown into account. We demonstrate the utility and flexibility of H-EYE on edge-server systems that are deployed on the field in two different disciplines, improving up to 47% latency over baselines with less than 2% scheduling overhead
-
-==========================================================================================
-[mid] writingprompts #82 d_hat=19.28 n_tokens=479
-==========================================================================================
-I nervously smoothed down my neatly combed hair. Everything was in the folder. The vanilla folder tucked gently beneath my arm. I had evidence - *so* much overwhelming evidence - that there was no way I couldn't win. Still, though, the threat of failure loomed over me. What if I had missed something? 
- 
- I got a new birth certificate. I had a driver's license, an ID, a *life*. One that wasn't mine, but it wouldn't matter - it would fool the authorities. I was Avery McAbbot, born in Honolulu, Hawaii, on January 31st, 2984. 
- 
- In truth, my name is Ryan Adams. I was born January 31st, 3005. I invented the time machine - *my* time machine - for one purpose and one alone. I would save myself from my parents. I could have used the time machine for profit. Could have made billions of dollars winning the lottery. Of course, it would have only worked once - an event like that would skew the time-space continuum so that my old future would no longer come to fruition. Kind of like that old relic of a movie... what was it called again? Back to the Future, I think it was. 
- 
- So, I gave up my chance at millions in order to do something else. I would save myself. 
- 
- It isn't as easy as it sounds. Sure, I knew exactly which days I had to call the police. I knew exactly what days I could talk to the boy, get pictures of the injuries. I perfectly played the part of a concerned neighbor. 
- 
- But to get the evidence, I had to watch it all again. Take pictures of the violence, create a paper trail of all the abuse that went on. The day I got the ten-inch long scar that bisects my back in half, hearing the screams coming from the house sent me into a panic attack. That night, I dialed CPS, then curled up into the fetal position and cried myself to sleep. 
- 
- But it will all be worth it. I know it will be. 
- 
- As I step into the courtroom, I look into the eyes of my nine-year-old self, and mouth a few words. 
- 
- "Everything will be alright."
-
-==========================================================================================
-[mid] academic_abstracts #40 d_hat=19.31 n_tokens=386
-==========================================================================================
-ALMA-IMF imaged 15 massive protoclusters down to a resolution of of 2 kau scales, identifying about 1000 star-forming cores. The mass and luminosity of these cores, which are fundamental physical characteristics, are difficult to determine, a problem greatly exacerbated at the distances >2 kpc of ALMA-IMF protoclusters. We combined new datasets and radiative transfer modeling to characterize these cores. We estimated their mass-averaged temperature and the masses these estimates imply. For 1/6 of the sample, we measured the bolometric luminosities, implementing deblending corrections when necessary. We used spectral energy distribution (SED) analysis obtained with the PPMAP Bayesian procedure, which aims to preserve the best angular resolution of the input data. We extrapolated the luminosity and dust temperature images provided by PPMAP at 2.5" resolution to estimate those of individual cores, which were identified at higher angular resolution. To do this, we applied approximate radiative transfer relationships between the luminosity of a protostar and the temperature of its surrounding envelope and between the external heating of prestellar cores and their temperatures. For the first time, we provide data-informed estimates of dust temperatures for 883 cores identified with ALMA-IMF: 17-31 K and 28-79 K (5th and 95th percentiles, up to 127 K) for the 617 prestellar and 266 protostellar cores, respectively. We also measured protostellar luminosities spanning 20-80 000 Lsun. For hot cores, we estimated systematically lower temperatures than studies based on complex organic molecules. We established a mass-luminosity evolutionary diagram, for the first time at the core spatial resolution and for a large sample of high-mass protostellar cores. The ALMA-IMF data favor a scenario in which protostars accrete their mass from a larger mass reservoir than their host cores.
-
-==========================================================================================
-[high] xsum #20 d_hat=28.05 n_tokens=465
-==========================================================================================
-Another student reported the alleged clinch between 50-year-old Tad Cummins and Elizabeth Thomas, but he was allowed to continue working. There have been more than 450 reported sightings of the girl since she and the teacher vanished on 13 March. Mr Cummins is believed to be travelling with two handguns. He is wanted on charges of sexual contact with a minor and aggravated kidnapping. The family is furious that Mr Cummins was not suspended after a middle school student reported the alleged kiss in January. Mr Cummins was allowed to continue teaching forensics at the high school in the town of Culleoka, 56 miles (90km) south of Nashville. He was suspended in February for flouting the principal's order to keep his distance from Ms Thomas. The Maury County School District officially fired Mr Cummins last week after the first missing-person alert was issued. The missing girl's father has appealed for his daughter's safe return in an interview with Nashville news station WZTV. Anthony Thomas said: "Izzy, please come home, get away from him. Come home." Both Mr Cummins and Ms Thomas denied to Culleoka Unit School officials that there had been a kiss. The girl's family were never informed of the alleged kiss, said Thomas family lawyer Jason Whatley. But the teacher acknowledged that the girl is "a really good friend and she does leave her other classes to come see him when she needs someone to calm her down", according to school records dated 30 January. Agents for the Tennessee Bureau of Investigation (TBI) "believe Cummins could have Thomas hidden from view of the general public or far away from Tennessee". But they add that due to the lack of confirmed sightings, "the individuals could be anywhere". One week after the disappearance, TBI spokesman Josh Devine took to local television to deliver a message to the teenager. "Our message to her tonight: you are a victim," Mr Devine said. "You're 15 years old. He's 50. We are going to do everything we can to bring you home." Two nationwide alerts, known as Amber Alerts, have been issued since she was first reported missing. People living in remote or rural areas have been asked to check their property for any sign of tampering or suspicious vehicles.
-
-==========================================================================================
-[high] amazon_reviews #79 d_hat=29.15 n_tokens=297
-==========================================================================================
-Edit: I was reached out to about my review below for some assistance and was able to get a replacement back plate. It looked different and was easier to get onto the camera. I'm wondering if the one I bought was older stock that came with the difficult back plate and now they have a better updated one. Was able to put it together and now it works well.
-Do note that the services provided for free are basic and do not include recording. I don't believe you can do live view if you do battery install, unless someone is at the door and it alerts you (just can just pull it up and view live whenever you want). Otherwise decent deal for what I paid and able to have a bit more security. The basic plan with video recording is $30 a year which I feel is decent if I have to pay for it. I can see my door and my car in case I need the video for anything. Also useful to post to neighbors if I catch anything suspicious happening as we have a lot of foot traffic where I live
-
-First review below, I updated it above:
-I've watched several videos read instructions and using all of my strength the camera will NOT lock onto the back. So now I've drilled holes into my house for nothing. I'll change the rating if I somehow can get it to work but I don't see myself wanting to fight with this every time I need to put in new batteries. I essentially cannot use it.
-
-==========================================================================================
-[high] academic_abstracts #22 d_hat=29.23 n_tokens=426
-==========================================================================================
-We aim to determine the redshift of GDS-1408, the most solid z~7 galaxy candidate lying in the Hubble Ultra Deep Field. We have used all the VLT spectra of GDS-1408 collected by us and two other groups with FORS2 at VLT in the last five years, for a total integration time of 52hr. The combined spectrum is the deepest ever obtained of a galaxy in the Reionization epoch. We do not detect any emission line or continuum over the whole wavelength range, up to 10100A. Based on an accurate set of simulations, we are able to put a stringent upper limit of f(Lya)<3x10^(-18) erg/s/cm2 at 3-9 sigma in the explored wavelength range, corresponding to a rest-frame equivalent width EW<9A. Combining this limit with the SED modelling we refine the redshift to be z=6.82+/- 0.1 (1-sigma). The same SED fitting indicates that GDS-1408 is relatively extinct (A1600~1) with a dust corrected star formation rate of ~ 20 Msol/yr. The comparison between the un-attenuated equivalent width predicted by the case-B recombination theory and the observed upper limit, provides a limit on the effective Lya escape fraction of f_(esc)^(eff)(Lya)<8%. Even though we cannot rule out a major contribution of the inter/circum galactic medium in damping the line, a plausible interpretation is that GDS-1408 is moderately evolved and contains sufficient gas and dust to attenuate the Lya emission, before it reaches the intergalactic medium. The redshift confirmation of even the best z~7 candidates is very hard to achieve (unless the Lya or unusually strong rest-UV nebular emission lines are present) with the current generation of 8-10m class telescopes. We show that both JWST and E-ELT will be necessary to make decisive progresses. Currently, the increased redshift accuracy obtained with this kind of analysis makes ALMA an interesting option for the redshift confirmation.
-
-==========================================================================================
-[high] amazon_reviews #30 d_hat=29.40 n_tokens=313
-==========================================================================================
-My husband and I bought two sets of these three years ago from Circuit City during their going out of business sale. We both travel quite a bit and were in need of decent headphones for longer flights (let's face it, the ear buds provided by the airlines just don't cut it). My husband accidentally left his set, in their pouch, in the seat back pocket on a flight last year and was in need of a replacement set for our trip to Germany last week. I was amazed by the price when I came onto Amazon to check - $29.99 was a steal compared to the $80 we spent a few years back! This headset is not the top of the line, but it is effective in canceling out the low aircraft drawl while in-flight. (They are also quite nice when you need to drown out the crying child in 23F.;)) The battery life is remarkable. I have had to change the battery on my set only twice in the three years I've owned it. The only complaint that I have, which results in the four star rating instead of five, is that after wearing the set for a few hours (i.e., Amsterdam to Houston, TX), my ears begin to ache on the outside. It is almost like the headset becomes to tight over longer periods of time. I tend not to wear earrings on airplanes, so I can rule out the possibility of pinching. Other than that slight achy feeling, these are wonderful for the casual traveler and the price simply cannot be beat!
-
-==========================================================================================
-[high] amazon_reviews #53 d_hat=29.76 n_tokens=265
-==========================================================================================
-I only use HP printers for my work, because they have always been reliable throughout my career. I work from home full-time and my company reimburses me for my work expenses. I try, however, to get a good price on whatever I'm buying…so I keep coming back to this particular product.
-
-I like this convenient 2-pack of black and color cartridges, since it seems to simplify my shopping. I always have backups since you never know when your ink will get used up.
-
-I prefer a black ink laser printer for most of my work, but I do have the occasional need for color printing.
-
-I'm sure we all find these ink and toner cartridges painfully expensive sometimes, but we do what we have to, right?
-
-As long as I go through the proper testing and adjusting (calibration?) when I put in new ink (the printer walks me through it), it usually is a simple enough process.
-
-The one complaint I have about inkjet print is that, when I use a highlighter on my copies, it smears my ink...even after the ink has dried. I just know not to highlight if I can help it.
-
-I do find this a decent value and HP products have always worked well for me.
-
-==========================================================================================
-[high] academic_abstracts #37 d_hat=29.83 n_tokens=338
-==========================================================================================
-Multi-fidelity (MF) methods are gaining popularity for enhancing surrogate modeling and design optimization by incorporating data from various low-fidelity (LF) models. While most existing MF methods assume a fixed dataset, adaptive sampling methods that dynamically allocate resources among fidelity models can achieve higher efficiency in the exploring and exploiting the design space. However, most existing MF methods rely on the hierarchical assumption of fidelity levels or fail to capture the intercorrelation between multiple fidelity levels and utilize it to quantify the value of the future samples and navigate the adaptive sampling. To address this hurdle, we propose a framework hinged on a latent embedding for different fidelity models and the associated pre-posterior analysis to explicitly utilize their correlation for adaptive sampling. In this framework, each infill sampling iteration includes two steps: We first identify the location of interest with the greatest potential improvement using the high-fidelity (HF) model, then we search for the next sample across all fidelity levels that maximize the improvement per unit cost at the location identified in the first step. This is made possible by a single Latent Variable Gaussian Process (LVGP) model that maps different fidelity models into an interpretable latent space to capture their correlations without assuming hierarchical fidelity levels. The LVGP enables us to assess how LF sampling candidates will affect HF response with pre-posterior analysis and determine the next sample with the best benefit-to-cost ratio. Through test cases, we demonstrate that the proposed method outperforms the benchmark methods in both MF global fitting (GF) and Bayesian Optimization (BO) problems in convergence rate and robustness. Moreover, the method offers the flexibility to switch between GF and BO by simply changing the acquisition function.
-
-==========================================================================================
-[high] academic_abstracts #53 d_hat=31.40 n_tokens=356
-==========================================================================================
-We consider damping and absorption of solar $p$ modes due to their energy loss to magnetic tube waves that can freely carry energy out of the acoustic cavity. The coupling of $p$ modes and sausage tube waves is studied in a model atmosphere composed of a polytropic interior above which lies an isothermal upper atmosphere. The sausage tube waves, excited by $p$ modes, propagate along a magnetic fibril which is assumed to be a vertically aligned, stratified, thin magnetic flux-tube. The deficit of $p$-mode energy is quantified through the damping rate, $\Gamma$ and absorption coefficient, $\alpha$. The variation of $\Gamma$ and $\alpha$ as a function of frequency and the tube's plasma properties is studied in detail. Previous similar studies have considered only a subphotospheric layer, modelled as a polytrope that has been truncated at the photosphere (Bogdan et al. (1996), Hindman & Jain 2008, Gascoyne et al. (2011)). Such studies have found that the resulting energy loss by the $p$ modes is very sensitive to the upper boundary condition, which because of the lack of a upper atmosphere have been imposed in a somewhat ad hoc manner. The model presented here avoids such problems by using an isothermal layer to model the overlying atmosphere (chromosphere), and consequently, allows us to analyse the propagation of $p$-mode driven sausage waves above the photosphere. In this paper we restrict our attention to frequencies below the acoustic cut-off frequency. We demonstrate the importance of coupling all waves (acoustic, magnetic) in the subsurface solar atmosphere with the overlying atmosphere in order to accurately model the interaction of solar $f$ and $p$ modes with sausage tube waves.
-
-==========================================================================================
-[high] amazon_reviews #69 d_hat=32.39 n_tokens=391
-==========================================================================================
-I use these batteries in a remote control, the annoying toilet flusher, a portable radio, my owl alerts, flashlights, and many other battery powered gadgets that normally discharge batteries. So far they work really well in these gadgets and the charger surprisingly charges them faster than I thought. Definitely worth the money because they last much longer than the non rechargeable disposable batteries and better for the environment. As for fit they seem to fit fine in everything so far without any problems which is really nice especially on expensive devices. I can tell you that they get a little warmer in the charger than I am comfortable with which concerns me. Because from personal experience fast charging getting batteries hot is not good for any rechargeable batteries it runis them plus its not safe I wish they had a slow or low charging setting. I can honestly say these easily out perform the Rayovac, Energizer, and Duracell rechargable batteries that discarge quickly saving you money and headaches. For just normal homeowners use for remote controls and around the household these should work perfectly fine. I have bought other batteries from EBL off Amazon and absolutely love them. I will have to keep taking notes on discharge, charging, and start measuring voltage on these to see how consistent they are and update this review. Stay tuned.
-
-Truthfully the only reason why I bought these is they do not offer the red EBL 1.5v AA Li-Ion rechargeable 3000mWh batteries in any quantity greater than four with a charger on Amazon which is why for value for my money I only rate the "value for the money" partpurchase at 3 stars. EBL needs to make those available here just like these batteries why they do not is a mystery to me. If you need an honest to goodness AA 1.5v battery for something sensitive to voltage read my review on those batteries they sell.
-
-==========================================================================================
-[high] xsum #1 d_hat=34.75 n_tokens=677
-==========================================================================================
-But her efforts have helped scientists in India devise a unique, non-invasive way to monitor the physiological health of wild elephants. The key has been freeze-drying dung in the field to preserve the elephant's hormones. As a result, scientists found stress levels in females were more conspicuous than in male elephants. Over five years, Sanjeeta and her colleagues collected more than 300 samples from 261 elephants in the biodiversity-rich Western Ghats area. She explained her technique: "I used to hide and observe till the elephant defecated and moved away." She told the BBC: "These samples mean a lot to me." The aim of the research was to evaluate the influence of the elephants' body condition on glucocorticoid metabolites. Animals such as elephants are subjected to various stressors in their lives, with factors including threats from predators, food shortages, drought and illness. Whenever any animal faces stressful events, their body secretes hormones known as glucocorticoids. These hormones are released into the circulatory system which eventually breaks them down into metabolites that are excreted through urine or faeces. The researchers say that collecting blood samples to assess stress levels is neither ethical nor feasible, since immobilising the animals will cause additional stress, thus biasing the study. "So glucocorticoid was measured using faecal or dung samples," said Sanjeeta. The team found the glucocorticoid metabolites in the dung remained relatively stable up to six hours after defecation, though collecting samples as fresh as possible was preferred. After six hours the dung starts to degrade through microbial activity. To prevent this, the collected samples were freeze-dried in the field and stored at -20 degrees Celsius for further analysis. Stress levels for all elephants peaked during the dry season, when resources were low. Senior researcher Prof Raman Sukumar said: "In a natural environment, large and long-ranging herbivorous mammals such as elephants may have to face various ecological challenges or stressful conditions. "One such challenge that might impact their health is forage resource limitation, either in terms of quality or quantity." Higher amounts of glucocorticoids generally indicated that the animal was more stressed, he said. "Stress levels in female elephants were more conspicuous than in male elephants." All mammalian systems would show a similar trend, the researchers say. Dr Sukumar and his team claim that their study is the "first to examine the relationship between body condition, seasonality and stress in wild Asian elephants using large-scale faecal sample collection for assaying glucocorticoid metabolites". The study also focused on finding possible answers to how elephant populations react to chronic stress and if superior nutrition from feeding on cultivated crops could help them reduce their physiological stress levels that may otherwise be enhanced through harassment by farmers trying to protect their fields. They also examined the idea that body condition alone could act as an indicator of physiological health and fitness of an animal. In the study, the animal's body condition was scored on a scale from one to five, with one indicating the animal was in a very poor state and five indicating the animal was obese. The study conclusively found that the stress levels in the Asian elephants peaked during the dry season when resources were low. They also concluded that very poor or poor body condition was a good visual indicator of stress. The research has been published in the Oxford Journal Conservation Physiology.
-
-==========================================================================================
-[high] xsum #26 d_hat=39.78 n_tokens=469
-==========================================================================================
-The bill would pardon men only if they had sex without "force or threat" and if they married the victim. Critics say it legitimises rape and child marriage, and lets off men who are aware of their crime. Violence against women in Turkey has increased in the past decade - 40% of women report sexual or physical abuse. Statistics also show the murder rate of women increased by 1,400% between 2003 and 2010. The bill was initially approved on Thursday evening after being brought to parliament by President Recep Tayyip Erdogan's ruling Justice and Development Party (AKP). On Tuesday, MPs will debate the bill a second time before casting their final vote. It is a highly contentious bill that has divided Turkey along its traditional secular versus conservative fault line. The aim, says the government, is not to excuse rape but to rehabilitate those who may not have realised their sexual relations were unlawful - or to prevent girls who have sex under the age of 18 from feeling ostracised by their community. There is opposition to the bill on the streets of Istanbul. Many say it will encourage men to rape. But the government will get support among its pious voter base in poorer areas where girls are married off young and the sexual abuse rate is higher. Supporters say Mr Erdogan has liberated religious women by repealing a ban on headscarves in public places. The vote on Tuesday could spark mass protests. If it passes it will likely quash the convictions of some 3,000 men accused of assaulting an under-18-year-old. But critics say as well as overlooking statutory rape (underage sex) it would legitimise child marriage. "Sexual abuse is a crime and there is no consent in it. This is what the AKP fails to understand," said Ozgur Ozel, MP for the opposition Republican People's Party, according to AFP news agency. "Seeking the consent of a child is something that universal law does not provide for." But Justice Minister Bekir Bozdag said it could help couples who have engaged in consensual sex and want to marry. "When a child is then born from this non-official union, the doctor warns the prosecutor and the man is sent to prison, putting the child and mother into financial difficulties," he said.
+Her underlying message is that Europe spends too much on social policies and thus has no choice but to retrench. Austerity is one reason for cuts, but other threats to the sustainability of the welfare state are more fundamental. They include dealing with an ageing population and adapting to evolving societal expectations. Intensifying competition from emerging markets has also seen globalisation become a threat, because the cost of welfare policies has undermined the competitiveness of companies. However, as I and my colleagues argue in a new paper, it would be wrong to view the welfare state mainly as a burden and it is undeniable that welfare states encapsulate values that people across the EU cherish. Social expenditure per person in the EU in 2012 (the most recent year available, using a harmonised definition) was €7,600 (£5,540), but with a range from €18,900 (£13,800) in Luxembourg to just €927 (£675) in Bulgaria. The UK figure was €8,700 (£6,340). Interestingly, average EU spending per citizen is almost the same as in the United States and well below that in Switzerland, after adjusting for price differences. Typically, poverty relief, health and pensions are much the biggest components of welfare spending, whereas unemployment benefits cost relatively less. The ageing of the EU population is the result of two phenomena: But there are also marked differences among the EU countries. Over the past 15 years, the average fertility rate (children per woman) in the EU has been 1.54, ranging from barely over 1.3 in Hungary and Spain, and 1.36 in Germany, to 1.8 in the UK and just under two in Ireland, France and Sweden. According to the "main scenario" of the latest Eurostat population projections, Germany's population has already started to shrink and is expected to fall from 82 million in 2013 to 74 million by 2050. The UK's population, by comparison, will rise from 64 million to 77 million over the same period. This scenario includes substantial net migration into the EU, although the likelihood is that the exceptional influx of refugees and migrants this year will result in even higher totals for countries seen as favoured destinations. What is most striking is the steady increase in the ratio of elderly dependants (over-65s) to working-age citizens (those aged 15-64). The number of working-age people supporting each elderly person will fall sharply, from 3.5 today to just two in 2050 in the EU as a whole and just 1.7 in Germany. The refugees and migrants entering the EU will put short-term pressures on social security budgets and social housing, but the numbers do need to be put into perspective. Even as many as one million migrants would be just 0.2% of the EU population and well under 1% of the number of people dependent in the EU on welfare budgets. In the longer term, migrants tend to move into jobs and become net contributors to the coffers of states. Moreover, with many European countries facing a decline in the working population, the arrival of younger dynamic workers is likely to prove helpful. Without immigration, the EU as a whole would see its population fall by 8% up to 2050, instead of a small rise of 3.6%. Labour costs are among the key factors for companies in deciding where to invest and produce. High wages can be afforded if workers are productive, but in many EU countries welfare states are funded in part by taxes on labour. This creates what economists call a "wedge" between the labour cost and the wage, or put another way, the difference between what the employee receives and what the employer pays. It causes difficulties if competitors from emerging market economies are able to undercut their European counterparts. However, cutting welfare provisions does not mean that risks go away; it simply creates different sorts of problems. There are plenty of ideas for how to resolve the challenges facing the welfare state. The demographic effects can be mitigated by curbing the generosity of payments, asking people to work longer or finding ways of boosting the economically active population. Bringing young migrants into the labour force could also be part of the solution, which may explain Germany's more accommodating stance towards the refugee crisis this summer. Taxing "bads" such as pollution instead of labour and other "goods" can lessen the competitiveness problem, and countries such as Denmark and the Netherlands have found ways to redesign systems to reflect the new structures of economic activity. A social investment approach is seen by many in the EU as the way to recast welfare policies to ensure that they both strengthen prevention of social risks and boost employment levels. Why then is welfare reform often so difficult? The simple answer is that it inevitably involves taking away what some people have to give to others and, unsurprisingly, the winners keep quiet while the losers shout loudly. Iain Begg is a professorial research fellow at the European Institute, London School of Economics, associate fellow at Chatham House and senior fellow on the UK in a Changing Europe initiative. He is the co-author of a new Chatham House paper, The Welfare State in Europe: Visions for Reform.

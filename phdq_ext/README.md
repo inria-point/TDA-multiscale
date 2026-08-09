@@ -193,7 +193,7 @@ $3.09^2 - 2.40^2/6 = 9.55 - 0.96 = 8.59$, откуда $\hat\sigma_b = 2.93$.
 $\mathrm{cv}_{\text{within}} \approx 10\%$ по одному тексту жанр не определить, но
 среднее по 30–50 текстам уже разрешает разрыв в 10% с запасом.
 
-Считается в [`scripts/variance_decomp.py`](scripts/variance_decomp.py).
+Считается в [`experiments/variance_decomp.py`](experiments/variance_decomp.py).
 
 ### Мера 2: ошибка восстановления степенного закона
 
@@ -329,7 +329,7 @@ MST строится один раз на подвыборку и переисп
 ## Конфигурация оценки
 
 Зафиксирована в [`scripts/config.py`](scripts/config.py). Выбрана перебором вариантов
-([`scripts/variant_sweep.py`](scripts/variant_sweep.py)), каждый пункт обоснован измерением.
+([`experiments/variant_sweep.py`](experiments/variant_sweep.py)), каждый пункт обоснован измерением.
 Относительный шум одного измерения **0.026 против 0.114 у настроек статьи**.
 
 | параметр | значение | почему |
@@ -382,7 +382,7 @@ S завышена, наклон смещён, d занижена.
 обрезанная доля равна ровно q при любом n. `trim="floor"` возвращает поведение статьи.
 
 **Рассмотренные альтернативы.** Проверены в
-[`scripts/exp_grid_alignment.py`](scripts/exp_grid_alignment.py) на общих текстах.
+[`experiments/exp_grid_alignment.py`](experiments/exp_grid_alignment.py) на общих текстах.
 Мера негладкости — средний модуль второй разности кривой d(q):
 
 | сетка n | обрезка | негладкость |
@@ -445,7 +445,7 @@ m ∈ {60, 80, 100, 120, 140, 180, 220, 260}. Приём работает, но 
 
 ### 3. Что отличает тексты с высокой и низкой размерностью
 
-[`scripts/inspect_extremes.py`](scripts/inspect_extremes.py), результат в `results/extremes_*.txt`.
+[`experiments/inspect_extremes.py`](experiments/inspect_extremes.py), результат в `results/extremes_*.txt`.
 
 **Низкая d** — диалоги и верлибр с жёсткой повторяющейся разметкой (реплики с указанием
 говорящего, переводы строк, анафора). **Высокая d** — плотная экспозиционная проза с
@@ -457,7 +457,7 @@ m ∈ {60, 80, 100, 120, 140, 180, 220, 260}. Приём работает, но 
 
 ### 4. Качество оценки: два независимых критерия
 
-[`scripts/variance_decomp.py`](scripts/variance_decomp.py) — разложение дисперсии на
+[`experiments/variance_decomp.py`](experiments/variance_decomp.py) — разложение дисперсии на
 шум оценки и реальные различия между текстами (одни и те же тексты под разными сидами).
 
 - `cv_within` — относительный шум одного измерения
@@ -472,7 +472,7 @@ m ∈ {60, 80, 100, 120, 140, 180, 220, 260}. Приём работает, но 
 
 ### 5. Зависимость d от L сильна и не устраняется настройкой оценки
 
-[`scripts/length_sweep.py`](scripts/length_sweep.py), [`figures/length_dependence.png`](figures/length_dependence.png).
+[`experiments/length_sweep.py`](experiments/length_sweep.py), [`figures/length_dependence.png`](figures/length_dependence.png).
 
 $d \sim L^{\,\gamma}$, где $\gamma \approx -0.21$ при q = 0 и до $-0.43$ при
 q_small = 0.3 (буква $\gamma$, а не $b$: это показатель зависимости от L, а не наклон
@@ -494,7 +494,7 @@ d(768)/d(256) = 1.01). Это единственный режим, допуск�
 
 ### 6. При фиксированном абсолютном L длина текста на d не влияет
 
-[`scripts/exp_length_policy.py`](scripts/exp_length_policy.py), [`figures/length_policy.png`](figures/length_policy.png).
+[`experiments/exp_length_policy.py`](experiments/exp_length_policy.py), [`figures/length_policy.png`](figures/length_policy.png).
 
 Регрессия log d на log(числа токенов) **внутри жанра**, 160 текстов длиной 322–881
 токена. В таблице — наклон этой регрессии; нулевой наклон означает независимость d от
@@ -513,7 +513,7 @@ d(768)/d(256) = 1.01). Это единственный режим, допуск�
 
 ### 7. Масштабировать L по q не нужно
 
-[`scripts/exp_L_per_q.py`](scripts/exp_L_per_q.py), [`figures/L_per_q.png`](figures/L_per_q.png).
+[`experiments/exp_L_per_q.py`](experiments/exp_L_per_q.py), [`figures/L_per_q.png`](figures/L_per_q.png).
 
 Мотивация: при большом q остаётся мало рёбер, поэтому L увеличивается как `N/(1−q)`,
 чтобы число оставшихся рёбер не зависело от q. Приём достигает заявленной цели — шум
@@ -535,28 +535,35 @@ d(768)/d(256) = 1.01). Это единственный режим, допуск�
 ## Структура
 
 ```
-scripts/
-  config.py               принятая конфигурация оценки и её обоснование
-  qphd.py                 ядро: MST, обрезка, приближение прямой, оценка d (порт без CUDA)
-  embedder.py             ModernBERT-base на MPS, кэширование эмбеддингов на диск
-  data.py                 загрузчик датасета (human / генераторы)
+scripts/                       основной код счёта
+  config.py                    принятая конфигурация оценки и её обоснование
+  qphd.py                      ядро: MST, обрезка, приближение прямой, оценка d
+  embedder.py                  ModernBERT-base на MPS, кэширование эмбеддингов
+  data.py                      загрузчик датасета (human / генераторы)
+  run_human_baseline.py        прогон по жанрам   → results/human_L201_v2.csv
+  plot_curves.py               кривые qPHD(q) и таблицы mean±std
+  reference/
+    phd_scale_original.py      код статьи без изменений, для сверки; не запускается
 
-  run_human_baseline.py   основной прогон по жанрам   → results/human_L201_v2.csv
-  plot_curves.py          кривые qPHD(q) и таблицы mean±std
+experiments/                   подбор параметров, см. experiments/README.md
+  variant_sweep.py             перебор вариантов оценки
+  summarize_variants.py        сводка по перебору
+  variance_decomp.py           разделение шума оценки и различий между текстами
+  exp_grid_alignment.py        выравнивание сетки и округление против дробной обрезки
+  length_sweep.py              зависимость d от L
+  exp_length_policy.py         абсолютный L против доли от длины
+  exp_L_per_q.py               зависимость L от q
+  inspect_extremes.py          тексты на краях распределения d
 
-  variance_decomp.py      разделение шума оценки и различий между текстами
-  variant_sweep.py        перебор вариантов оценки
-  summarize_variants.py   сводка по перебору
-  length_sweep.py         зависимость d от L
-  exp_length_policy.py    эксперимент 1: абсолютный L против доли от длины
-  exp_L_per_q.py          эксперимент 2: зависимость L от q
-  exp_grid_alignment.py   выравнивание сетки и округление против дробной обрезки
-  inspect_extremes.py     тексты на краях распределения d
-
-figures/                  графики
-results/                  таблицы и логи прогонов
-cache/embeds/             кэш эмбеддингов (не включён в репозиторий)
+figures/                       графики
+results/                       таблицы и логи прогонов
+cache/embeds/                  кэш эмбеддингов (не включён в репозиторий)
 ```
+
+Скрипты из `experiments/` запускаются из корня `phdq_ext/` и импортируют ядро из
+`scripts/`. Оригинальный код статьи лежит в `scripts/reference/` рядом с нашей версией:
+он требует CUDA и отсутствующих здесь модулей, поэтому не запускается, но позволяет
+построчно сверить, что именно изменено — перечень отличий в шапке файла.
 
 ---
 

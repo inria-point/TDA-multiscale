@@ -16,7 +16,7 @@ import sys
 import numpy as np
 import pandas as pd
 
-sys.path.insert(0, os.path.dirname(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "scripts"))
 import config as cfg
 from data import GENRES, load
 from embedder import Embedder

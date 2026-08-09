@@ -1,6 +1,6 @@
 """The qPHD estimator configuration settled on after the variant sweep.
 
-Chosen in scripts/variant_sweep.py; results/variant_sweep_L256.csv.
+Chosen in experiments/variant_sweep.py; results/variant_sweep_L256.csv.
 Relative measurement noise cv_within = 0.026 vs 0.114 for the paper's
 settings, with no change in what is measured beyond the bootstrap bias.
 

@@ -26,7 +26,7 @@ import sys
 import numpy as np
 import pandas as pd
 
-sys.path.insert(0, os.path.dirname(__file__))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "scripts"))
 from data import GENRES, load
 from embedder import Embedder
 from qphd import qphd
