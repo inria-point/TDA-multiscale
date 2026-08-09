@@ -124,6 +124,71 @@ def plot_groups(s, mode, tag):
     print("saved", path)
 
 
+# Perturbations that touch the text directly, with no model in the loop. They
+# carry no "a machine rewrote this" component, so their effects are readable
+# against the original as they stand — unlike the LLM arms.
+MECHANICAL = ["shuffle_words", "shuffle_within_sentences", "shuffle_sentences",
+              "add_typos", "shorten_sentences", "lengthen_sentences",
+              "add_linebreaks", "break_at_commas", "lowercase",
+              "strip_punctuation"]
+
+
+def plot_mechanical(s, tag):
+    """All mechanical perturbations in one place, one panel per mode."""
+    modes = [m for m in ["q_small", "q_large", "q0.5_range"]
+             if (s["mode"] == m).any()]
+    fig, axes = plt.subplots(1, len(modes), figsize=(5.2 * len(modes), 4.8),
+                             sharey=True)
+    axes = np.atleast_1d(axes)
+    for ax, mode in zip(axes, modes):
+        sub = s[s["mode"] == mode]
+        for pert in MECHANICAL:
+            g = sub[sub["perturbation"] == pert].sort_values("q")
+            if g.empty:
+                continue
+            ax.plot(g["q"], g["rel"] * 100, marker="o", ms=3, label=pert)
+        ax.axhline(0, c="k", lw=1)
+        ax.set_title(mode, fontsize=10)
+        ax.set_xlabel("q")
+        ax.grid(alpha=0.3)
+    axes[0].set_ylabel("изменение d относительно оригинала, %")
+    axes[-1].legend(fontsize=7)
+    fig.suptitle(f"{tag} — механические модификации: текст меняется напрямую, "
+                 f"без модели")
+    fig.tight_layout()
+    path = os.path.join(BASE, "figures", f"{tag}_mechanical.png")
+    fig.savefig(path, dpi=150)
+    plt.close(fig)
+    print("saved", path)
+
+
+def plot_contrasts(c, tag):
+    """One panel per mode; each line is an up-arm minus its down-arm."""
+    modes = [m for m in ["q_small", "q_large", "q0.5_range"]
+             if (c["mode"] == m).any()]
+    fig, axes = plt.subplots(1, len(modes), figsize=(5.2 * len(modes), 4.6),
+                             sharey=True)
+    axes = np.atleast_1d(axes)
+    for ax, mode in zip(axes, modes):
+        sub = c[c["mode"] == mode]
+        for name, g in sub.groupby("contrast"):
+            g = g.sort_values("q")
+            ax.plot(g["q"], g["rel"] * 100, marker="o", ms=3, label=name)
+        ax.axhline(0, c="k", lw=1)
+        ax.set_title(mode, fontsize=10)
+        ax.set_xlabel("q")
+        ax.grid(alpha=0.3)
+    axes[0].set_ylabel("разность плеч, % от d оригинала")
+    axes[-1].legend(fontsize=7)
+    fig.suptitle(f"{tag} — противопоставления: свойство без общего эффекта "
+                 f"машинного переписывания")
+    fig.tight_layout()
+    path = os.path.join(BASE, "figures", f"{tag}_contrasts.png")
+    fig.savefig(path, dpi=150)
+    plt.close(fig)
+    print("saved", path)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("csv", nargs="?",
@@ -140,6 +205,7 @@ def main():
     for mode in ["q_small", "q_large", "q0.5_range"]:
         if (s["mode"] == mode).any():
             plot_groups(s, mode, args.tag)
+    plot_mechanical(s, args.tag)
 
     pd.set_option("display.width", 240)
     for mode in ["q_small", "q_large"]:
@@ -155,6 +221,7 @@ def main():
     if not c.empty:
         c.to_csv(os.path.join(BASE, "results", f"{args.tag}_contrasts.csv"),
                  index=False)
+        plot_contrasts(c, args.tag)
         print(f"\n{'='*100}\n=== противопоставления: разность между плечами на одном "
               f"тексте, % (снимает общий эффект переписывания)")
         for mode in ["q_small", "q_large"]:
