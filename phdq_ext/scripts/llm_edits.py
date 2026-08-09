@@ -47,6 +47,9 @@ PROMPTS = {
         "content words as often as possible instead of varying them. Do not "
         "remove ideas and do not change the meaning."
     ),
+    # v1 asked for "more" and "fewer" ideas in relative terms, which the model
+    # satisfied by rewriting in general. v2 states the target as an absolute
+    # property of every sentence, which is checkable sentence by sentence.
     "ideas_up": (
         "Increase the number of distinct ideas in the text: add further "
         "specifics, consequences and details, so that more separate claims are "
@@ -56,6 +59,21 @@ PROMPTS = {
         "Decrease the number of distinct ideas in the text: keep only one or two "
         "claims and restate and elaborate them, so that fewer separate ideas "
         "fill the same space. Stay on the same topic."
+    ),
+    "ideas_up_v2": (
+        "Rewrite the text so that EVERY sentence introduces a new fact or a "
+        "distinct thought. No sentence may restate, paraphrase or elaborate "
+        "what an earlier sentence has already said. Each sentence must add "
+        "information that cannot be inferred from the others. Stay on the same "
+        "topic and in the same genre."
+    ),
+    "ideas_down_v2": (
+        "Rewrite the text so that it expresses ONE single idea, restated again "
+        "and again in different words. Take the central claim of the original "
+        "and paraphrase it repeatedly — different vocabulary, different "
+        "sentence shapes, different angles on the same thought — but never "
+        "introduce a second distinct fact or claim. Every sentence must say "
+        "essentially the same thing as every other sentence."
     ),
     "topics_up": (
         "Increase the topical variety of the text: let it move between several "

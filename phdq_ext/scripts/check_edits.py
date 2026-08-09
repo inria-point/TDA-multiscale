@@ -40,6 +40,8 @@ EXPECTED = {
     "lexical_diversity_down": ("ttr", -1),
     "ideas_up": ("idea_spread", +1),
     "ideas_down": ("idea_spread", -1),
+    "ideas_up_v2": ("idea_spread", +1),
+    "ideas_down_v2": ("idea_spread", -1),
     "topics_up": ("idea_spread", +1),
     "topics_down": ("idea_spread", -1),
     "words_common": ("mean_log_rank", -1),

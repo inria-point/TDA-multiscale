@@ -1,0 +1,30 @@
+loaded 2 perturbations from results/llm_edits_v2.json
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/134 [00:00<?, ?it/s]Loading weights: 100%|██████████| 134/134 [00:00<00:00, 5945.47it/s]
+[transformers] [1mModernBertModel LOAD REPORT[0m from: answerdotai/ModernBERT-base
+Key               | Status     |  | 
+------------------+------------+--+-
+decoder.bias      | UNEXPECTED |  | 
+head.norm.weight  | UNEXPECTED |  | 
+head.dense.weight | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+xsum: 50 texts
+  identity                     50 texts  (24s)
+  ideas_up_v2                  50 texts  (31s)
+  ideas_down_v2                50 texts  (30s)
+academic_abstracts: 50 texts
+  identity                     50 texts  (24s)
+  ideas_up_v2                  50 texts  (29s)
+  ideas_down_v2                50 texts  (28s)
+amazon_reviews: 50 texts
+  identity                     50 texts  (24s)
+  ideas_up_v2                  43 texts (7 skipped)  (24s)
+  ideas_down_v2                43 texts (7 skipped)  (24s)
+writingprompts: 50 texts
+  identity                     50 texts  (24s)
+  ideas_up_v2                  48 texts (2 skipped)  (30s)
+  ideas_down_v2                48 texts (2 skipped)  (28s)
+saved -> /Users/admin/Desktop/Research/TDA/phdq_ext/scripts/../results/perturb_L201_v2.csv.gz
+saved -> /Users/admin/Desktop/Research/TDA/phdq_ext/scripts/../results/perturbed_texts_v2.json

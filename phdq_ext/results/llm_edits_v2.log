@@ -1,0 +1,9 @@
+400 requests, model=anthropic/claude-sonnet-4.5, 8 workers
+  100/400  ошибок: 0
+  200/400  ошибок: 0
+  300/400  ошибок: 0
+  400/400  ошибок: 0
+
+saved -> results/llm_edits_v2.json
+  ideas_up_v2               200 текстов
+  ideas_down_v2             200 текстов

@@ -22,10 +22,24 @@ import pandas as pd
 
 BASE = os.path.join(os.path.dirname(__file__), "..")
 
+# Pairs whose two arms should move d in opposite directions. Every LLM rewrite
+# also carries a common "a machine rewrote this" effect, which raises d
+# regardless of the instruction (see finding 8); differencing the two arms
+# cancels it, so the contrast is the honest estimate of the property itself.
+CONTRASTS = [
+    ("lexical_diversity_up", "lexical_diversity_down"),
+    ("words_rare", "words_common"),
+    ("ideas_up", "ideas_down"),
+    ("ideas_up_v2", "ideas_down_v2"),
+    ("topics_up", "topics_down"),
+    ("syntax_complex", "syntax_simple"),
+    ("lengthen_sentences", "shorten_sentences"),
+]
+
 GROUPS = {
     "лексика": ["lexical_diversity_up", "lexical_diversity_down",
                 "words_rare", "words_common"],
-    "идеи и темы": ["ideas_up", "ideas_down", "topics_up", "topics_down"],
+    "идеи и темы": ["ideas_up_v2", "ideas_down_v2", "topics_up", "topics_down"],
     "синтаксис": ["syntax_complex", "syntax_simple",
                   "lengthen_sentences", "shorten_sentences"],
     "типографика": ["add_linebreaks", "break_at_commas", "lowercase",
@@ -58,6 +72,31 @@ def summarize(p):
             "rel": g["rel"].mean(),
             "effect": d.mean() / sd if sd > 0 else np.nan,
         })
+    return pd.DataFrame(rows)
+
+
+def contrasts(p):
+    """d(up arm) - d(down arm) on the same text, per mode and q."""
+    key = ["genre", "text_id", "mode", "q"]
+    rows = []
+    for up, down in CONTRASTS:
+        a = p[p["perturbation"] == up].set_index(key)["d_hat"]
+        b = p[p["perturbation"] == down].set_index(key)["d_hat"]
+        both = pd.concat([a.rename("up"), b.rename("down")], axis=1).dropna()
+        if both.empty:
+            continue
+        d0 = (p[p["perturbation"] == up].set_index(key)["d0"]
+              .reindex(both.index))
+        diff = both["up"] - both["down"]
+        g = pd.DataFrame({"diff": diff, "rel": diff / d0}).reset_index()
+        for (mode, q), gg in g.groupby(["mode", "q"]):
+            sd = gg["diff"].std()
+            rows.append({
+                "contrast": f"{up} − {down}", "mode": mode, "q": q,
+                "n": len(gg), "diff": gg["diff"].mean(),
+                "rel": gg["rel"].mean(),
+                "effect": gg["diff"].mean() / sd if sd > 0 else np.nan,
+            })
     return pd.DataFrame(rows)
 
 
@@ -111,6 +150,21 @@ def main():
         piv = sub.pivot(index="perturbation", columns="q", values="rel") * 100
         cols = [c for c in [0.0, 0.2, 0.4, 0.6, 0.9] if c in piv.columns]
         print(piv[cols].round(1).sort_values(cols[0]).to_string())
+
+    c = contrasts(p)
+    if not c.empty:
+        c.to_csv(os.path.join(BASE, "results", f"{args.tag}_contrasts.csv"),
+                 index=False)
+        print(f"\n{'='*100}\n=== противопоставления: разность между плечами на одном "
+              f"тексте, % (снимает общий эффект переписывания)")
+        for mode in ["q_small", "q_large"]:
+            sub = c[c["mode"] == mode]
+            if sub.empty:
+                continue
+            print(f"\n--- {mode}")
+            piv = sub.pivot(index="contrast", columns="q", values="rel") * 100
+            cols = [x for x in [0.0, 0.2, 0.4, 0.6, 0.9] if x in piv.columns]
+            print(piv[cols].round(1).to_string())
 
     print(f"\n{'='*100}\n=== где эффект максимален (по |effect|), для каждой модификации")
     best = (s.assign(a=s["effect"].abs())
