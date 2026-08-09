@@ -162,7 +162,18 @@ def lowercase(text, rng):
 
 
 def strip_punctuation(text, rng):
-    """Remove punctuation, keeping words and spaces."""
+    """Remove punctuation, keeping words and spaces.
+
+    Interpret the result with care: this is not a clean manipulation of one
+    property. It deletes ~11% of the tokens, and those tokens sit 1.5x closer
+    to their nearest neighbour than the rest (11.5 against 17.4), i.e. they are
+    the tightest clusters in the cloud and the source of the shortest MST
+    edges. Removing them therefore removes most of what the fine-scale regime
+    (q_large) measures, so the large effect there is close to tautological.
+    It also fragments words: "don't" -> "don t", "non-invasive" -> "non
+    invasive", which adds short edges of its own, and it erases sentence
+    boundaries.
+    """
     return re.sub(r"\s+", " ", re.sub(r"[^\w\s]", " ", text)).strip()
 
 

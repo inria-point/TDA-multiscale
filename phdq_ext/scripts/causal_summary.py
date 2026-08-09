@@ -64,9 +64,15 @@ PROPERTIES = {
         "arms": {},
         "mechanical": ("shuffle_sentences", None),
     },
-    "пунктуация": {
+    # Excluded from the ranking on purpose: stripping punctuation deletes ~11%
+    # of the tokens, and those are the densest cluster in the cloud, so at
+    # q_large it removes the very population that regime measures. The large
+    # effect is close to tautological rather than a property of the text.
+    # Kept in the tables, out of the causal figure. See perturb.py.
+    "пунктуация (не интерпретируется)": {
         "arms": {},
         "mechanical": ("strip_punctuation", None),
+        "exclude_from_ranking": True,
     },
     "опечатки": {
         "arms": {},
@@ -113,6 +119,8 @@ def plot_ranking(res):
     """Properties ranked by |dz|, marked by what kind of evidence backs them."""
     rows = []
     for _, r in res.iterrows():
+        if r.get("исключено"):
+            continue
         dz = r.get("dz_макс")
         mech = r.get("механ_dz")
         if pd.notna(dz):
@@ -161,7 +169,8 @@ def main():
 
     rows = []
     for prop, spec in PROPERTIES.items():
-        rec = {"свойство": prop}
+        rec = {"свойство": prop,
+               "исключено": spec.get("exclude_from_ranking", False)}
         signs, peaks = [], []
         for model, (up, down) in spec["arms"].items():
             eu, ed = arm_effect(p, up), arm_effect(p, down)
