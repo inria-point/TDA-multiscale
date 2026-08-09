@@ -1,0 +1,101 @@
+loaded 10 perturbations from results/llm_edits.json
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/134 [00:00<?, ?it/s]Loading weights: 100%|██████████| 134/134 [00:00<00:00, 5655.66it/s]
+[transformers] [1mModernBertModel LOAD REPORT[0m from: answerdotai/ModernBERT-base
+Key               | Status     |  | 
+------------------+------------+--+-
+head.dense.weight | UNEXPECTED |  | 
+decoder.bias      | UNEXPECTED |  | 
+head.norm.weight  | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+xsum: 50 texts
+  identity                     50 texts  (32s)
+  shorten_sentences            50 texts  (32s)
+  lengthen_sentences           50 texts  (32s)
+  add_linebreaks               50 texts  (32s)
+  break_at_commas              50 texts  (32s)
+  shuffle_words                50 texts  (31s)
+  shuffle_within_sentences     50 texts  (32s)
+  shuffle_sentences            50 texts  (33s)
+  add_typos                    50 texts  (33s)
+  lowercase                    50 texts  (32s)
+  strip_punctuation            50 texts  (30s)
+  lexical_diversity_up         50 texts  (31s)
+  lexical_diversity_down       50 texts  (32s)
+  ideas_up                     49 texts (1 skipped)  (30s)
+  ideas_down                   50 texts  (31s)
+  topics_up                    50 texts  (31s)
+  topics_down                  50 texts  (30s)
+  words_common                 50 texts  (31s)
+  words_rare                   50 texts  (31s)
+  syntax_complex               50 texts  (32s)
+  syntax_simple                50 texts  (32s)
+academic_abstracts: 50 texts
+  identity                     50 texts  (30s)
+  shorten_sentences            50 texts  (29s)
+  lengthen_sentences           50 texts  (30s)
+  add_linebreaks               50 texts  (29s)
+  break_at_commas              50 texts  (29s)
+  shuffle_words                50 texts  (29s)
+  shuffle_within_sentences     50 texts  (29s)
+  shuffle_sentences            50 texts  (29s)
+  add_typos                    50 texts  (29s)
+  lowercase                    50 texts  (29s)
+  strip_punctuation            50 texts  (29s)
+  lexical_diversity_up         50 texts  (29s)
+  lexical_diversity_down       50 texts  (29s)
+  ideas_up                     50 texts  (29s)
+  ideas_down                   49 texts (1 skipped)  (29s)
+  topics_up                    50 texts  (29s)
+  topics_down                  50 texts  (29s)
+  words_common                 50 texts  (29s)
+  words_rare                   50 texts  (29s)
+  syntax_complex               50 texts  (29s)
+  syntax_simple                49 texts (1 skipped)  (29s)
+amazon_reviews: 50 texts
+  identity                     50 texts  (29s)
+  shorten_sentences            50 texts  (29s)
+  lengthen_sentences           50 texts  (29s)
+  add_linebreaks               50 texts  (29s)
+  break_at_commas              50 texts  (29s)
+  shuffle_words                50 texts  (29s)
+  shuffle_within_sentences     50 texts  (29s)
+  shuffle_sentences            50 texts  (29s)
+  add_typos                    50 texts  (29s)
+  lowercase                    50 texts  (29s)
+  strip_punctuation            50 texts  (28s)
+  lexical_diversity_up         43 texts (7 skipped)  (25s)
+  lexical_diversity_down       43 texts (7 skipped)  (25s)
+  ideas_up                     43 texts (7 skipped)  (25s)
+  ideas_down                   43 texts (7 skipped)  (25s)
+  topics_up                    41 texts (9 skipped)  (23s)
+  topics_down                  42 texts (8 skipped)  (24s)
+  words_common                 43 texts (7 skipped)  (25s)
+  words_rare                   43 texts (7 skipped)  (25s)
+  syntax_complex               43 texts (7 skipped)  (25s)
+  syntax_simple                41 texts (9 skipped)  (24s)
+writingprompts: 50 texts
+  identity                     50 texts  (32s)
+  shorten_sentences            50 texts  (31s)
+  lengthen_sentences           50 texts  (31s)
+  add_linebreaks               50 texts  (31s)
+  break_at_commas              50 texts  (32s)
+  shuffle_words                50 texts  (32s)
+  shuffle_within_sentences     50 texts  (32s)
+  shuffle_sentences            50 texts  (32s)
+  add_typos                    50 texts  (32s)
+  lowercase                    50 texts  (32s)
+  strip_punctuation            50 texts  (30s)
+  lexical_diversity_up         47 texts (3 skipped)  (29s)
+  lexical_diversity_down       48 texts (2 skipped)  (30s)
+  ideas_up                     47 texts (3 skipped)  (30s)
+  ideas_down                   48 texts (2 skipped)  (30s)
+  topics_up                    47 texts (3 skipped)  (30s)
+  topics_down                  47 texts (3 skipped)  (29s)
+  words_common                 48 texts (2 skipped)  (30s)
+  words_rare                   47 texts (3 skipped)  (30s)
+  syntax_complex               48 texts (2 skipped)  (30s)
+  syntax_simple                48 texts (2 skipped)  (30s)
+saved -> /Users/admin/Desktop/Research/TDA/phdq_ext/scripts/../results/perturb_L201.csv

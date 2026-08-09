@@ -8,3 +8,8 @@ phdq_ext/cache/
 
 # redundant with the extracted data_completion/
 data_completion.zip
+
+# API keys — never commit
+.env
+*.env
+

@@ -1,0 +1,33 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/134 [00:00<?, ?it/s]Loading weights: 100%|██████████| 134/134 [00:00<00:00, 6156.88it/s]
+[transformers] [1mModernBertModel LOAD REPORT[0m from: answerdotai/ModernBERT-base
+Key               | Status     |  | 
+------------------+------------+--+-
+head.dense.weight | UNEXPECTED |  | 
+decoder.bias      | UNEXPECTED |  | 
+head.norm.weight  | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+device=mps  L=201  n_texts=150
+human              xsum                  150 texts (71s)
+human              academic_abstracts    150 texts (75s)
+human              amazon_reviews        150 texts (73s)
+human              writingprompts        150 texts (72s)
+gpt-5-nano         xsum                  150 texts (92s)
+gpt-5-nano         academic_abstracts    150 texts (85s)
+gpt-5-nano         amazon_reviews        150 texts (88s)
+gpt-5-nano         writingprompts        150 texts (109s)
+gemini-2.5-flash   xsum                  150 texts (95s)
+gemini-2.5-flash   academic_abstracts    150 texts (86s)
+gemini-2.5-flash   amazon_reviews        150 texts (88s)
+gemini-2.5-flash   writingprompts        150 texts (101s)
+deepseek-v4-flash  xsum                  150 texts (99s)
+deepseek-v4-flash  academic_abstracts    150 texts (85s)
+deepseek-v4-flash  amazon_reviews        150 texts (86s)
+deepseek-v4-flash  writingprompts        150 texts (94s)
+qwen3.6-flash      xsum                  150 texts (97s)
+qwen3.6-flash      academic_abstracts    150 texts (84s)
+qwen3.6-flash      amazon_reviews        150 texts (87s)
+qwen3.6-flash      writingprompts        150 texts (96s)
+saved -> /Users/admin/Desktop/Research/TDA/phdq_ext/scripts/../results/qphd_L201.csv

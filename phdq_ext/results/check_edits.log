@@ -1,0 +1,27 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/134 [00:00<?, ?it/s]Loading weights: 100%|██████████| 134/134 [00:00<00:00, 6001.65it/s]
+[transformers] [1mModernBertModel LOAD REPORT[0m from: answerdotai/ModernBERT-base
+Key               | Status     |  | 
+------------------+------------+--+-
+head.norm.weight  | UNEXPECTED |  | 
+decoder.bias      | UNEXPECTED |  | 
+head.dense.weight | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+
+выполнение инструкций: hit_rate — доля текстов, сдвинувшихся в нужную сторону
+
+          perturbation   n  len_ratio        metric  before  after  rel_change  hit_rate
+              ideas_up 198      1.011   idea_spread   0.751  0.755       0.005     0.490
+           topics_down 199      1.011   idea_spread   0.751  0.718      -0.045     0.698
+             topics_up 200      1.019   idea_spread   0.752  0.804       0.069     0.905
+            ideas_down 200      1.011   idea_spread   0.752  0.634      -0.156     0.915
+        syntax_complex 200      1.021 mean_sent_len  19.856 30.996       0.561     0.920
+          words_common 200      1.041 mean_log_rank   5.048  4.715      -0.066     0.985
+         syntax_simple 200      1.004 mean_sent_len  19.545  6.734      -0.655     0.990
+            words_rare 200      1.013 mean_log_rank   5.045  5.622       0.114     0.990
+lexical_diversity_down 200      1.038           ttr   0.525  0.438      -0.165     1.000
+  lexical_diversity_up 200      0.972           ttr   0.532  0.747       0.405     1.000
+
+слабо исполнены (hit_rate < 0.7): ideas_up, topics_down
