@@ -1,0 +1,25 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/134 [00:00<?, ?it/s]Loading weights: 100%|██████████| 134/134 [00:00<00:00, 6209.18it/s]
+[transformers] [1mModernBertModel LOAD REPORT[0m from: answerdotai/ModernBERT-base
+Key               | Status     |  | 
+------------------+------------+--+-
+head.dense.weight | UNEXPECTED |  | 
+head.norm.weight  | UNEXPECTED |  | 
+decoder.bias      | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+20 texts, 6 seeds, 11 variants
+  baseline         q_small@0.3: d= 14.28 cv_within=0.112 rel_resid=0.0040
+  no_replace       q_small@0.3: d= 11.78 cv_within=0.086 rel_resid=0.0046
+  pool_full        q_small@0.3: d= 11.65 cv_within=0.047 rel_resid=0.0048
+  rep32            q_small@0.3: d= 14.28 cv_within=0.084 rel_resid=0.0028
+  rep64            q_small@0.3: d= 14.23 cv_within=0.078 rel_resid=0.0027
+  grid_log         q_small@0.3: d= 14.20 cv_within=0.108 rel_resid=0.0039
+  grid_more_small  q_small@0.3: d= 14.10 cv_within=0.109 rel_resid=0.0041
+  grid_more_large  q_small@0.3: d= 14.40 cv_within=0.114 rel_resid=0.0035
+  grid_log8        q_small@0.3: d= 14.16 cv_within=0.103 rel_resid=0.0042
+  grid_wide        q_small@0.3: d= 16.70 cv_within=0.105 rel_resid=0.0045
+  combo            q_small@0.3: d= 11.58 cv_within=0.021 rel_resid=0.0042
+
+saved /Users/admin/Desktop/Research/TDA/phdq_ext/scripts/../results/variant_sweep_L256.csv

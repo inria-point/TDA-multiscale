@@ -1,0 +1,50 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/134 [00:00<?, ?it/s]Loading weights: 100%|██████████| 134/134 [00:00<00:00, 7375.52it/s]
+[transformers] [1mModernBertModel LOAD REPORT[0m from: answerdotai/ModernBERT-base
+Key               | Status     |  | 
+------------------+------------+--+-
+head.dense.weight | UNEXPECTED |  | 
+head.norm.weight  | UNEXPECTED |  | 
+decoder.bias      | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+160 texts, tokens 322-881 (median 458)
+  abs_L done
+  abs_L_pool2L done
+  frac_50 done
+  frac_100 done
+
+=== q_small: slope of log d_hat vs log n_tokens (0 = length-free)
+q               0.0    0.3    0.6    0.9
+policy                                  
+abs_L        -0.014  0.011 -0.067 -0.051
+abs_L_pool2L  0.012  0.031 -0.038 -0.010
+frac_100     -0.134 -0.354 -0.277 -0.149
+frac_50      -0.268 -0.558 -0.381 -0.319
+
+=== q_small: spread of d_hat across texts (cv)
+q               0.0    0.3    0.6    0.9
+policy                                  
+abs_L         0.125  0.160  0.127  0.182
+abs_L_pool2L  0.125  0.157  0.127  0.175
+frac_100      0.121  0.161  0.133  0.162
+frac_50       0.127  0.195  0.165  0.230
+
+=== q_large: slope of log d_hat vs log n_tokens (0 = length-free)
+q               0.0    0.3    0.6    0.9
+policy                                  
+abs_L        -0.014  0.001 -0.004 -0.195
+abs_L_pool2L  0.012  0.027  0.022 -0.064
+frac_100     -0.134 -0.143  0.103  0.197
+frac_50      -0.268 -0.274 -0.200  0.177
+
+=== q_large: spread of d_hat across texts (cv)
+q               0.0    0.3    0.6    0.9
+policy                                  
+abs_L         0.125  0.144  0.154  0.193
+abs_L_pool2L  0.125  0.145  0.157  0.194
+frac_100      0.121  0.142  0.151  0.214
+frac_50       0.127  0.141  0.148  0.209
+
+saved /Users/admin/Desktop/Research/TDA/phdq_ext/scripts/../results/exp_length_policy.csv

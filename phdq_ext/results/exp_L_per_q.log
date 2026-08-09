@@ -1,0 +1,80 @@
+N=100, q<=0.8 -> L ranges 100..501
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/134 [00:00<?, ?it/s]Loading weights: 100%|██████████| 134/134 [00:00<00:00, 16371.11it/s]
+[transformers] [1mModernBertModel LOAD REPORT[0m from: answerdotai/ModernBERT-base
+Key               | Status     |  | 
+------------------+------------+--+-
+decoder.bias      | UNEXPECTED |  | 
+head.norm.weight  | UNEXPECTED |  | 
+head.dense.weight | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+32 texts with >=501 tokens
+xsum                  8
+academic_abstracts    8
+amazon_reviews        8
+writingprompts        8
+scaled L per q: [100, 125, 166, 250, 500]; mean 228
+  xsum_1 done
+  xsum_2 done
+  xsum_3 done
+  xsum_5 done
+  xsum_8 done
+  xsum_9 done
+  xsum_13 done
+  xsum_14 done
+  academic_abstracts_0 done
+  academic_abstracts_1 done
+  academic_abstracts_2 done
+  academic_abstracts_3 done
+  academic_abstracts_4 done
+  academic_abstracts_5 done
+  academic_abstracts_7 done
+  academic_abstracts_10 done
+  amazon_reviews_0 done
+  amazon_reviews_19 done
+  amazon_reviews_21 done
+  amazon_reviews_26 done
+  amazon_reviews_34 done
+  amazon_reviews_45 done
+  amazon_reviews_47 done
+  amazon_reviews_50 done
+  writingprompts_0 done
+  writingprompts_2 done
+  writingprompts_3 done
+  writingprompts_6 done
+  writingprompts_9 done
+  writingprompts_12 done
+  writingprompts_16 done
+  writingprompts_17 done
+
+=== q_small: mean_d
+q                 0.0     0.2     0.4     0.6     0.8
+arm                                                  
+fixed_L_mean    8.198  10.205  14.634  16.033  16.660
+fixed_L_small  11.448  18.134  22.811  24.097  26.703
+scaled_L       11.448  14.783  16.632  15.794  14.277
+
+=== q_small: cv_within
+q                0.0    0.2    0.4    0.6    0.8
+arm                                             
+fixed_L_mean   0.042  0.037  0.054  0.063  0.068
+fixed_L_small  0.070  0.086  0.096  0.139  0.175
+scaled_L       0.070  0.082  0.058  0.050  0.037
+
+=== q_large: mean_d
+q                 0.0    0.2    0.4    0.6    0.8
+arm                                              
+fixed_L_mean    8.198  6.961  5.590  3.980  3.214
+fixed_L_small  11.448  9.810  7.996  5.629  3.423
+scaled_L       11.448  8.704  6.162  3.886  4.066
+
+=== q_large: cv_within
+q                0.0    0.2    0.4    0.6    0.8
+arm                                             
+fixed_L_mean   0.042  0.047  0.047  0.055  0.074
+fixed_L_small  0.070  0.075  0.100  0.096  0.107
+scaled_L       0.070  0.081  0.052  0.055  0.068
+
+saved /Users/admin/Desktop/Research/TDA/phdq_ext/scripts/../results/exp_L_per_q.csv

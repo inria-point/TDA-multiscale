@@ -1,0 +1,37 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/134 [00:00<?, ?it/s]Loading weights: 100%|██████████| 134/134 [00:00<00:00, 6114.81it/s]
+[transformers] [1mModernBertModel LOAD REPORT[0m from: answerdotai/ModernBERT-base
+Key               | Status     |  | 
+------------------+------------+--+-
+head.dense.weight | UNEXPECTED |  | 
+head.norm.weight  | UNEXPECTED |  | 
+decoder.bias      | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+device=mps  L=256  n_texts=100
+  xsum: 20/100  (16s)
+  xsum: 40/100  (31s)
+  xsum: 60/100  (47s)
+  xsum: 80/100  (63s)
+  xsum: 100/100  (79s)
+xsum: done 100 texts in 79s
+  academic_abstracts: 20/100  (16s)
+  academic_abstracts: 40/100  (32s)
+  academic_abstracts: 60/100  (47s)
+  academic_abstracts: 80/100  (63s)
+  academic_abstracts: 100/100  (79s)
+academic_abstracts: done 100 texts in 79s
+  amazon_reviews: 20/100  (16s)
+  amazon_reviews: 40/100  (32s)
+  amazon_reviews: 60/100  (47s)
+  amazon_reviews: 80/100  (63s)
+  amazon_reviews: 100/100  (79s)
+amazon_reviews: done 100 texts in 79s
+  writingprompts: 20/100  (16s)
+  writingprompts: 40/100  (32s)
+  writingprompts: 60/100  (48s)
+  writingprompts: 80/100  (64s)
+  writingprompts: 100/100  (80s)
+writingprompts: done 100 texts in 80s
+saved -> /Users/admin/Desktop/Research/TDA/phdq_ext/scripts/../results/human_L256_v2.csv

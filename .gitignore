@@ -1,0 +1,10 @@
+.DS_Store
+__pycache__/
+*.pyc
+
+# python env and the embedding cache (2.7 GB, regenerated on demand)
+phdq_ext/.venv/
+phdq_ext/cache/
+
+# redundant with the extracted data_completion/
+data_completion.zip

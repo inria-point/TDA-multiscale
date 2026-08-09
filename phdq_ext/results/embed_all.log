@@ -1,0 +1,35 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/134 [00:00<?, ?it/s]Loading weights: 100%|██████████| 134/134 [00:00<00:00, 6447.82it/s]
+[transformers] [1mModernBertModel LOAD REPORT[0m from: answerdotai/ModernBERT-base
+Key               | Status     |  | 
+------------------+------------+--+-
+head.dense.weight | UNEXPECTED |  | 
+decoder.bias      | UNEXPECTED |  | 
+head.norm.weight  | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+xsum: 100/500
+xsum: 200/500
+xsum: 300/500
+xsum: 400/500
+xsum: 500/500
+xsum: done
+writingprompts: 100/500
+writingprompts: 200/500
+writingprompts: 300/500
+writingprompts: 400/500
+writingprompts: 500/500
+writingprompts: done
+amazon_reviews: 100/500
+amazon_reviews: 200/500
+amazon_reviews: 300/500
+amazon_reviews: 400/500
+amazon_reviews: 500/500
+amazon_reviews: done
+academic_abstracts: 100/500
+academic_abstracts: 200/500
+academic_abstracts: 300/500
+academic_abstracts: 400/500
+academic_abstracts: 500/500
+academic_abstracts: done
