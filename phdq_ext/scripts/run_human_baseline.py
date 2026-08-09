@@ -34,7 +34,8 @@ def load_texts(genre, source="human"):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--L", type=int, default=256, help="tokens per text (subsample)")
+    ap.add_argument("--L", type=int, default=cfg.L_DEFAULT,
+                    help="tokens per text (subsample)")
     ap.add_argument("--n-texts", type=int, default=100, help="texts per genre")
     ap.add_argument("--replicates", type=int, default=32)
     ap.add_argument("--source", default="human")
@@ -75,6 +76,7 @@ def main():
                     q_list=Q_LIST,
                     rng=rng,
                     **cfg.qphd_kwargs(
+                        L=args.L,
                         pool=cfg.make_pool(embeds, args.L, rng),
                         replicates=args.replicates,
                     ),

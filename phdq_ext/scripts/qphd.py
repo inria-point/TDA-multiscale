@@ -25,32 +25,48 @@ def mst_edge_lengths(points):
     return np.sort(mst.data)
 
 
-def trimmed_sum(lens_sorted, q, mode, alpha=1.0, p_range=0.5, discrete=False):
+TRIM_MODES = ("fractional", "floor", "round")
+
+
+def trimmed_sum(lens_sorted, q, mode, alpha=1.0, p_range=0.5, trim="fractional"):
     """Sum of alpha-powers of MST edge lengths after quantile trimming.
 
     lens_sorted must be ascending.
 
-    discrete=True reproduces the paper's floor()-based edge counting. That
-    makes the effective trimmed fraction depend on m = n-1: at the smallest
-    subsample floor() rounds q down by up to 0.5/m, so less is trimmed there,
-    S is inflated at small n, and the log-log slope tilts. On a q grid finer
-    than 0.1 this shows up as a saw-tooth in d_hat(q). The default
-    (discrete=False) gives the boundary edge a fractional weight instead, so
-    the trimmed fraction is exactly q at every n.
+    trim controls how the fraction q becomes a number of edges:
+
+      "floor"       the paper's behaviour, k = floor(q*m). The effective
+                    trimmed fraction k/m then depends on m = n-1, and since m
+                    varies across the log-log fit grid, the smallest subsample
+                    trims up to 1/m too little. S is inflated there, the slope
+                    tilts, and d_hat(q) develops a saw-tooth on any q grid
+                    finer than 0.1.
+      "round"       k = round(q*m). The error is at most 0.5/m and is no longer
+                    systematically one-signed, so the artefact shrinks but does
+                    not vanish.
+      "fractional"  default. The boundary edge is given weight 1 - frac(q*m),
+                    so the trimmed fraction is exactly q at every n.
     """
     m = lens_sorted.size
     if m == 0:
         return 0.0
+    if trim not in TRIM_MODES:
+        raise ValueError(f"unknown trim {trim!r}, expected one of {TRIM_MODES}")
 
-    if discrete:
+    if trim in ("floor", "round"):
+        to_k = np.floor if trim == "floor" else np.round
         if mode == "q_small":
-            kept = lens_sorted[int(np.floor(q * m)) :]
+            kept = lens_sorted[int(to_k(q * m)) :]
         elif mode == "q_large":
-            k = int(np.floor(q * m))
+            k = int(to_k(q * m))
             kept = lens_sorted[: m - k] if k > 0 else lens_sorted
         elif mode == "q0.5_range":
-            k_min = int(np.floor(q * m))
-            k_max = int(np.ceil(min(1.0, q + p_range) * m))
+            k_min = int(to_k(q * m))
+            k_max = int(
+                np.ceil(min(1.0, q + p_range) * m)
+                if trim == "floor"
+                else to_k(min(1.0, q + p_range) * m)
+            )
             kept = lens_sorted[k_min : min(m, k_max)]
         else:
             raise ValueError(f"unknown mode {mode}")
@@ -150,11 +166,12 @@ def qphd(
     q_list=tuple(np.round(np.arange(0, 0.901, 0.05), 2)),
     modes=MODES,
     n_fraction_list=(0.2, 0.4, 0.6, 0.8, 1.0),
+    n_values=None,
     alpha=1.0,
     p_range=0.5,
     replicates=10,
     replace=True,
-    discrete=False,
+    trim="fractional",
     pool=None,
     rng=None,
 ):
@@ -173,7 +190,12 @@ def qphd(
     N = points.shape[0]
     src = points if pool is None else pool
     records = []
-    n_values = sorted({int(f * N) for f in n_fraction_list if int(f * N) > 1})
+    if n_values is None:
+        n_values = sorted({int(f * N) for f in n_fraction_list if int(f * N) > 1})
+    else:
+        # given explicitly so that m = n-1 can be controlled exactly; going
+        # through fractions would risk an off-by-one on the round trip
+        n_values = sorted({int(n) for n in n_values if n > 1})
     if not replace:
         n_values = [n for n in n_values if n <= src.shape[0]]
 
@@ -191,7 +213,7 @@ def qphd(
                             "q": q,
                             "n": n,
                             "S": trimmed_sum(
-                                lens, q, mode, alpha, p_range, discrete=discrete
+                                lens, q, mode, alpha, p_range, trim=trim
                             ),
                         }
                     )

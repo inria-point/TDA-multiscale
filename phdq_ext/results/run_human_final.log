@@ -1,0 +1,45 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/134 [00:00<?, ?it/s]Loading weights: 100%|██████████| 134/134 [00:00<00:00, 16280.54it/s]
+[transformers] [1mModernBertModel LOAD REPORT[0m from: answerdotai/ModernBERT-base
+Key               | Status     |  | 
+------------------+------------+--+-
+head.norm.weight  | UNEXPECTED |  | 
+head.dense.weight | UNEXPECTED |  | 
+decoder.bias      | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+device=mps  L=201  n_texts=150
+  xsum: 20/150  (10s)
+  xsum: 40/150  (19s)
+  xsum: 60/150  (29s)
+  xsum: 80/150  (39s)
+  xsum: 100/150  (48s)
+  xsum: 120/150  (58s)
+  xsum: 140/150  (68s)
+xsum: done 150 texts in 73s
+  academic_abstracts: 20/150  (10s)
+  academic_abstracts: 40/150  (20s)
+  academic_abstracts: 60/150  (30s)
+  academic_abstracts: 80/150  (40s)
+  academic_abstracts: 100/150  (49s)
+  academic_abstracts: 120/150  (59s)
+  academic_abstracts: 140/150  (69s)
+academic_abstracts: done 150 texts in 73s
+  amazon_reviews: 20/150  (10s)
+  amazon_reviews: 40/150  (20s)
+  amazon_reviews: 60/150  (29s)
+  amazon_reviews: 80/150  (39s)
+  amazon_reviews: 100/150  (49s)
+  amazon_reviews: 120/150  (58s)
+  amazon_reviews: 140/150  (68s)
+amazon_reviews: done 150 texts in 73s
+  writingprompts: 20/150  (10s)
+  writingprompts: 40/150  (19s)
+  writingprompts: 60/150  (29s)
+  writingprompts: 80/150  (39s)
+  writingprompts: 100/150  (49s)
+  writingprompts: 120/150  (58s)
+  writingprompts: 140/150  (68s)
+writingprompts: done 150 texts in 73s
+saved -> /Users/admin/Desktop/Research/TDA/phdq_ext/scripts/../results/human_L201_v2.csv
