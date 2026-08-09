@@ -164,17 +164,54 @@ def lowercase(text, rng):
 def strip_punctuation(text, rng):
     """Remove punctuation, keeping words and spaces.
 
-    Interpret the result with care: this is not a clean manipulation of one
-    property. It deletes ~11% of the tokens, and those tokens sit 1.5x closer
-    to their nearest neighbour than the rest (11.5 against 17.4), i.e. they are
-    the tightest clusters in the cloud and the source of the shortest MST
-    edges. Removing them therefore removes most of what the fine-scale regime
-    (q_large) measures, so the large effect there is close to tautological.
-    It also fragments words: "don't" -> "don t", "non-invasive" -> "non
-    invasive", which adds short edges of its own, and it erases sentence
-    boundaries.
+    The mechanism behind its large effect is known: the deleted tokens sit 1.5x
+    closer to their nearest neighbour than the rest (11.5 against 17.4), so
+    they are the densest clusters in the cloud and the source of the shortest
+    MST edges — exactly what the fine-scale regime (q_large) sums over.
+
+    That explains the effect rather than diminishing it. The one thing to keep
+    narrow is the claim: what is established is that removing punctuation
+    raises measured d, not that punctuation as a feature of style governs
+    dimension, since this also fragments words ("don't" -> "don t",
+    "non-invasive" -> "non invasive") and erases sentence boundaries. A test of
+    the wider claim would substitute or insert marks instead of deleting tokens.
     """
     return re.sub(r"\s+", " ", re.sub(r"[^\w\s]", " ", text)).strip()
+
+
+def strip_punct_then_shuffle(text, rng):
+    """Both local-structure manipulations at once, to test whether they share
+    a channel.
+
+    strip_punctuation and shuffle_words peak in the same regime (q_large near
+    q = 0.7) and their effect profiles correlate at 0.61, which suggested both
+    might act through one channel: dismantling local organisation. If so,
+    applying both should land near the larger of the two rather than near
+    their sum.
+
+    Result: rejected in the working range. At q = 0.7 the pair gives +67.2%
+    against +34.2% for the larger alone -- twice as much, which no single
+    shared resource can produce. Under a multiplicative null (effects on a
+    ratio quantity compose as products) the two are independent to within
+    2 pp over q = 0.5-0.7. That last statement is null-dependent: a
+    slope-additive null fits at q = 0 instead and overshoots badly later, and
+    nothing in the geometry dictates which to use.
+
+    Saturation does appear at the extreme: by q = 0.9 both nulls overpredict
+    (by 27 and 57 pp), i.e. after the first manipulation the second has little
+    left to destroy. That is robust to the choice of null, and is independent
+    evidence that q_large at high q measures local organisation specifically.
+    """
+    return shuffle_words(strip_punctuation(text, rng), rng)
+
+
+def strip_punct_then_shuffle_within(text, rng):
+    """As above, with shuffling confined to sentences.
+
+    Sentence boundaries are gone after stripping, so this collapses onto the
+    plain version; kept for symmetry with the uncombined pair.
+    """
+    return shuffle_within_sentences(strip_punctuation(text, rng), rng)
 
 
 PERTURBATIONS = {
@@ -194,6 +231,9 @@ PERTURBATIONS = {
     "add_typos": add_typos,
     "lowercase": lowercase,
     "strip_punctuation": strip_punctuation,
+    # composites: do the two local-structure manipulations share a channel?
+    "strip_punct_then_shuffle": strip_punct_then_shuffle,
+    "strip_punct_then_shuffle_within": strip_punct_then_shuffle_within,
 }
 
 

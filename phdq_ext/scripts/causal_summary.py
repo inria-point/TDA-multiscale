@@ -64,15 +64,17 @@ PROPERTIES = {
         "arms": {},
         "mechanical": ("shuffle_sentences", None),
     },
-    # Excluded from the ranking on purpose: stripping punctuation deletes ~11%
-    # of the tokens, and those are the densest cluster in the cloud, so at
-    # q_large it removes the very population that regime measures. The large
-    # effect is close to tautological rather than a property of the text.
-    # Kept in the tables, out of the causal figure. See perturb.py.
-    "пунктуация (не интерпретируется)": {
+    # A causal effect with a known mechanism: the deleted tokens are the
+    # densest cluster in the cloud (nearest-neighbour distance 11.5 against
+    # 17.4), i.e. the source of the shortest MST edges, which is what q_large
+    # measures. Knowing why it works does not make it less causal. What the
+    # experiment does not license is the wider claim that punctuation as a
+    # feature of style governs dimension, since the manipulation also fragments
+    # words ("don't" -> "don t"). See perturb.py.
+    "пунктуация": {
         "arms": {},
         "mechanical": ("strip_punctuation", None),
-        "exclude_from_ranking": True,
+        "механизм": "удаляет плотнейшие 11% токенов",
     },
     "опечатки": {
         "arms": {},
@@ -119,8 +121,6 @@ def plot_ranking(res):
     """Properties ranked by |dz|, marked by what kind of evidence backs them."""
     rows = []
     for _, r in res.iterrows():
-        if r.get("исключено"):
-            continue
         dz = r.get("dz_макс")
         mech = r.get("механ_dz")
         if pd.notna(dz):
@@ -169,8 +169,7 @@ def main():
 
     rows = []
     for prop, spec in PROPERTIES.items():
-        rec = {"свойство": prop,
-               "исключено": spec.get("exclude_from_ranking", False)}
+        rec = {"свойство": prop, "механизм": spec.get("механизм", "")}
         signs, peaks = [], []
         for model, (up, down) in spec["arms"].items():
             eu, ed = arm_effect(p, up), arm_effect(p, down)
@@ -181,7 +180,9 @@ def main():
             # a reversal means the arms move d in opposite directions
             rec[f"{model}_разворот"] = bool(np.sign(eu[1]) != np.sign(ed[1]))
             signs.append(np.sign(eu[1] - ed[1]))
-            peaks.append(max(abs(eu[0]), abs(ed[0])))
+            # keep where the peak sits, not only how large it is
+            strongest = max((eu, ed), key=lambda e: abs(e[0]))
+            peaks.append((abs(strongest[0]), f"{model}: {strongest[2]} q={strongest[3]}"))
         if spec["mechanical"]:
             mu, md = spec["mechanical"]
             em = arm_effect(p, mu)
@@ -196,7 +197,9 @@ def main():
                             np.sign(em[1]) != np.sign(emd[1]))
         if signs:
             rec["воспроизв"] = bool(len(set(signs)) == 1) if len(signs) > 1 else None
-            rec["dz_макс"] = max(peaks)
+            best = max(peaks)
+            rec["dz_макс"] = best[0]
+            rec["где"] = best[1]
         rows.append(rec)
 
     res = pd.DataFrame(rows)
@@ -207,7 +210,7 @@ def main():
     print("=== LLM-манипуляции: пиковый эффект каждого плеча, доля от d\n")
     cols = [c for c in ["свойство", "gemini_up", "gemini_down", "gemini_разворот",
                         "sonnet_up", "sonnet_down", "sonnet_разворот",
-                        "воспроизв", "dz_макс"] if c in res]
+                        "воспроизв", "dz_макс", "где"] if c in res]
     print(res[res["dz_макс"].notna()][cols].round(3).to_string(index=False))
 
     print("\n=== механические манипуляции: контроль без модели\n")
