@@ -1,0 +1,54 @@
+loaded 8 perturbations from results/llm_edits_sonnet.json
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/134 [00:00<?, ?it/s]Loading weights: 100%|██████████| 134/134 [00:00<00:00, 6408.70it/s]
+[transformers] [1mModernBertModel LOAD REPORT[0m from: answerdotai/ModernBERT-base
+Key               | Status     |  | 
+------------------+------------+--+-
+head.norm.weight  | UNEXPECTED |  | 
+head.dense.weight | UNEXPECTED |  | 
+decoder.bias      | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+xsum: 50 texts
+  identity                     50 texts  (24s)
+  topics_up_v2                 50 texts  (32s)
+  topics_down_v2               50 texts  (30s)
+  lexical_diversity_up_s       50 texts  (30s)
+  lexical_diversity_down_s     50 texts  (30s)
+  words_rare_s                 50 texts  (30s)
+  words_common_s               50 texts  (30s)
+  syntax_complex_s             50 texts  (31s)
+  syntax_simple_s              50 texts  (31s)
+academic_abstracts: 50 texts
+  identity                     50 texts  (24s)
+  topics_up_v2                 50 texts  (28s)
+  topics_down_v2               50 texts  (28s)
+  lexical_diversity_up_s       50 texts  (28s)
+  lexical_diversity_down_s     49 texts (1 skipped)  (28s)
+  words_rare_s                 50 texts  (29s)
+  words_common_s               50 texts  (29s)
+  syntax_complex_s             50 texts  (29s)
+  syntax_simple_s              50 texts  (29s)
+amazon_reviews: 50 texts
+  identity                     50 texts  (24s)
+  topics_up_v2                 43 texts (7 skipped)  (25s)
+  topics_down_v2               43 texts (7 skipped)  (24s)
+  lexical_diversity_up_s       43 texts (7 skipped)  (25s)
+  lexical_diversity_down_s     43 texts (7 skipped)  (25s)
+  words_rare_s                 43 texts (7 skipped)  (25s)
+  words_common_s               43 texts (7 skipped)  (25s)
+  syntax_complex_s             43 texts (7 skipped)  (25s)
+  syntax_simple_s              43 texts (7 skipped)  (25s)
+writingprompts: 50 texts
+  identity                     50 texts  (25s)
+  topics_up_v2                 48 texts (2 skipped)  (31s)
+  topics_down_v2               48 texts (2 skipped)  (30s)
+  lexical_diversity_up_s       48 texts (2 skipped)  (30s)
+  lexical_diversity_down_s     48 texts (2 skipped)  (30s)
+  words_rare_s                 48 texts (2 skipped)  (30s)
+  words_common_s               48 texts (2 skipped)  (30s)
+  syntax_complex_s             48 texts (2 skipped)  (32s)
+  syntax_simple_s              48 texts (2 skipped)  (31s)
+saved -> /Users/admin/Desktop/Research/TDA/phdq_ext/scripts/../results/perturb_L201_sonnet.csv.gz
+saved -> /Users/admin/Desktop/Research/TDA/phdq_ext/scripts/../results/perturbed_texts_sonnet.json

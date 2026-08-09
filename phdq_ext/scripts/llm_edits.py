@@ -107,6 +107,31 @@ PROMPTS = {
 }
 
 
+PROMPTS.update({
+    # topics_down executed weakly (0.70) on the small model; reworded in the
+    # same absolute, sentence-checkable style that fixed the ideas pair
+    "topics_up_v2": (
+        "Rewrite the text so that it ranges over SEVERAL clearly different "
+        "subjects. Consecutive sentences should concern different domains, so "
+        "that the text as a whole cannot be assigned to one topic. Keep the "
+        "same genre and register."
+    ),
+    "topics_down_v2": (
+        "Rewrite the text so that it stays on ONE narrow subject throughout. "
+        "Every sentence must concern that same single subject; never bring in "
+        "another domain, example or aside from elsewhere. Keep the same genre "
+        "and register."
+    ),
+})
+
+# the remaining pairs executed well already (0.92-1.00); they are rerun on the
+# stronger model unchanged, so that every contrast is within one model
+for _p in ["lexical_diversity_up", "lexical_diversity_down",
+           "words_rare", "words_common",
+           "syntax_complex", "syntax_simple"]:
+    PROMPTS[_p + "_s"] = PROMPTS[_p]
+
+
 def build_prompt(instruction, text):
     n = len(text.split())
     lo, hi = int(n * 0.95), int(n * 1.1)

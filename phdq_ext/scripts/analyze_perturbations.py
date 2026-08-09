@@ -28,18 +28,24 @@ BASE = os.path.join(os.path.dirname(__file__), "..")
 # cancels it, so the contrast is the honest estimate of the property itself.
 CONTRASTS = [
     ("lexical_diversity_up", "lexical_diversity_down"),
+    ("lexical_diversity_up_s", "lexical_diversity_down_s"),
     ("words_rare", "words_common"),
+    ("words_rare_s", "words_common_s"),
     ("ideas_up", "ideas_down"),
     ("ideas_up_v2", "ideas_down_v2"),
     ("topics_up", "topics_down"),
+    ("topics_up_v2", "topics_down_v2"),
     ("syntax_complex", "syntax_simple"),
+    ("syntax_complex_s", "syntax_simple_s"),
     ("lengthen_sentences", "shorten_sentences"),
 ]
 
 GROUPS = {
     "лексика": ["lexical_diversity_up", "lexical_diversity_down",
                 "words_rare", "words_common"],
-    "идеи и темы": ["ideas_up_v2", "ideas_down_v2", "topics_up", "topics_down"],
+    # the corrected arms: both pairs executed weakly on the small model
+    "идеи и темы": ["ideas_up_v2", "ideas_down_v2",
+                    "topics_up_v2", "topics_down_v2"],
     "синтаксис": ["syntax_complex", "syntax_simple",
                   "lengthen_sentences", "shorten_sentences"],
     "типографика": ["add_linebreaks", "break_at_commas", "lowercase",
