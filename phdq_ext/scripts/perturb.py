@@ -240,3 +240,189 @@ PERTURBATIONS = {
 def apply(name, text, seed=0, **kwargs):
     rng = random.Random(seed)
     return PERTURBATIONS[name](text, rng, **kwargs)
+
+
+# ---------------------------------------------------------------------------
+# Stage-2 mechanical perturbations, from the COLING extreme-group hypotheses.
+# Defects are included deliberately: the point is to tell a dimension drop
+# caused by a style from one caused by a generation failure.
+# ---------------------------------------------------------------------------
+
+def _regroup(text, pattern):
+    """Join existing sentences in groups of the given sizes.
+
+    Only real sentence boundaries are used, so grammar is untouched and the
+    only thing that changes is how evenly length is distributed. Cutting at a
+    fixed word count instead would break phrases, and destroying syntax has a
+    large effect of its own that would swamp the one under test.
+    """
+    sents = sentences(text)
+    out, i, k = [], 0, 0
+    while i < len(sents):
+        n = pattern[k % len(pattern)]
+        group = sents[i:i + n]
+        if not group:
+            break
+        merged = group[0].rstrip(".!?")
+        for extra in group[1:]:
+            extra = extra.rstrip(".!?").strip()
+            if extra:
+                merged += ", " + extra[0].lower() + extra[1:]
+        out.append(merged + ".")
+        i += n
+        k += 1
+    return " ".join(out)
+
+
+def burst_alternate(text, rng):
+    """Alternate one short sentence with a long merged one: uneven lengths (H1)."""
+    return _regroup(text, [1, 4])
+
+
+def burst_flatten(text, rng, group=2.5):
+    """Merge sentences into groups of equal *word count*, not equal count.
+
+    Grouping a fixed number of sentences does not flatten anything: the sums
+    inherit the variation of their parts. Packing greedily towards a target
+    word count does, and the target is set to the same average as
+    burst_alternate so the pair differs in unevenness alone, not in mean
+    sentence length.
+    """
+    sents = sentences(text)
+    if not sents:
+        return text
+    lens = [len(x.split()) for x in sents]
+    target = group * (sum(lens) / len(lens))
+    out, cur, cur_w = [], [], 0
+    for s_, w in zip(sents, lens):
+        cur.append(s_)
+        cur_w += w
+        if cur_w >= target:
+            out.append(cur)
+            cur, cur_w = [], 0
+    if cur:
+        out.append(cur)
+    joined = []
+    for group_ in out:
+        merged = group_[0].rstrip(".!?")
+        for extra in group_[1:]:
+            extra = extra.rstrip(".!?").strip()
+            if extra:
+                merged += ", " + extra[0].lower() + extra[1:]
+        joined.append(merged + ".")
+    return " ".join(joined)
+
+
+def drop_sentence_boundaries(text, rng):
+    """Remove sentence-final punctuation: the text becomes one run-on.
+
+    A defect, and the one the mean_sent_len feature was actually detecting in
+    the corpus (flan_t5 outputs with no full stops at all).
+    """
+    return re.sub(r"\s+", " ", re.sub(r"[.!?]+(\s|$)", " ", text)).strip()
+
+
+def loop_phrase(text, rng, span=12, repeats=4):
+    """Repeat one phrase over and over, as a degenerate decoder does.
+
+    The classic failure at the low-dimension end of the corpus: the same clause
+    restated with small variations until the length is filled.
+    """
+    words = text.split()
+    if len(words) < span * 2:
+        return text
+    start = rng.randrange(0, max(1, len(words) - span))
+    phrase = " ".join(words[start:start + span])
+    out, i = [], 0
+    while i < len(words):
+        out.extend(words[i:i + span])
+        for _ in range(repeats):
+            out.append(phrase)
+        i += span * (repeats + 1)
+    return " ".join(out[:len(words)])
+
+
+def add_punctuation(text, rng, rate=0.18):
+    """Insert commas and semicolons at plausible clause boundaries (H4).
+
+    The opposite of strip_punctuation, and the direction the corpus could not
+    supply: it only ever showed punctuation being lost.
+    """
+    out = []
+    for sent in sentences(text):
+        w = sent.split()
+        new = []
+        for i, x in enumerate(w):
+            new.append(x)
+            if (0 < i < len(w) - 2 and not x.endswith((",", ";", ".", ":"))
+                    and rng.random() < rate):
+                new[-1] = x + (";" if rng.random() < 0.25 else ",")
+        out.append(" ".join(new))
+    return " ".join(out)
+
+
+def strip_digits(text, rng):
+    """Remove digits, keeping everything else (H7, subtractive direction)."""
+    return re.sub(r"\s+", " ", re.sub(r"\d+", " ", text)).strip()
+
+
+def add_digits(text, rng, rate=0.09):
+    """Insert plausible numbers, dates and percentages (H7, additive)."""
+    units = ["%", " million", " per cent", "", "", ""]
+    out = []
+    for w in text.split():
+        out.append(w)
+        if rng.random() < rate:
+            if rng.random() < 0.4:
+                out.append(f"({rng.randrange(1950, 2025)})")
+            else:
+                out.append(f"{rng.randrange(2, 99)}{rng.choice(units)}")
+    return " ".join(out)
+
+
+def capitalize_terms(text, rng, rate=0.12):
+    """Upper-case some content words, as acronyms and proper names do (H8)."""
+    out = []
+    for w in text.split():
+        core = WORD.search(w)
+        if core and len(core.group()) > 3 and rng.random() < rate:
+            w = w.upper()
+        out.append(w)
+    return out and " ".join(out) or text
+
+
+def to_numbered_list(text, rng, per_item=2):
+    """Reformat the same sentences as a numbered list (H6)."""
+    sents = sentences(text)
+    items = [" ".join(sents[i:i + per_item])
+             for i in range(0, len(sents), per_item)]
+    return "\n".join(f"{i + 1}. {s}" for i, s in enumerate(items))
+
+
+def drop_function_words(text, rng, rate=0.75):
+    """Delete most function words: a telegraphic surface (H5)."""
+    out = [w for w in text.split()
+           if WORD.search(w) is None
+           or WORD.search(w).group() not in FUNCTION_WORDS
+           or rng.random() > rate]
+    return " ".join(out)
+
+
+FUNCTION_WORDS = {
+    "the", "a", "an", "and", "or", "but", "if", "of", "to", "in", "on", "at",
+    "by", "for", "with", "from", "as", "is", "are", "was", "were", "be", "been",
+    "it", "its", "this", "that", "these", "those", "there", "here",
+}
+
+PERTURBATIONS.update({
+    "burst_alternate": burst_alternate,
+    "burst_flatten": burst_flatten,
+    "drop_sentence_boundaries": drop_sentence_boundaries,
+    "loop_phrase": loop_phrase,
+    "add_punctuation": add_punctuation,
+    "strip_digits": strip_digits,
+    "add_digits": add_digits,
+    "capitalize_terms": capitalize_terms,
+    "to_numbered_list": to_numbered_list,
+    "drop_function_words": drop_function_words,
+})

@@ -1,0 +1,400 @@
+
+====================================================================================================
+H1 неровность длин предложений   [sent_len_burst]   q_small, q=0.9
+====================================================================================================
+
+(+) высокая d, высокий признак
+
+  [GLM130B / sci_gen]  d=20.9  sent_len_burst=1.692
+   The paper presents a new, robust control algorithm for position trajectory tracking in a 3D
+   space, dedicated to underactuated airships. In order to take into account real
+   characteristics of such vehicles, it is based on the use of a dual inertial measurement
+   unit (IMU) for data fusion, a simple control strategy, a sliding mode control (SMC) based
+   on a set of sliding parameters and a PID based on the history of past p
+
+  [dolly / peerread]  d=31.0  sent_len_burst=0.722
+   The problem addressed in this paper is how to generate high quality samples from trained
+   GANs. The main contribution is a method, dubbed InfoGAN, which improves the quality of
+   samples generated from GANs by optimizing the information density of the generated samples.
+   The proposed method is compared to a state-of-the-art baseline, DC-GAN, and on a number of
+   tasks the proposed method produces samples of much higher qua
+
+  [opt_13b / wp]  d=15.3  sent_len_burst=1.760
+   The warning signal blared over the canteen. "Contact estimate 240 seconds. Collect your
+   gear and get to the Contact Point. Command out." "Oh, Crap." Jace thought. It is a rare
+   occurrence that he gets thrown into contact missions without being briefed first but it was
+   going down on this mission... What are you looking at? "I've got something in mind," said
+   his teammate Emily as she turned towards him with her hands be
+
+(-) низкая d, низкий признак
+
+  [flan_t5_xxl / hswag]  d=7.3  sent_len_burst=0.059
+   [title] Select your preferred language when prompted to by the automated system. [title]
+   Select option one and follow the instructions to refill, or recharge your salik account.
+   [title] Select option two and follow the instructions to refill, or recharge your salik
+   account. [title] Select option three and follow the instructions to refill, or recharge
+   your salik account. [title] Select option six and follow the instr
+
+  [flan_t5_xxl / xsum]  d=10.9  sent_len_burst=0.081
+   It said it had taken a PS235m charge after it agreed a deferred prosecution with the
+   Serious Fraud Office and the Financial Conduct Authority in March. However, Tesco said it
+   Tesco said it agreed a deferred prosecution agreement with the Serious Fraud Office and the
+   Financial Conduct Authority in March. However, Tesco said it had taken a PS235m charge
+   after it agreed a deferred prosecution with the SFO and the FCA in
+
+  [opt_6.7b / tldr]  d=13.5  sent_len_burst=0.126
+   A display created by Misapplied Sciences and partially funded by Delta is able to produce
+   multiple displays at different angles, meaning that multiple people viewing the same screen
+   are able to see it from various angles. The technology was first developed for use in a
+   virtual training environment (VTE) used by NASA called Virtual Reality Trainer 2.0 (VRT2),
+   but was later implemented in several other applications as
+
+====================================================================================================
+H2 длина предложений   [mean_sent_len]   q_large, q=0.9
+====================================================================================================
+
+(+) высокая d, высокий признак
+
+  [flan_t5_xxl / cmv]  d=3.8  mean_sent_len=220.000
+   I'll allow that, in most cases, the misbehaving kid is just throwing a temper tantrum, but
+   what do you do in cases where the kid has thrown himself on the , tantrum, but I'll allow
+   that, in most cases, the misbehaving kid is just throwing a temper tantrum, but what do you
+   do in cases where the kid has thrown himself on the floor on the case of cases where the
+   kid has thrown himself on the floor and he has thrown hims
+
+  [gpt_neox / sci_gen]  d=7.8  mean_sent_len=73.333
+   Many algorithms for congestion control, scheduling, network measurement, active queue
+   management, security, and load balancing require custom processing of packets as they
+   traverse the data plane of a network switch. Most hardware switches today process only one
+   packet at time per port through their individual cards - serial in nature such that if an
+   algorithm requires knowledge about several different fields within
+
+  [gpt_neox / hswag]  d=6.2  mean_sent_len=73.333
+   reaches that end, she makes a turn but it's too tight and she reverses a little. I'm
+   thinking maybe the right door is on her left side so if we can get this car to make another
+   ninety degrees of rotation while still being straight in front or at least not turning its
+   nose toward us then... "We are now one hundred fifty feet from you," says Jubal for what
+   has become his "designated kill shot time." He moves forward in
+
+(-) низкая d, низкий признак
+
+  [7B / yelp]  d=1.8  mean_sent_len=10.000
+   The sushi was so horrible that it was the first time I had to return sushi in my entire 15
+   15 year sushi history. It is truly not a sushi restaurant. The nigiri sushi and sashimi
+   have no fishy flavor. And the sushi rice does not have any taste at all. The chef is either
+   an idiot or has a very limited skill of cooking. Either way, it should not be on the menu.
+   There is no point to come here. It is a joke. The sushi wa
+
+  [GLM130B / xsum]  d=1.5  mean_sent_len=16.923
+   Few details of the deal agreed by the Russians and Americans have been released. There was
+   indeed something of a decline in hostilities, though no comprehensive calm. The ceasefire
+   was only partially observed, and there was not much room for hope that the fighting would
+   cease altogether. On 17 September, the government forces and the People's Liberation Army
+   resumed their advance, after they had stopped on 13 Septemb
+
+  [65B / xsum]  d=1.6  mean_sent_len=16.923
+   Spencer Wilding, who hails from Rhyl, was the guest of honour at a special screening of
+   Rogue One. He had to muster all powers of the force to keep his identity secret as Darth
+   Vader in the new Star Wars movie. Ever since the first Star Wars movie was released in
+   1977, fans have been wondering who was inside the costume of the Darth Vader character. It
+   has been revealed that the man behind the mask in the latest Star
+
+====================================================================================================
+H3 длина слов   [long_word_rate]   q_small, q=0.9
+====================================================================================================
+
+(+) высокая d, высокий признак
+
+  [opt_13b / eli5]  d=27.2  long_word_rate=0.345
+   The crash was caused by the popping of the sub-prime housing bubble, which caused a number
+   of large banks to nearly fail which destabilized the rest of the market. Driven largely
+   from their offices in London's Canary Wharf financial district and New York City on Wall
+   Street due to fears for safety following 911 attacks at home.[73] Financial engineering is
+   any technique used during an economic activity that involves
+
+  [human / yelp]  d=25.3  long_word_rate=0.168
+   I am a nice, amicable person. I treat others with kindness and have a highly positive
+   attitude. I rarely complain about things. Thus, it makes me sad to write a negative review.
+   However, the way in which Mozart Management Staff have behaved and conducted themselves
+   over the past two years warrants this review. We moved to Pittsburgh when I was in graduate
+   school. We loved our tiny, cute apartment at Schenley Arms, ou
+
+  [flan_t5_xxl / wp]  d=21.0  long_word_rate=0.305
+   David tossed and turned, unable to quite fall asleep. The pressures of leading one of the
+   worlds foremost teams responsible for developing the newest nanotech theory and application
+   was something David tossed and turned, unable to quite fall asleep. The pressures of
+   leading one of the worlds foremost teams responsible for developing the newest nanotech
+   theory and application was something that was something that was
+
+(-) низкая d, низкий признак
+
+  [flan_t5_xxl / sci_gen]  d=13.1  long_word_rate=0.036
+   We address scene layout modeling for recognizing agent-in-place actions, which are actions
+   associated with agents who perform them and the places where they occur, in the context of
+   outdoor home home. A scene is a temporary theatrical event in a staged outdoor theater.
+   Scenes occur in a scene layout modeling for recognizing agent-in-place actions, which are
+   actions associated with agents who perform them and the plac
+
+  [flan_t5_small / squad]  d=8.7  long_word_rate=0.032
+   The war in North America officially ended with the signing of the Treaty of Paris on 10
+   February 1763, and war in the European theatre of the Seven Years' War The Wars in North
+   America officially ended with the signing of the Treaty of Paris on 10 February 1763, and
+   the War in the European theatre of the Seven Years' War in the European theatre of the
+   Seven Years' War in the Seven Years' War in the Seven Years' War i
+
+  [flan_t5_xxl / cmv]  d=9.0  long_word_rate=0.018
+   I'll allow that, in most cases, the misbehaving kid is just throwing a temper tantrum, but
+   what do you do in cases where the kid has thrown himself on the , tantrum, but I'll allow
+   that, in most cases, the misbehaving kid is just throwing a temper tantrum, but what do you
+   do in cases where the kid has thrown himself on the floor on the case of cases where the
+   kid has thrown himself on the floor and he has thrown hims
+
+====================================================================================================
+H4 плотность пунктуации   [punct_rate]   q_small, q=0.6
+====================================================================================================
+
+(+) высокая d, высокий признак
+
+  [bloomz / wikipedia]  d=18.5  punct_rate=0.054
+   The Evergreen Cemetery is located in the Back Bay neighborhood of Boston, Massachusetts at
+   1 Commonwealth Avenue and was designed by Henry Bacon. The cemetery opened on May 15, 1852
+   as one of three public cemeteries established to serve the city. It contains gravesites
+   from many notable Bostonians including John Hancock, Samuel Adams, Paul Revere, James Otis,
+   Charles Summers Rowan, George Williams Eliot, Frederick Do
+
+  [bloomz / wikihow]  d=18.2  punct_rate=0.048
+   If you want to ride horses but don't have one yet or can't find one naturally (e.g., if
+   you're playing survival), you'll need to craft a saddle first. You can also use this method
+   as part of a recipe to make armor that will protect you from fire damage caused by lava. To
+   start making a saddle, you'll need at least two pieces of leather - which are obtained
+   through killing mobs such as cows, sheep, pigs, rabbits, deer
+
+  [gpt_neox / roct]  d=20.7  punct_rate=0.071
+   Their grandfathers, generations ago, had built the church. The stone had come from the
+   quarry over the hill. It was the first building in town, and now was to be its last; it
+   would soon fall into ruin with all else around that once-proud village." "The girl thought
+   about her family's history: a long string of men who knew nothing but warring between each
+   other or against their neighbors for centuries on end...the gre
+
+(-) низкая d, низкий признак
+
+  [flan_t5_xxl / squad]  d=2.9  punct_rate=0.000
+   A study by the World Institute for Development Economics Research at United Nations
+   University reports that the richest 1 of adults alone owned 40 of global assets in the year
+   Wealth and Assets in the World by Gini coefficient in the year The study by the World
+   Institute for Development Economics Research at United Nations University reports that the
+   richest 1 of adults alone owned 40 of global assets in the year The
+
+  [flan_t5_small / eli5]  d=3.0  punct_rate=0.003
+   They convert it to HD using the original film master, not the TV broadcast. The film master
+   is much higher resolution than even HD video so it can be scanned They convert it to HD
+   using the original film master, not the TV broadcast. The film master is much higher
+   resolution than even HD video so it can be scanned so it can be scanned so it can be
+   scanned so it can be scanned so it can be scanned so it can be scanned
+
+  [flan_t5_small / squad]  d=2.5  punct_rate=0.002
+   The war in North America officially ended with the signing of the Treaty of Paris on 10
+   February 1763, and war in the European theatre of the Seven Years' War The Wars in North
+   America officially ended with the signing of the Treaty of Paris on 10 February 1763, and
+   the War in the European theatre of the Seven Years' War in the European theatre of the
+   Seven Years' War in the Seven Years' War in the Seven Years' War i
+
+====================================================================================================
+H5 доля знаменательных слов   [content_ratio]   q_small, q=0.9
+====================================================================================================
+
+(+) высокая d, высокий признак
+
+  [gpt-3.5-turbo / tldr]  d=38.8  content_ratio=0.705
+   Google has just released the developer preview of Android 12, the latest version of its
+   popular mobile operating system. The newest release promises many under-the-hood updates,
+   which aim to improve the user experience and boost the overall performance of Android
+   devices. Among the key changes in Android 12 is a new, more polished user interface. The
+   new design includes a fresh color scheme, along with rounded corner
+
+  [opt_13b / eli5]  d=27.2  content_ratio=0.745
+   The crash was caused by the popping of the sub-prime housing bubble, which caused a number
+   of large banks to nearly fail which destabilized the rest of the market. Driven largely
+   from their offices in London's Canary Wharf financial district and New York City on Wall
+   Street due to fears for safety following 911 attacks at home.[73] Financial engineering is
+   any technique used during an economic activity that involves
+
+  [opt_6.7b / xsum]  d=32.9  content_ratio=0.664
+   Media playback is unsupported on your device 5 February 2014 Last updated at 08:46 GMT
+   White lions are very rare - their zoo keeper thinks there's only around 90 of them left in
+   the world "The difference between a Malayan white and a Sumatran white doesn't really
+   exist, as they're both a mix." Both species were bred using domestic cats that went from
+   Sumatra to Malaysia in the 1970s. It was known back then that the a
+
+(-) низкая d, низкий признак
+
+  [flan_t5_small / eli5]  d=13.3  content_ratio=0.300
+   They convert it to HD using the original film master, not the TV broadcast. The film master
+   is much higher resolution than even HD video so it can be scanned They convert it to HD
+   using the original film master, not the TV broadcast. The film master is much higher
+   resolution than even HD video so it can be scanned so it can be scanned so it can be
+   scanned so it can be scanned so it can be scanned so it can be scanned
+
+  [human / outfox]  d=14.3  content_ratio=0.436
+   In the artical "Driverless Cars Are Coming" they are talking about the negitaves and
+   positives of the Driverless Cars. I think driverless car are cool but are they all safe?
+   One of my negitives is that the cars might malfuction and make you get in a accident and
+   cause harm to the driver in the car, and if your just sitting there will the cars diving it
+   will be a easy way for you to dose off and fall asleep, but in th
+
+  [GLM130B / hswag]  d=6.8  content_ratio=0.505
+   is putting contact lenses into her eyes. "Do you want to wear them?" she asked. "No," she
+   said. "You want to wear them?" she asked. "No," she said. "You want to wear them?" she
+   asked. "No," she said. "You want to wear them?" she asked. "No," she said. "You want to
+   wear them?" she asked. "No," she said. "You want to wear them?" she asked. "No," she said.
+   "You want to wear them?" she asked. "No," she said. "You want to
+
+====================================================================================================
+H6 списочное форматирование   [bullet_rate]   q_small, q=0.4
+====================================================================================================
+
+(+) высокая d, высокий признак
+
+  [opt_6.7b / eli5]  d=21.6  bullet_rate=0.455
+   1) Does it matter if you mow the lawn horizontally or vertically? (as in stripes) No. End
+   goal is to go over every patch of grass once, minimizing repeats. Key: You don't want a
+   dirtier cutting area than your neighbors have because they are taking care of their lawns
+   as well. 2) Start with a dark green color and work toward lighter greens throughout the
+   season. If you start out yellow, then add light colors at each p
+
+  [human / finance]  d=16.5  bullet_rate=0.455
+   1. Your oldest active credit agreement is not very old This is fairly straight forward. If
+   you've not been exposed to borrowing for a reasonable length of time, people won't want to
+   lend you money. They have no reason to have any confidence in your ability to repay them.
+   As other said, it's pretty much a case of proving yourself by being good with credit over a
+   period of time. 2. You have no active credit card accoun
+
+  [gpt4o / outfox]  d=17.8  bullet_rate=3.636
+   ### Distance Learning vs. Attending School Physically In recent years, especially
+   accelerated by the global pandemic, distance learning has emerged as a significant form of
+   education. While it offers several benefits, it also comes with its own set of challenges.
+   This essay will delve into the advantages and disadvantages of distance learning compared
+   to attending school physically, focusing on the impact on a studen
+
+(-) низкая d, низкий признак
+
+  [dolly / wikipedia]  d=4.2  bullet_rate=0.000
+   There's Gonna Be a Storm: The Complete Recordings 1966–1969 is a compilation album by the
+   American rock band the Grateful Dead. It was released in 1991 as a 2-CD set and as a 4-LP
+   box set. The set features the complete recording sessions for the band's 1966 debut album,
+   The Grateful Dead, through 1969's Aoxomoxoa. The original album titles have been restored
+   for this compilation; in prior releases of the album the ti
+
+  [dolly-v2-12b / outfox]  d=5.0  bullet_rate=0.000
+   The electoral college should not be used in presidential elections because: 1. Voting for a
+   slate of electors can waste a vote because some of the electors might not vote the way the
+   voter intended. 2. The potential advantage for a political party to win the popular vote
+   but lose the electoral college vote is inefficient and could result in future power shifts
+   towards larger population centers at the expense of small
+
+  [dolly / wikipedia]  d=5.2  bullet_rate=0.000
+   Yury Kavalyow (b. 1982) is a Russian animator, film director and video artist. He is known
+   for the online short film "Domestic Peace" (2015), which has over 40 million views on
+   YouTube. He has used YouTube as a platform to showcase his own artwork and collaborations,
+   as well as work with other creators. One of Kavalyow's central projects has been a film
+   adaptation of the novella "The Clan of the Cave Bear" by Park Th
+
+====================================================================================================
+H7 цифры и числа   [digit_rate]   q_small, q=0.6
+====================================================================================================
+
+(+) высокая d, высокий признак
+
+  [GLM130B / roct]  d=10.8  digit_rate=0.059
+   Bob was trying to run an 8051 simulator. He went to the download site and grabbed the
+   latest one. Bob was discouraged when he he found it was only a Windows version. "It is a
+   pain to install, and I need a Linux version," he thought. Bob got a good Linux computer and
+   decided to get the simulator. He started the download, but found it was not what he was
+   looking for. Bob decided to read the description to see what he n
+
+  [mixtral-8x7b / outfox]  d=16.0  digit_rate=0.038
+   In 1976 NASA's Viking 1 spacecraft was circling Mars when it spotted what appeared to be a
+   likeness of a human face in a region called Cydonia. Over the years there has been
+   speculation that this "face" was created by aliens. But over the years new equiptment has
+   revealed the "face" for what it is: a mesa. There are three key points of evidence that
+   disprove the alien theory: the equiptment first used to photograph t
+
+  [human / arxiv]  d=15.9  digit_rate=0.146
+   We use new and published near-IR spectra, with synthetic spectra, to derivephysical
+   properties of three of the latest-type T dwarfs. A new R~1700 spectrumof the T7.5 dwarf HD
+   3651B, with existing data, allows a detailed comparison tothe well-studied and very similar
+   dwarf, Gl 570D. We find that HD 3651B hasboth higher gravity and metallicity than Gl 570D,
+   with Teff=820-830K, log g=5.4-5.5, [m/H]= +0.2 and Kzz=10^4cm^
+
+(-) низкая d, низкий признак
+
+  [flan_t5_xxl / tldr]  d=2.5  digit_rate=0.001
+   data2vec is a multi-modal artificial intelligence algorithm from Meta that attempts to
+   replicate the general learning ability that the human mind possesses. The team aimed to
+   create an AI that The team aimed to create an AI that that could learn the general ability
+   that the human mind possesses. The team aimed to create an AI that could learn the general
+   ability that the human mind possesses. The team's goal was to b
+
+  [flan_t5_xxl / tldr]  d=2.8  digit_rate=0.000
+   This article tells the story of how a team generated a massive amount of data with their
+   MVP and blew through their cloud budget for the year by May. Multiple A team generated a
+   massive amount of data with their MVP and blew through their cloud budget for the year by
+   May. Multiple Teams This article tells the story of how a team generated a massive amount
+   of data with their MVP and blew through their cloud budget for
+
+  [flan_t5_xxl / yelp]  d=4.3  digit_rate=0.009
+   I ate here a total of 3 times, take out twice, and dining in once. If I was basing this
+   solely on the take out experience, it would have been on the first 2 visits, and dining in
+   on the 3rd. The dining in experience was a bit dining in, but all 3 experiences were very
+   good. The dining in experience was the best out of the 3 visits. The dining in experience
+   was meh. If I was basing this solely on the dining in experie
+
+====================================================================================================
+H8 заглавные и аббревиатуры   [upper_rate]   q_small, q=0.6
+====================================================================================================
+
+(+) высокая d, высокий признак
+
+  [30B / hswag]  d=11.8  upper_rate=0.100
+   Your sixth grader will learn how to: [substeps] Multiply and divide fractions. Understand
+   ratios and rates, and solve word problems relating to ratios and rates. Determine the
+   probability of an event occurring. The lessons, activities, and test items in this workbook
+   are aligned to the Common Core State Standards (CCSS) for mathematics. Grade 6 covers the
+   standards for Number and Operations in Base Ten (NO-NBT), Numb
+
+  [human / wp]  d=14.1  upper_rate=0.086
+   PLANET: 4BA-4 CODENAME: ROME SELF REFERENCE NAME: GRAND MOTHER TRANSLATION LOG: 2475-08-21:
+   All He does not understand. I do not understand. My life is one of eons, yet every All He
+   lives only a few cycles of my star, but there are so many of All He. How could so many live
+   at once, divided? I do not know. I live alone, my spores and children live among the stars,
+   our music shared over eons. We sing to please the All
+
+  [bloomz / wikipedia]  d=18.5  upper_rate=0.122
+   The Evergreen Cemetery is located in the Back Bay neighborhood of Boston, Massachusetts at
+   1 Commonwealth Avenue and was designed by Henry Bacon. The cemetery opened on May 15, 1852
+   as one of three public cemeteries established to serve the city. It contains gravesites
+   from many notable Bostonians including John Hancock, Samuel Adams, Paul Revere, James Otis,
+   Charles Summers Rowan, George Williams Eliot, Frederick Do
+
+(-) низкая d, низкий признак
+
+  [flan_t5_xxl / yelp]  d=4.3  upper_rate=0.016
+   I ate here a total of 3 times, take out twice, and dining in once. If I was basing this
+   solely on the take out experience, it would have been on the first 2 visits, and dining in
+   on the 3rd. The dining in experience was a bit dining in, but all 3 experiences were very
+   good. The dining in experience was the best out of the 3 visits. The dining in experience
+   was meh. If I was basing this solely on the dining in experie
+
+  [flan_t5_xxl / cmv]  d=3.1  upper_rate=0.002
+   I'll allow that, in most cases, the misbehaving kid is just throwing a temper tantrum, but
+   what do you do in cases where the kid has thrown himself on the , tantrum, but I'll allow
+   that, in most cases, the misbehaving kid is just throwing a temper tantrum, but what do you
+   do in cases where the kid has thrown himself on the floor on the case of cases where the
+   kid has thrown himself on the floor and he has thrown hims
+
+  [flan_t5_base / wp]  d=2.6  upper_rate=0.002
+   This side of my skin will tell you a story, you can read the lines and predict the crimes
+   of a history attached to a physical being with a face, Wow! This side of my skin will tell
+   you a story, you can read the lines and predict the crimes of a history attached to a
+   physical being with a face, you can read the lines and predict the crimes of a history
+   attached to a physical being with a face, you can read the lines a

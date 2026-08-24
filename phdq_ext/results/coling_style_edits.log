@@ -1,0 +1,50 @@
+840 requests, model=anthropic/claude-sonnet-4.5, 8 workers
+  100/840  ошибок: 0
+  200/840  ошибок: 5
+  300/840  ошибок: 47
+  400/840  ошибок: 147
+  500/840  ошибок: 247
+  600/840  ошибок: 347
+  700/840  ошибок: 447
+  800/840  ошибок: 547
+
+saved -> results/coling_style_edits.json
+  style_news_telegraphic     36 текстов
+  style_simplified           36 текстов
+  style_news_dates_suffixes   37 текстов
+  style_dialogue_interjections   37 текстов
+  style_literary             37 текстов
+  style_bulletin_abbreviations   36 текстов
+  style_scientific_terms     34 текстов
+
+587 ошибок, первые пять:
+   ('style_bulletin_abbreviations', 'coling::65648d18-be4d-475d-bcab-2fbcdb8ade2d', 'OpenRouter failed after 4 attempts: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of prot')
+   ('style_scientific_terms', 'coling::65648d18-be4d-475d-bcab-2fbcdb8ade2d', 'OpenRouter failed after 4 attempts: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of prot')
+   ('style_news_telegraphic', 'coling::6ea6d618-d59e-455d-a265-490e14187344', 'OpenRouter failed after 4 attempts: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of prot')
+   ('style_simplified', 'coling::6ea6d618-d59e-455d-a265-490e14187344', 'OpenRouter failed after 4 attempts: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of prot')
+   ('style_scientific_terms', 'coling::23d0bd02-f2a0-4752-971c-cac75280ef8f', 'Remote end closed connection without response')
+840 requests, model=anthropic/claude-sonnet-4.5, 8 workers
+  100/840  ошибок: 0
+  200/840  ошибок: 0
+  300/840  ошибок: 47
+  400/840  ошибок: 147
+  500/840  ошибок: 247
+  600/840  ошибок: 347
+  700/840  ошибок: 447
+  800/840  ошибок: 547
+
+saved -> results/coling_style_edits.json
+  style_news_telegraphic     36 текстов
+  style_simplified           36 текстов
+  style_news_dates_suffixes   37 текстов
+  style_dialogue_interjections   37 текстов
+  style_literary             37 текстов
+  style_bulletin_abbreviations   36 текстов
+  style_scientific_terms     34 текстов
+
+587 ошибок, первые пять:
+   ('style_news_telegraphic', 'coling::c986a4de-fede-44ef-b275-ef7634245f1b', 'OpenRouter 403: {"error":{"message":"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspace')
+   ('style_scientific_terms', 'coling::23d0bd02-f2a0-4752-971c-cac75280ef8f', 'OpenRouter 403: {"error":{"message":"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspace')
+   ('style_news_telegraphic', 'coling::6ea6d618-d59e-455d-a265-490e14187344', 'OpenRouter 403: {"error":{"message":"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspace')
+   ('style_scientific_terms', 'coling::7c3f2a9c-bdfc-4800-8191-0036c8cec709', 'OpenRouter 403: {"error":{"message":"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspace')
+   ('style_simplified', 'coling::6ea6d618-d59e-455d-a265-490e14187344', 'OpenRouter 403: {"error":{"message":"Key limit exceeded (monthly limit). Manage it using https://openrouter.ai/workspace')

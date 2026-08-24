@@ -1,0 +1,19 @@
+model,n,"уровень, %",форма,похоже на,лучшее,косинус,дефект?
+GLM130B,39,-35.03329833641954,11.06014714807695,lowercase +0.46; burst_alternate +0.40; style_simplified +0.23,lowercase,0.4553630095738409,True
+7B,41,-29.91934992081545,8.357845691590287,lowercase +0.59; burst_alternate +0.56; style_simplified +0.42,lowercase,0.5907291208686204,True
+13B,40,-24.546200254145607,8.2403871336815,lowercase +0.52; burst_alternate +0.48; style_simplified +0.33,lowercase,0.5222149561111584,True
+65B,43,-19.435292594355918,7.016151440384609,lowercase +0.46; burst_alternate +0.40; style_simplified +0.26,lowercase,0.4568277941097797,True
+dolly,38,-18.420223612703296,7.417169128354475,lowercase +0.49; burst_alternate +0.42; style_simplified +0.26,lowercase,0.48529801749072843,True
+gpt-35,90,-16.16319919487552,14.291988894107412,lowercase +0.37; burst_alternate +0.30; style_simplified +0.12,lowercase,0.3735404070905115,True
+gpt4,38,-13.044979557821785,7.2699812329520865,lowercase +0.52; burst_alternate +0.45; style_simplified +0.30,lowercase,0.5219583967247712,True
+text-davinci-002,25,-12.816932845934053,4.422726963226236,style_scientific_terms +0.22; to_numbered_list +0.08; lowercase -0.13,style_scientific_terms,0.22183847410814966,False
+cohere,40,-11.592674233579844,10.80259663221235,lowercase +0.26; burst_alternate +0.18; style_simplified +0.00,lowercase,0.2609347948446432,True
+gpt-3.5-turbo,98,-8.105942281176185,11.657022932565903,lowercase +0.24; burst_alternate +0.15; style_simplified -0.03,lowercase,0.2357792663599526,True
+mixtral-8x7b,36,-7.125409633015284,8.065496078939473,lowercase +0.26; burst_alternate +0.18; style_simplified +0.01,lowercase,0.26390393683657526,True
+llama3-70b,30,-6.802967967490175,7.541807419816979,lowercase +0.18; burst_alternate +0.09; style_scientific_terms -0.04,lowercase,0.1810580435124448,True
+gpt4o,32,-4.617830548938261,4.842610693386733,style_scientific_terms +0.21; to_numbered_list +0.09; lowercase -0.07,style_scientific_terms,0.20576322958036614,False
+davinci,41,-3.7688182570088062,10.625379742378911,lowercase +0.36; burst_alternate +0.28; style_simplified +0.11,lowercase,0.3582903097916391,True
+text-davinci-003,28,-3.290769734261496,12.867258954019304,lowercase +0.19; burst_alternate +0.10; style_scientific_terms -0.04,lowercase,0.19059912199122744,True
+opt_125m,25,18.20597336788337,11.504827303253432,capitalize_terms +0.94; drop_function_words +0.83; style_bulletin_abbreviations +0.79,capitalize_terms,0.9354928447437788,False
+bloom_7b,31,36.196333917640054,23.59649473186751,drop_function_words +0.91; capitalize_terms +0.90; style_bulletin_abbreviations +0.88,drop_function_words,0.91415881347507,True
+opt_2.7b,26,51.85254117054012,27.777419943830225,capitalize_terms +0.92; drop_function_words +0.90; style_bulletin_abbreviations +0.87,capitalize_terms,0.9185692631145952,False

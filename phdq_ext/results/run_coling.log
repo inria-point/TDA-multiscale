@@ -1,0 +1,23 @@
+Loading weights:   0%|          | 0/134 [00:00<?, ?it/s]Loading weights: 100%|██████████| 134/134 [00:00<00:00, 19536.87it/s]
+[transformers] [1mModernBertModel LOAD REPORT[0m from: answerdotai/ModernBERT-base
+Key               | Status     |  | 
+------------------+------------+--+-
+head.norm.weight  | UNEXPECTED |  | 
+decoder.bias      | UNEXPECTED |  | 
+head.dense.weight | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+device=mps  texts=2000  L=201
+  200/2000  (114s)
+  400/2000  (231s)
+  600/2000  (348s)
+  800/2000  (465s)
+  1000/2000  (582s)
+  1200/2000  (700s)
+  1400/2000  (818s)
+  1600/2000  (937s)
+  1800/2000  (1054s)
+  2000/2000  (1172s)
+готово: 2000 текстов, пропущено 0, 1174s
+saved -> /Users/admin/Desktop/Research/TDA/phdq_ext/scripts/../results/coling_qphd_L201.csv.gz

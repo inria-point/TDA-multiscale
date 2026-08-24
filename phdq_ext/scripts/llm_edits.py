@@ -108,6 +108,51 @@ PROMPTS = {
 
 
 PROMPTS.update({
+    # --- stage 2: styles named for what they are, not for a property to move.
+    # Each is a register a human writer would recognise; the properties they
+    # carry (sentence length, term repetition, abbreviations, numbers) are
+    # measured afterwards rather than dictated, so the mapping from style to
+    # dimension is read off rather than assumed.
+    "style_news_telegraphic": (
+        "Rewrite as a newswire dispatch in telegraphic style: short declarative "
+        "sentences, facts first, no commentary, no transitions, minimal "
+        "adjectives. Attribute claims briefly ('officials said'). Keep the same "
+        "events and details."
+    ),
+    "style_simplified": (
+        "Rewrite in deliberately simple language, as for a reader with a small "
+        "vocabulary: common everyday words only, one idea per sentence, no "
+        "subordinate clauses, no technical terms. Keep all the content."
+    ),
+    "style_news_dates_suffixes": (
+        "Rewrite as a dense news report saturated with specifics: give dates, "
+        "years, quantities and named institutions wherever the content allows, "
+        "and prefer nominalised forms with suffixes (-ation, -ment, -ity, "
+        "-ance) over plain verbs. Invent no facts that contradict the text."
+    ),
+    "style_dialogue_interjections": (
+        "Rewrite as everyday spoken dialogue between two people, with "
+        "interjections and fillers (oh, well, hmm, you know, right, I mean), "
+        "contractions, short turns and interruptions. The same content must be "
+        "conveyed through what they say."
+    ),
+    "style_literary": (
+        "Rewrite as polished literary and essayistic prose: varied rhythm, "
+        "concrete imagery, balanced periodic sentences, an authorial voice. "
+        "Keep the same subject matter and length."
+    ),
+    "style_bulletin_abbreviations": (
+        "Rewrite as a terse information bulletin dense with abbreviations and "
+        "acronyms: introduce an acronym for every institution or repeated "
+        "multi-word term and then use it throughout. Keep the same content."
+    ),
+    "style_scientific_terms": (
+        "Rewrite in an academic scientific register: introduce precise "
+        "technical terminology and named concepts, and then REUSE the same "
+        "terms consistently rather than varying the wording, as a research "
+        "paper does. Add abbreviations for repeated terms. Keep the same "
+        "content and length."
+    ),
     # topics_down executed weakly (0.70) on the small model; reworded in the
     # same absolute, sentence-checkable style that fixed the ideas pair
     "topics_up_v2": (
@@ -148,6 +193,7 @@ def main():
     ap.add_argument("--n-texts", type=int, default=50, help="per genre")
     ap.add_argument("--genres", nargs="+", default=GENRES)
     ap.add_argument("--source", default="human")
+    ap.add_argument("--corpus", choices=["flat", "coling"], default="flat")
     ap.add_argument("--model", default=DEFAULT_MODEL)
     ap.add_argument("--perturbations", nargs="+", default=list(PROMPTS))
     ap.add_argument("--min-words", type=int, default=200)
@@ -157,16 +203,23 @@ def main():
     args = ap.parse_args()
 
     jobs = []
-    for genre in args.genres:
-        picked = 0
-        for text_id, text in load(genre, args.source):
-            if picked >= args.n_texts:
-                break
-            if len(text.split()) < args.min_words:
-                continue
+    if args.corpus == "coling":
+        from coling_data import human_texts
+
+        for key, text in human_texts(args.n_texts, min_words=args.min_words):
             for pname in args.perturbations:
-                jobs.append((pname, genre, text_id, text))
-            picked += 1
+                jobs.append((pname, None, key, text))
+    else:
+        for genre in args.genres:
+            picked = 0
+            for text_id, text in load(genre, args.source):
+                if picked >= args.n_texts:
+                    break
+                if len(text.split()) < args.min_words:
+                    continue
+                for pname in args.perturbations:
+                    jobs.append((pname, genre, text_id, text))
+                picked += 1
     print(f"{len(jobs)} requests, model={args.model}, {args.workers} workers",
           flush=True)
 
@@ -184,7 +237,8 @@ def main():
             temperature=args.temperature,
             max_tokens=max(1024, int(2.2 * len(text.split()))),
         )
-        return pname, f"{genre}::{text_id}", out.strip()
+        key = text_id if genre is None else f"{genre}::{text_id}"
+        return pname, key, out.strip()
 
     with ThreadPoolExecutor(max_workers=args.workers) as pool:
         futures = {pool.submit(run, j): j for j in jobs}

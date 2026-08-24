@@ -35,6 +35,7 @@ def main():
     ap.add_argument("--n-texts", type=int, default=80, help="per genre")
     ap.add_argument("--genres", nargs="+", default=GENRES)
     ap.add_argument("--source", default="human")
+    ap.add_argument("--corpus", choices=["flat", "coling"], default="flat")
     ap.add_argument("--perturbations", nargs="+", default=list(PERTURBATIONS))
     ap.add_argument("--texts-json", default=None,
                     help="precomputed edits: {perturbation: {text_id: text}}")
@@ -60,9 +61,15 @@ def main():
     written = {}
     emb = Embedder()
 
+    if args.corpus == "coling":
+        from coling_data import human_texts
+
+        genres_iter = [("coling", human_texts(args.n_texts, min_words=280))]
+    else:
+        genres_iter = [(g, load(g, args.source)) for g in args.genres]
+
     rows = []
-    for genre in args.genres:
-        texts = load(genre, args.source)
+    for genre, texts in genres_iter:
         # a perturbation may shorten the text below L, so require some slack
         chosen = []
         for i, (text_id, text) in enumerate(texts):
@@ -79,13 +86,15 @@ def main():
             done = skipped = 0
             for i, text_id, text in chosen:
                 if pname in extra:
-                    new = extra[pname].get(f"{genre}::{text_id}")
+                    lookup = text_id if args.corpus == "coling" else f"{genre}::{text_id}"
+                    new = extra[pname].get(lookup)
                     if new is None:
                         skipped += 1
                         continue
                 else:
                     new = apply(pname, text, seed=args.seed + i)
-                written.setdefault(pname, {})[f"{genre}::{text_id}"] = new
+                wkey = text_id if args.corpus == "coling" else f"{genre}::{text_id}"
+                written.setdefault(pname, {})[wkey] = new
                 if args.dump_only:
                     done += 1
                     continue

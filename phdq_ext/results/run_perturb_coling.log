@@ -1,0 +1,38 @@
+loaded 7 perturbations from results/coling_style_edits.json
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/134 [00:00<?, ?it/s]Loading weights: 100%|██████████| 134/134 [00:00<00:00, 5885.45it/s]
+[transformers] [1mModernBertModel LOAD REPORT[0m from: answerdotai/ModernBERT-base
+Key               | Status     |  | 
+------------------+------------+--+-
+head.dense.weight | UNEXPECTED |  | 
+head.norm.weight  | UNEXPECTED |  | 
+decoder.bias      | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+coling: 120 texts
+  identity                    120 texts  (69s)
+  burst_alternate             120 texts  (70s)
+  burst_flatten               120 texts  (71s)
+  drop_sentence_boundaries    120 texts  (70s)
+  loop_phrase                 120 texts  (70s)
+  add_punctuation             120 texts  (71s)
+  strip_punctuation           120 texts  (69s)
+  add_digits                  120 texts  (72s)
+  strip_digits                120 texts  (70s)
+  capitalize_terms            120 texts  (71s)
+  lowercase                   120 texts  (71s)
+  to_numbered_list            120 texts  (71s)
+  drop_function_words         120 texts  (68s)
+  shuffle_words               120 texts  (70s)
+  shuffle_within_sentences    120 texts  (70s)
+  add_typos                   120 texts  (70s)
+  style_news_telegraphic       36 texts (84 skipped)  (21s)
+  style_simplified             36 texts (84 skipped)  (21s)
+  style_news_dates_suffixes    37 texts (83 skipped)  (21s)
+  style_dialogue_interjections   37 texts (83 skipped)  (22s)
+  style_literary               37 texts (83 skipped)  (21s)
+  style_bulletin_abbreviations   36 texts (84 skipped)  (21s)
+  style_scientific_terms       34 texts (86 skipped)  (20s)
+saved -> /Users/admin/Desktop/Research/TDA/phdq_ext/scripts/../results/perturb_L201_coling.csv.gz
+saved -> /Users/admin/Desktop/Research/TDA/phdq_ext/scripts/../results/perturbed_texts_coling.json

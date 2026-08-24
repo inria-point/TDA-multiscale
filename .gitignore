@@ -13,3 +13,6 @@ data_completion.zip
 .env
 *.env
 
+
+# COLING parquet: 234 MB, re-downloadable from HF
+coling/dev.parquet
