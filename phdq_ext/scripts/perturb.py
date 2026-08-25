@@ -719,3 +719,89 @@ PERTURBATIONS.update({
     "splice_sentences": splice_sentences,
     "splice_pairs": splice_pairs,
 })
+
+
+# ---------------------------------------------------------------------------
+# The mirror of collapse_vocabulary: instead of forcing the content words down
+# onto the k most frequent ones, give every one of them a word that occurs
+# nowhere else in the text.
+#
+# Replacements are matched on length *and* on frequency rank. Length alone
+# would let the draw wander into rarer vocabulary than the original, and word
+# rarity is what PC3 tracks; matching the rank band keeps the mean log rank of
+# the text where it was, so the perturbation isolates type diversity.
+#
+# Function words, punctuation, word order and length in tokens are untouched,
+# exactly as in collapse_vocabulary, so the pair differs in one thing only.
+# ---------------------------------------------------------------------------
+
+_VOCAB = {}
+
+
+def _vocab_pool():
+    """Corpus content words bucketed by length, each bucket in rank order."""
+    if _VOCAB:
+        return _VOCAB
+    from collections import Counter, defaultdict
+
+    counts = Counter()
+    for t in _corpus():
+        counts.update(WORD.findall(t.lower()))
+    rank = {w: i for i, (w, _) in enumerate(counts.most_common())}
+    by_len = defaultdict(list)
+    for w, r in sorted(rank.items(), key=lambda kv: kv[1]):
+        if w in FUNCTION_WORDS or len(w) <= 3:
+            continue
+        by_len[len(w)].append(w)
+    _VOCAB.update(by_len=dict(by_len), rank=rank,
+                  ranks={L: [rank[w] for w in ws] for L, ws in by_len.items()})
+    return _VOCAB
+
+
+def expand_vocabulary(text, rng, share=1.0, window=60):
+    """Replace content words with fresh ones of the same length and rank band.
+
+    share  -- fraction of content words to replace
+    window -- how far along the rank-ordered bucket the draw may reach
+    """
+    import bisect
+
+    pool = _vocab_pool()
+    by_len, ranks, rank = pool["by_len"], pool["ranks"], pool["rank"]
+    words = text.split()
+    cores = [WORD.search(w) for w in words]
+    own = {c.group().lower() for c in cores if c}
+    used = set()
+    out = []
+    for w, c in zip(words, cores):
+        if not c:
+            out.append(w)
+            continue
+        low = c.group().lower()
+        if low in FUNCTION_WORDS or len(low) <= 3 or rng.random() > share:
+            out.append(w)
+            continue
+        L = len(low) if by_len.get(len(low)) else len(low) - 1
+        bucket = by_len.get(L)
+        if not bucket:
+            out.append(w)
+            continue
+        rs = ranks[L]
+        i0 = bisect.bisect_left(rs, rank.get(low, rs[len(rs) // 2]))
+        cand = [x for x in bucket[max(0, i0 - window):i0 + window]
+                if x not in own and x not in used]
+        if not cand:
+            out.append(w)
+            continue
+        repl = cand[rng.randrange(len(cand))]
+        used.add(repl)
+        if c.group()[0].isupper():
+            repl = repl.capitalize()
+        out.append(w.replace(c.group(), repl))
+    return " ".join(out)
+
+
+PERTURBATIONS.update({
+    "expand_vocab_100": lambda t, rng: expand_vocabulary(t, rng, share=1.0),
+    "expand_vocab_50": lambda t, rng: expand_vocabulary(t, rng, share=0.5),
+})

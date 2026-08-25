@@ -232,6 +232,57 @@ PROMPTS.update({
 })
 
 
+# ---------------------------------------------------------------------------
+# Probes for the second component.
+#
+# PC2 is fine-scale dimension minus coarse-scale dimension. The reading being
+# tested: it measures how many distinct *contexts* a given token appears in,
+# holding the token inventory fixed. A contextual embedding of the same word
+# spreads out when its surroundings vary and collapses onto itself when they
+# do not, which is a fine-scale effect; the topic, which sets the coarse scale,
+# is untouched by either.
+#
+# Everything below therefore holds vocabulary and subject matter constant on
+# purpose and varies only how sentences are built. That is what makes the test
+# separable from PC1: if the reading is right these should spread along PC2
+# while staying in a narrow band on PC1.
+#
+# Prediction registered before running:
+#   syntax_varied, syntax_complex  -> PC2 up
+#   syntax_monotone, terms_long, context_locked -> PC2 down
+#   all six -> |PC1| well below the vocabulary perturbations
+PROMPTS.update({
+    "syntax_monotone": (
+        "Rewrite so that every sentence is built the same way: subject, then "
+        "verb, then object, then one prepositional phrase, in that order. No "
+        "subordination, no clauses joined by conjunctions, and every sentence "
+        "about the same length. Keep the same content words and the same "
+        "subject matter — change only how the sentences are built."
+    ),
+    "syntax_varied": (
+        "Rewrite so that no two consecutive sentences are built the same way. "
+        "Alternate deliberately: active and passive; opening with the subject, "
+        "with a subordinate clause, with a participial phrase, with a "
+        "prepositional phrase; short and long; statement and rhetorical "
+        "question. Keep the same content words and the same subject matter — "
+        "change only how the sentences are built."
+    ),
+    "context_locked": (
+        "Rewrite so that every term occurring more than once always appears "
+        "inside exactly the same surrounding phrase. If the first mention is "
+        "'the proposed model, trained on the full corpus', then every later "
+        "mention must repeat that wording verbatim rather than shortening it "
+        "or rephrasing it. Keep the same content and the same length."
+    ),
+    "terms_long": (
+        "Rewrite in the manner of a legal or regulatory document: replace "
+        "every abbreviation, acronym and short noun with its full multi-word "
+        "designation, and repeat that full designation in every subsequent "
+        "mention without ever shortening it. Keep the same content and length."
+    ),
+})
+
+
 def build_prompt(instruction, text):
     n = len(text.split())
     lo, hi = int(n * 0.95), int(n * 1.1)

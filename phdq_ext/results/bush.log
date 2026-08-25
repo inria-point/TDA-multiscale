@@ -1,0 +1,29 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/134 [00:00<?, ?it/s]Loading weights: 100%|██████████| 134/134 [00:00<00:00, 5362.54it/s]
+[transformers] [1mModernBertModel LOAD REPORT[0m from: answerdotai/ModernBERT-base
+Key               | Status     |  | 
+------------------+------------+--+-
+head.norm.weight  | UNEXPECTED |  | 
+head.dense.weight | UNEXPECTED |  | 
+decoder.bias      | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+  syntax/burst_1to4               30
+  syntax/no_sent_bounds           30
+  loop/phrase12w_x4               30
+  surface/punct_add               30
+  surface/punct_strip             30
+  surface/digits_add              30
+  surface/caps_terms              30
+  surface/lowercase               30
+  surface/numbered_list           30
+  syntax/drop_funcwords           30
+  shuffle/words                   30
+  surface/typos                   30
+  style/telegraphic               30
+  style/simplified                30
+  style/news_dates                30
+  style/dialogue_interj           30
+  style/literary                  30
+  style/bulletin_abbrev           30

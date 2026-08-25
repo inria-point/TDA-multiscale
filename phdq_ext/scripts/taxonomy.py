@@ -54,6 +54,10 @@ KEEP = {
     "collapse_vocab_60":   "vocab/top60",
     "collapse_vocab_25":   "vocab/top25",
     "collapse_vocab_10":   "vocab/top10",
+    # the mirror: every content word replaced by a fresh one of the same
+    # length and frequency band, so type diversity moves and rarity does not
+    "expand_vocab_50":     "vocab/expand50",
+    "expand_vocab_100":    "vocab/expand100",
     # --- LLM asked for less content
     "lexical_diversity_down_s": "deplete/lexdiv_down",
     "ideas_down_v2":            "deplete/ideas_down",
