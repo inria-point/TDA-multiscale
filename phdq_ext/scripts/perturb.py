@@ -533,6 +533,7 @@ def collapse_vocabulary(text, rng, keep=60):
 
 PERTURBATIONS.update({
     "collapse_vocab_60": lambda t, rng: collapse_vocabulary(t, rng, keep=60),
+    "collapse_vocab_50": lambda t, rng: collapse_vocabulary(t, rng, keep=50),
     "collapse_vocab_25": lambda t, rng: collapse_vocabulary(t, rng, keep=25),
     "collapse_vocab_10": lambda t, rng: collapse_vocabulary(t, rng, keep=10),
 })

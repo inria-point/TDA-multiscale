@@ -4,3 +4,20 @@
   300/720  ошибок: 0
   400/720  ошибок: 0
   500/720  ошибок: 2
+  600/720  ошибок: 90
+  700/720  ошибок: 188
+
+saved -> results/coling_pc2_probes.json
+  syntax_simple              86 текстов
+  syntax_complex             85 текстов
+  syntax_monotone            86 текстов
+  syntax_varied              85 текстов
+  context_locked             85 текстов
+  terms_long                 85 текстов
+
+208 ошибок, первые пять:
+   ('syntax_simple', 'coling::9600c031-1ba2-4882-9aa0-8cb6b07d966a', 'Remote end closed connection without response')
+   ('syntax_complex', 'coling::9600c031-1ba2-4882-9aa0-8cb6b07d966a', 'Remote end closed connection without response')
+   ('syntax_complex', 'coling::040c1d28-4583-4101-87e6-0631f517d0b5', 'apiyi 403: {"error":{"message":"user [53750] quota [11948] preConsumedQuota [17024] is not enough","localized_message":"')
+   ('syntax_complex', 'coling::b535c4fe-fe84-4ce7-af76-446c58fe22a2', 'apiyi 403: {"error":{"message":"user [53750] quota [11948] preConsumedQuota [14129] is not enough","localized_message":"')
+   ('syntax_varied', 'coling::040c1d28-4583-4101-87e6-0631f517d0b5', 'apiyi 403: {"error":{"message":"user [53750] quota [11948] preConsumedQuota [17098] is not enough","localized_message":"')

@@ -283,6 +283,58 @@ PROMPTS.update({
 })
 
 
+# ---------------------------------------------------------------------------
+# Structure-preserving ways to collapse the short edges.
+#
+# Every perturbation in the set that pulls the short MST edges together is a
+# loop, and every loop destroys the text, so "low dimension implies a broken
+# text" was left standing by construction rather than by evidence. Measuring
+# real source code and real numeric tables at equal length shows it is false:
+# code collapses three times as many edges as prose and a table collapses
+# seven times as many (24.4% against 3.3%, the same as the harshest echo),
+# while both are perfectly well-formed texts of their genre.
+#
+# The two do it differently, and both routes are worth having as rewrites of
+# the same human text. A table repeats a field label inside an identical frame
+# once per row -- identical context, distant position. Code repeats an
+# identifier a few tokens away -- identical context and adjacent. Anaphora is
+# the prose form of the first, a catechism the prose form of the second.
+PROMPTS.update({
+    "style_record_fields": (
+        "Rewrite the content as a list of structured records. Every record "
+        "must use the same field labels in the same order, spelled the same "
+        "way every time, one field per line, in the form 'Label: value'. Do "
+        "not vary the labels or abbreviate them after the first record. Keep "
+        "the same content."
+    ),
+    "style_anaphora": (
+        "Rewrite so that every sentence opens with the same three or four "
+        "words, repeated verbatim, in the manner of rhetorical anaphora. The "
+        "text must still read as deliberate, well-formed prose and carry the "
+        "same content."
+    ),
+    "style_catechism": (
+        "Rewrite as a sequence of question and answer pairs. Every question "
+        "must be phrased with the same opening formula, and every answer must "
+        "begin by restating the subject of its question word for word. Keep "
+        "the same content."
+    ),
+    "style_code": (
+        "Rewrite the content as a documented Python module: functions, "
+        "variable assignments, and docstrings that carry the meaning of the "
+        "original. Reuse the same identifiers throughout rather than "
+        "inventing synonyms. The result must be syntactically valid Python."
+    ),
+    "style_equations": (
+        "Rewrite the content as a mathematical derivation: numbered "
+        "equations, symbols defined once and then reused, and short "
+        "connecting sentences between steps. Reuse the same symbols "
+        "throughout rather than introducing new notation for the same "
+        "quantity."
+    ),
+})
+
+
 def build_prompt(instruction, text):
     n = len(text.split())
     lo, hi = int(n * 0.95), int(n * 1.1)

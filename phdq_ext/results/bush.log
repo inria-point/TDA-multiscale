@@ -27,3 +27,33 @@ Notes:
   style/dialogue_interj           30
   style/literary                  30
   style/bulletin_abbrev           30
+  style/scientific_terms          30
+  deplete/ideas_down              30
+  enrich/lexdiv_up                30
+  deplete/lexdiv_down             29
+  rarity/rare_words               29
+  rarity/common_words             30
+  loop/echo6w_x2                  30
+  loop/echo6w_x4                  30
+  loop/tail_keep60_unit1w         30
+  loop/tail_keep60_unit3w         30
+  loop/tail_keep40_unit3w         30
+  loop/tail_keep20_unit3w         30
+  loop/tail_keep40_unit3w_drift   30
+  vocab/top60                     30
+  vocab/top25                     30
+  vocab/top10                     30
+  ngram/n2                        30
+  ngram/n4                        30
+  vocab/expand100                 30
+  vocab/expand50                  30
+  enrich/topics_up_hard           29
+
+ранговые корреляции по 39 пертурбациям
+
+    признак d_fine d_coarse    PC1   PC2
+bush_radius +0.80*    +0.15 +0.76* +0.38
+ pos_spread  +0.28   +0.42* +0.74* -0.03
+  rep_share  -0.31    -0.38 -0.94* +0.02
+
+* p < 0.01

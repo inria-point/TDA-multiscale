@@ -1,0 +1,60 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/134 [00:00<?, ?it/s]Loading weights: 100%|██████████| 134/134 [00:00<00:00, 6084.82it/s]
+[transformers] [1mModernBertModel LOAD REPORT[0m from: answerdotai/ModernBERT-base
+Key               | Status     |  | 
+------------------+------------+--+-
+head.norm.weight  | UNEXPECTED |  | 
+decoder.bias      | UNEXPECTED |  | 
+head.dense.weight | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+  syntax/burst_1to4               25
+  syntax/no_sent_bounds           25
+  loop/phrase12w_x4               25
+  surface/punct_add               25
+  surface/punct_strip             25
+  surface/digits_add              25
+  surface/caps_terms              25
+  surface/lowercase               25
+  surface/numbered_list           25
+  syntax/drop_funcwords           25
+  shuffle/words                   25
+  surface/typos                   25
+  style/telegraphic               25
+  style/simplified                25
+  style/news_dates                25
+  style/dialogue_interj           25
+  style/literary                  25
+  style/bulletin_abbrev           25
+  style/scientific_terms          25
+  deplete/ideas_down              24
+  enrich/lexdiv_up                25
+  deplete/lexdiv_down             23
+  rarity/rare_words               24
+  rarity/common_words             25
+  loop/echo6w_x2                  25
+  loop/echo6w_x4                  25
+  loop/tail_keep60_unit1w         25
+  loop/tail_keep60_unit3w         25
+  loop/tail_keep40_unit3w         25
+  loop/tail_keep20_unit3w         25
+  loop/tail_keep40_unit3w_drift   25
+  vocab/top60                     25
+  vocab/top25                     25
+  vocab/top10                     25
+  ngram/n2                        25
+  ngram/n4                        25
+  vocab/expand100                 25
+  vocab/expand50                  25
+  enrich/topics_up_hard           17
+
+ранговые корреляции по 39 пертурбациям
+
+    признак d_общий d_мелкий d_крупный мелк.-круп.    PC1    PC2
+bush_radius  +0.81*   +0.77*     +0.23      +0.43* +0.80*  +0.32
+ gap_tokens  +0.57*    +0.29     +0.25       +0.24 +0.58*  +0.13
+ near_share   -0.21    -0.19     -0.09       -0.23  -0.23  -0.12
+  collapsed  -0.68*   -0.81*     -0.04      -0.62* -0.68* -0.51*
+
+* p < 0.01
