@@ -939,3 +939,107 @@ PERTURBATIONS.update({
     "marker_p6": lambda t, rng: interleave_marker(t, rng, period=6),
     "marker_p12": lambda t, rng: interleave_marker(t, rng, period=12),
 })
+
+
+# ---------------------------------------------------------------------------
+# Swapping the once-used vocabulary.
+#
+# The long edges, which carry the coarse scale, are 64.8% edges with a hapax
+# at one end -- against 0.4% at the short end. A word used once cannot form a
+# short edge at all: a short edge needs a near-duplicate, and a hapax has no
+# second occurrence of itself, while two *different* content words are never
+# close (0.2% of short edges). So the once-used vocabulary is the coarse
+# scale's own material, and the repeated vocabulary is the fine scale's.
+#
+# The perturbation acts on that material and nothing else: every content word
+# occurring exactly once is replaced, every word occurring more than once is
+# left alone. The count of hapax is therefore unchanged and so is the
+# repetition skeleton; what changes is how far apart the once-used words are
+# in meaning.
+#
+# The pair is the test. hapax_swap_wide draws each replacement from a
+# different domain of the corpus, so the injected words span many subjects;
+# hapax_swap_local draws them all from one domain, so they are as coherent as
+# the originals. Same operation, same counts, same lengths -- only the spread
+# differs. If the coarse scale is about the spread of once-used vocabulary,
+# the first should raise it and the second should not.
+# ---------------------------------------------------------------------------
+
+_DOMAIN_VOCAB = {}
+
+
+def _domain_vocab():
+    """Content words of the human corpus, grouped by domain and by length."""
+    if _DOMAIN_VOCAB:
+        return _DOMAIN_VOCAB
+    import os
+    from collections import Counter, defaultdict
+
+    import pandas as pd
+
+    path = os.path.join(os.path.dirname(__file__), "..", "..", "coling",
+                        "pool.parquet")
+    p = pd.read_parquet(path)
+    p = p[p["is_human"]]
+    for dom, g in p.groupby("sub_source"):
+        counts = Counter()
+        for t in g["text"]:
+            counts.update(WORD.findall(t.lower()))
+        by_len = defaultdict(list)
+        for w, c in counts.items():
+            if w in FUNCTION_WORDS or len(w) <= 3 or c < 2:
+                continue
+            by_len[len(w)].append(w)
+        if sum(len(v) for v in by_len.values()) > 200:
+            _DOMAIN_VOCAB[dom] = dict(by_len)
+    return _DOMAIN_VOCAB
+
+
+def swap_hapax(text, rng, wide=True, share=1.0):
+    """Replace once-used content words with once-used words from elsewhere.
+
+    wide  -- draw each replacement from a different domain, or all from one
+    share -- fraction of the hapax replaced
+    """
+    vocab = _domain_vocab()
+    doms = sorted(vocab)
+    if not doms:
+        return text
+    home = doms[rng.randrange(len(doms))]
+
+    from collections import Counter
+
+    words = text.split()
+    cores = [WORD.search(w) for w in words]
+    counts = Counter(c.group().lower() for c in cores if c)
+    used = set(counts)
+    out = []
+    for w, c in zip(words, cores):
+        low = c.group().lower() if c else None
+        if (low is None or low in FUNCTION_WORDS or len(low) <= 3
+                or counts[low] != 1 or rng.random() > share):
+            out.append(w)
+            continue
+        dom = doms[rng.randrange(len(doms))] if wide else home
+        bucket = vocab[dom].get(len(low)) or vocab[dom].get(len(low) - 1)
+        if not bucket:
+            out.append(w)
+            continue
+        cand = [x for x in bucket if x not in used]
+        if not cand:
+            out.append(w)
+            continue
+        repl = cand[rng.randrange(len(cand))]
+        used.add(repl)
+        if c.group()[0].isupper():
+            repl = repl.capitalize()
+        out.append(w.replace(c.group(), repl))
+    return " ".join(out)
+
+
+PERTURBATIONS.update({
+    "hapax_swap_wide": lambda t, rng: swap_hapax(t, rng, wide=True),
+    "hapax_swap_wide_50": lambda t, rng: swap_hapax(t, rng, wide=True,
+                                                    share=0.5),
+    "hapax_swap_local": lambda t, rng: swap_hapax(t, rng, wide=False),
+})
