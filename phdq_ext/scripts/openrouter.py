@@ -1,7 +1,9 @@
-"""Minimal OpenRouter client: key handling, retries, on-disk response cache.
+"""Minimal chat-completions client: key handling, retries, on-disk cache.
 
-The key is read from the environment or from phdq_ext/.env, which is
-gitignored. It is never logged or written into results.
+Provider-agnostic, because any OpenAI-compatible endpoint will do and the
+project has already outrun one monthly quota. Select with PROVIDER or the
+--provider flag of the calling script; keys live in phdq_ext/.env, which is
+gitignored, and are never logged or written into results.
 """
 import hashlib
 import json
@@ -13,28 +15,39 @@ import urllib.request
 BASE = os.path.join(os.path.dirname(__file__), "..")
 CACHE_DIR = os.path.join(BASE, "cache", "openrouter")
 ENV_PATH = os.path.join(BASE, ".env")
-API_URL = "https://openrouter.ai/api/v1/chat/completions"
+
+PROVIDERS = {
+    "openrouter": {"url": "https://openrouter.ai/api/v1/chat/completions",
+                   "env": "OPENROUTER_API_KEY"},
+    "apiyi": {"url": "https://api.apiyi.com/v1/chat/completions",
+              "env": "APIYI_API_KEY"},
+    "openai": {"url": "https://api.openai.com/v1/chat/completions",
+               "env": "OPENAI_API_KEY"},
+}
+PROVIDER = os.environ.get("LLM_PROVIDER", "openrouter")
+API_URL = PROVIDERS[PROVIDER]["url"]
 
 
-def get_key():
-    key = os.environ.get("OPENROUTER_API_KEY")
+def get_key(provider=None):
+    name = PROVIDERS[provider or PROVIDER]["env"]
+    key = os.environ.get(name)
     if key:
         return key.strip()
     if os.path.exists(ENV_PATH):
         with open(ENV_PATH) as f:
             for line in f:
                 line = line.strip()
-                if line.startswith("OPENROUTER_API_KEY"):
+                if line.startswith(name):
                     return line.split("=", 1)[1].strip().strip("'\"")
-    raise RuntimeError(
-        f"no OPENROUTER_API_KEY: set it in the environment or in {ENV_PATH}"
-    )
+    raise RuntimeError(f"no {name}: set it in the environment or in {ENV_PATH}")
 
 
 def complete(prompt, model, temperature=0.7, max_tokens=2048, system=None,
-             retries=4, timeout=180, use_cache=True):
+             retries=4, timeout=180, use_cache=True, provider=None):
     """One chat completion. Cached on disk by (model, system, prompt, temp)."""
     os.makedirs(CACHE_DIR, exist_ok=True)
+    # the provider is not part of the cache key: the same model through a
+    # different gateway is the same request
     key_material = json.dumps(
         [model, system, prompt, temperature, max_tokens], sort_keys=True
     )
@@ -55,11 +68,12 @@ def complete(prompt, model, temperature=0.7, max_tokens=2048, system=None,
 
     last = None
     for attempt in range(retries):
+        prov = provider or PROVIDER
         req = urllib.request.Request(
-            API_URL,
+            PROVIDERS[prov]["url"],
             data=payload,
             headers={
-                "Authorization": f"Bearer {get_key()}",
+                "Authorization": f"Bearer {get_key(prov)}",
                 "Content-Type": "application/json",
             },
         )
@@ -81,9 +95,9 @@ def complete(prompt, model, temperature=0.7, max_tokens=2048, system=None,
                 except Exception:
                     pass
                 if exc.code in (400, 401, 403):  # not worth retrying
-                    raise RuntimeError(f"OpenRouter {exc.code}: {detail}") from exc
+                    raise RuntimeError(f"{prov} {exc.code}: {detail}") from exc
             time.sleep(2 ** attempt)
-    raise RuntimeError(f"OpenRouter failed after {retries} attempts: {last}")
+    raise RuntimeError(f"{prov} failed after {retries} attempts: {last}")
 
 
 def check():

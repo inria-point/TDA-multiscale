@@ -120,7 +120,7 @@ def heatmap(mat, title, path, vmax=None, cmap="RdBu_r"):
 
 
 def main():
-    src = os.path.join(BASE, "results", "perturb_L201_coling.csv.gz")
+    src = os.path.join(BASE, "results", "perturb_L201_coling_all.csv.gz")
     d = pd.read_csv(src)
     d = d[d["d_hat"] > 0]
     p = paired(d)

@@ -1,0 +1,27 @@
+960 requests, model=claude-sonnet-4-5-20250929, 8 workers
+  100/960  ошибок: 0
+  200/960  ошибок: 0
+  300/960  ошибок: 0
+  400/960  ошибок: 0
+  500/960  ошибок: 8
+  600/960  ошибок: 8
+  700/960  ошибок: 8
+  800/960  ошибок: 8
+  900/960  ошибок: 8
+
+saved -> results/coling_v2_edits.json
+  ideas_up_v2               119 текстов
+  ideas_down_v2             119 текстов
+  topics_up_v2              119 текстов
+  topics_down_v2            119 текстов
+  lexical_diversity_up_s    119 текстов
+  lexical_diversity_down_s  119 текстов
+  words_rare_s              119 текстов
+  words_common_s            119 текстов
+
+8 ошибок, первые пять:
+   ('words_common_s', 'coling::31049c2c-a6a8-44a9-acaa-b8e3b1237658', 'apiyi failed after 4 attempts: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol ')
+   ('ideas_up_v2', 'coling::564547e8-c996-4ee6-8beb-abfe80624a51', 'apiyi failed after 4 attempts: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol ')
+   ('ideas_down_v2', 'coling::564547e8-c996-4ee6-8beb-abfe80624a51', 'apiyi failed after 4 attempts: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol ')
+   ('topics_up_v2', 'coling::564547e8-c996-4ee6-8beb-abfe80624a51', 'apiyi failed after 4 attempts: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol ')
+   ('topics_down_v2', 'coling::564547e8-c996-4ee6-8beb-abfe80624a51', 'apiyi failed after 4 attempts: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol ')

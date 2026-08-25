@@ -1,0 +1,5 @@
+120 requests, model=claude-sonnet-4-5-20250929, 6 workers
+  100/120  ошибок: 0
+
+saved -> results/coling_temp1.7.json
+  style_literary            120 текстов

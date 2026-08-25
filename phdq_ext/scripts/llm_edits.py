@@ -108,6 +108,30 @@ PROMPTS = {
 
 
 PROMPTS.update({
+    # Strengthened variants. The instruction is the same in kind, stated with a
+    # quantitative target instead of a comparative, because "more diverse" has
+    # no ceiling a model can aim at while "no content word twice" does. This is
+    # the single-call route to a larger magnitude; the other is to apply the
+    # ordinary operator to its own output, which raises the magnitude without
+    # touching the direction at all.
+    "lexical_diversity_up_hard": (
+        "Rewrite so that NO content word appears more than twice in the entire "
+        "text. Every repeated notion must be named by a different word each "
+        "time it recurs: use synonyms, hypernyms, paraphrases. Function words "
+        "may repeat freely. Do not add or remove ideas."
+    ),
+    "ideas_up_hard": (
+        "Rewrite so that EVERY CLAUSE carries a fact not stated anywhere else "
+        "in the text. Not merely every sentence — every clause. Nothing may be "
+        "restated, summarised or elaborated. If a sentence has three clauses "
+        "it must carry three separate pieces of information."
+    ),
+    "topics_up_hard": (
+        "Rewrite so that EVERY SENTENCE belongs to a different subject area "
+        "from the one before it — different field, different domain of life, "
+        "different register of knowledge. The text must not be assignable to "
+        "any single topic at all, while still reading as continuous prose."
+    ),
     # --- stage 2: styles named for what they are, not for a property to move.
     # Each is a register a human writer would recognise; the properties they
     # carry (sentence length, term repetition, abbreviations, numbers) are
@@ -177,6 +201,37 @@ for _p in ["lexical_diversity_up", "lexical_diversity_down",
     PROMPTS[_p + "_s"] = PROMPTS[_p]
 
 
+# Iterated variants, for raising the magnitude without changing the direction.
+#
+# Iteration only compounds when the instruction is *comparative*. The absolute
+# forms used elsewhere -- "every sentence must introduce a new fact" -- are
+# idempotent: once the text satisfies the condition a second pass has nothing
+# to do and returns it unchanged. These are therefore phrased against the text
+# as received, so each pass pushes beyond wherever the previous one stopped.
+PROMPTS.update({
+    "lexical_diversity_up_more": (
+        "This text has already been rewritten once for lexical variety. Push it "
+        "FURTHER than it currently is: find every content word that still "
+        "occurs more than once and replace all but one occurrence with a "
+        "different word. Judge against the text as given, not against some "
+        "ideal. Do not add or remove ideas."
+    ),
+    "ideas_up_more": (
+        "This text has already been rewritten once to carry more distinct "
+        "ideas. Push it FURTHER than it currently is: find every sentence that "
+        "still restates, elaborates or merely illustrates another and replace "
+        "it with a sentence carrying a fact stated nowhere else. Judge against "
+        "the text as given."
+    ),
+    "topics_up_more": (
+        "This text has already been rewritten once for topical variety. Push it "
+        "FURTHER than it currently is: find every pair of adjacent sentences "
+        "that still share a subject area and move one of them to a different "
+        "field. Judge against the text as given."
+    ),
+})
+
+
 def build_prompt(instruction, text):
     n = len(text.split())
     lo, hi = int(n * 0.95), int(n * 1.1)
@@ -194,7 +249,16 @@ def main():
     ap.add_argument("--genres", nargs="+", default=GENRES)
     ap.add_argument("--source", default="human")
     ap.add_argument("--corpus", choices=["flat", "coling"], default="flat")
+    ap.add_argument("--input-json", default=None,
+                    help="feed a previous run's output back in: applies the "
+                         "same operator again, which raises the magnitude "
+                         "without changing its direction")
+    ap.add_argument("--input-key", default=None,
+                    help="which perturbation of --input-json to use as input; "
+                         "defaults to the one being generated")
     ap.add_argument("--model", default=DEFAULT_MODEL)
+    ap.add_argument("--provider", default=None,
+                    help="openrouter | apiyi | openai")
     ap.add_argument("--perturbations", nargs="+", default=list(PROMPTS))
     ap.add_argument("--min-words", type=int, default=200)
     ap.add_argument("--workers", type=int, default=8)
@@ -202,13 +266,24 @@ def main():
     ap.add_argument("--out", default=os.path.join(BASE, "results", "llm_edits.json"))
     args = ap.parse_args()
 
+    prev = {}
+    if args.input_json:
+        with open(args.input_json) as f:
+            prev = json.load(f)
+
     jobs = []
     if args.corpus == "coling":
         from coling_data import human_texts
 
         for key, text in human_texts(args.n_texts, min_words=args.min_words):
             for pname in args.perturbations:
-                jobs.append((pname, None, key, text))
+                src = text
+                if prev:
+                    base = args.input_key or pname.rsplit("_x", 1)[0]
+                    src = prev.get(base, {}).get(key)
+                    if src is None:
+                        continue
+                jobs.append((pname, None, key, src))
     else:
         for genre in args.genres:
             picked = 0
@@ -236,6 +311,7 @@ def main():
             system=SYSTEM,
             temperature=args.temperature,
             max_tokens=max(1024, int(2.2 * len(text.split()))),
+            provider=args.provider,
         )
         key = text_id if genre is None else f"{genre}::{text_id}"
         return pname, key, out.strip()

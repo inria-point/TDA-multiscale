@@ -32,6 +32,7 @@ from build_property_map import DEFECTS, paired, profiles
 
 BASE = os.path.join(os.path.dirname(__file__), "..")
 MODES = ["q_small", "q_large"]
+ALL_MODES = ["q_small", "q_large", "q0.5_range"]
 
 
 def generator_profiles(qphd, min_texts=25):
@@ -169,21 +170,34 @@ def main():
     for _, r in res.iterrows():
         print(f"  {r['model']:18s} {r['похоже на']}")
 
-    # картинка: профили генераторов по q
-    fig, axes = plt.subplots(1, len(MODES), figsize=(7.2 * len(MODES), 5.2),
+    # картинка: профили генераторов по q, все три режима
+    d = qphd[qphd["d_hat"] > 0].copy()
+    human = (d[d["is_human"]].groupby(["sub_source", "mode", "q"])["d_hat"]
+             .mean().rename("h"))
+    d = d.join(human, on=["sub_source", "mode", "q"]).dropna(subset=["h"])
+    d["rel"] = (d["d_hat"] - d["h"]) / d["h"] * 100
+    keep = n[n >= 25].index.difference(["human"])
+
+    fig, axes = plt.subplots(1, len(ALL_MODES), figsize=(6.4 * len(ALL_MODES), 5.6),
                              sharey=True)
-    for ax, mode in zip(np.atleast_1d(axes), MODES):
-        G = gen[mode]
-        order = G.mean(1).sort_values()
-        for model in order.index:
-            ax.plot(G.columns, G.loc[model], lw=1.1, alpha=0.75, label=model)
-        ax.axhline(0, c="k", lw=1)
-        ax.set_title(mode, fontsize=10)
+    # colour by the sign of the deviation, so the two families are visible
+    for ax, mode in zip(axes, ALL_MODES):
+        M = (d[(d["mode"] == mode) & d["model"].isin(keep)]
+             .pivot_table(index="model", columns="q", values="rel"))
+        base = M[[c for c in M.columns if c <= 0.3]].mean(axis=1)
+        for model in base.sort_values().index:
+            ax.plot(M.columns, M.loc[model], lw=1.2, alpha=0.85,
+                    color="#c53030" if base[model] > 0 else "#2b6cb0",
+                    label=model)
+        ax.axhline(0, c="k", lw=1.2)
+        ax.set_title(mode, fontsize=11)
         ax.set_xlabel("q")
         ax.grid(alpha=0.3)
-    np.atleast_1d(axes)[0].set_ylabel("d относительно человека в том же домене, %")
-    np.atleast_1d(axes)[-1].legend(fontsize=5.5, ncol=2, loc="upper right")
-    fig.suptitle("Профили генераторов")
+    axes[0].set_ylabel("d относительно человека в том же домене, %")
+    axes[-1].legend(fontsize=6, ncol=2, loc="best")
+    fig.suptitle("Профили генераторов: красные выше человека на малых q, "
+                 "синие ниже\nпересечение нуля по q — отдельная ось, "
+                 "не сводимая к уровню")
     fig.tight_layout()
     path = os.path.join(BASE, "figures", "generator_profiles.png")
     fig.savefig(path, dpi=150)

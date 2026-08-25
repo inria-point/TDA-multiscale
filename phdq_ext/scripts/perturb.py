@@ -426,3 +426,296 @@ PERTURBATIONS.update({
     "to_numbered_list": to_numbered_list,
     "drop_function_words": drop_function_words,
 })
+
+
+# ---------------------------------------------------------------------------
+# Degeneracy, closer to what a failing decoder actually produces.
+#
+# The original loop_phrase splices one globally chosen phrase through the whole
+# text, cruder than reality: real loops are local and start partway in. The
+# corpus shows the pattern -- flan_t5 emitting "Select option one / two /
+# three ... salik account" with a drifting detail, GLM130B repeating "However,
+# Tesco said it Tesco said it". So the collapse is parameterised instead, by
+# where it begins, how long the repeated unit is and how often it repeats,
+# which also makes a magnitude series possible.
+# ---------------------------------------------------------------------------
+
+def loop_tail(text, rng, keep=0.4, unit=3, drift=0.0):
+    """Normal prose for the first `keep` of the text, then a collapse into
+    repeating a short unit until the original length is filled.
+
+    unit  -- words in the repeated fragment (1 = a single word)
+    drift -- chance of re-picking the fragment, so the repetition wanders
+             rather than being literally identical, as real loops do
+    """
+    words = text.split()
+    n = len(words)
+    cut = max(unit + 1, int(n * keep))
+    out = list(words[:cut])
+    frag = words[max(0, cut - unit):cut]
+    while len(out) < n:
+        if drift and rng.random() < drift:
+            j = rng.randrange(0, max(1, cut - unit))
+            frag = words[j:j + unit]
+        out.extend(frag)
+    return " ".join(out[:n])
+
+
+def loop_local(text, rng, span=6, repeats=2):
+    """Repeat what was just said, throughout: a drifting local stutter."""
+    words = text.split()
+    out, i = [], 0
+    while i < len(words):
+        chunk = words[i:i + span]
+        out.extend(chunk)
+        for _ in range(repeats):
+            out.extend(chunk)
+        i += span
+    return " ".join(out[:len(words)])
+
+
+def _tail(**kw):
+    return lambda text, rng: loop_tail(text, rng, **kw)
+
+
+def _local(**kw):
+    return lambda text, rng: loop_local(text, rng, **kw)
+
+
+PERTURBATIONS.update({
+    "loop_tail_word": _tail(keep=0.6, unit=1),
+    "loop_tail_short": _tail(keep=0.6, unit=3),
+    "loop_tail_mid": _tail(keep=0.4, unit=3),
+    "loop_tail_early": _tail(keep=0.2, unit=3),
+    "loop_tail_drift": _tail(keep=0.4, unit=3, drift=0.25),
+    "loop_local_1": _local(span=6, repeats=1),
+    "loop_local_3": _local(span=6, repeats=3),
+})
+
+
+def collapse_vocabulary(text, rng, keep=60):
+    """Rewrite the text using only its own `keep` most frequent content words.
+
+    The mechanical counterpart of asking a model to lower lexical diversity.
+    Asking did almost nothing on this corpus -- type-token ratio moved 0.60 to
+    0.59 -- because a model will not strip terminology out of an abstract. Here
+    the strength is a parameter rather than a request: every content word
+    outside the kept vocabulary is replaced by the nearest kept word by length,
+    so the token count and the function-word skeleton survive.
+    """
+    words = text.split()
+    cores = [WORD.search(w) for w in words]
+    content = [c.group().lower() for c, w in zip(cores, words)
+               if c and c.group().lower() not in FUNCTION_WORDS
+               and len(c.group()) > 3]
+    if not content:
+        return text
+    from collections import Counter
+
+    freq = [w for w, _ in Counter(content).most_common(keep)]
+    if not freq:
+        return text
+    by_len = sorted(freq, key=len)
+    out = []
+    for w, c in zip(words, cores):
+        if not c:
+            out.append(w)
+            continue
+        low = c.group().lower()
+        if low in FUNCTION_WORDS or len(low) <= 3 or low in freq:
+            out.append(w)
+            continue
+        # nearest kept word by length keeps the surface rhythm intact
+        repl = min(by_len, key=lambda k: (abs(len(k) - len(low)), k))
+        out.append(w.replace(c.group(), repl))
+    return " ".join(out)
+
+
+PERTURBATIONS.update({
+    "collapse_vocab_60": lambda t, rng: collapse_vocabulary(t, rng, keep=60),
+    "collapse_vocab_25": lambda t, rng: collapse_vocabulary(t, rng, keep=25),
+    "collapse_vocab_10": lambda t, rng: collapse_vocabulary(t, rng, keep=10),
+})
+
+
+# ---------------------------------------------------------------------------
+# Locally coherent nonsense, by sampling from an n-gram model of the corpus.
+#
+# The right edge of PC1 is held by the old base models (bloom_7b, opt_2.7b),
+# roughly twice as far out as the strongest rewrite we can obtain. What they
+# produce is locally plausible and globally incoherent, which is exactly what
+# an n-gram model generates: every adjacent pair of words is real English
+# because it was observed, while the text as a whole wanders across topics and
+# so carries corpus-wide vocabulary rather than one document's.
+#
+# The order is the dial: order 2 wanders almost every word, order 5 copies long
+# stretches verbatim and stays nearly coherent.
+# ---------------------------------------------------------------------------
+
+_NGRAM_CACHE = {}
+
+
+def _build_ngram(order, corpus_texts, tag=""):
+    key = (order, len(corpus_texts), tag)
+    if key in _NGRAM_CACHE:
+        return _NGRAM_CACHE[key]
+    from collections import defaultdict
+
+    table = defaultdict(list)
+    for t in corpus_texts:
+        w = t.split()
+        for i in range(len(w) - order):
+            table[tuple(w[i:i + order - 1])].append(w[i + order - 1])
+    _NGRAM_CACHE[key] = table
+    return table
+
+
+def _corpus():
+    """Human texts of the COLING pool, as the source of n-gram statistics."""
+    import os
+
+    import pandas as pd
+
+    path = os.path.join(os.path.dirname(__file__), "..", "..", "coling",
+                        "pool.parquet")
+    p = pd.read_parquet(path)
+    return p[p["is_human"]]["text"].tolist()
+
+
+def ngram_generate(text, rng, order=3):
+    """A text of the same length, sampled from the corpus n-gram model.
+
+    Seeded from the opening of the source so the beginning stays on topic and
+    the drift is visible against it.
+    """
+    table = _build_ngram(order, _corpus())
+    words = text.split()
+    n = len(words)
+    out = list(words[:order - 1])
+    for _ in range(n - len(out)):
+        key = tuple(out[-(order - 1):])
+        choices = table.get(key)
+        if not choices:
+            key = rng.choice(list(table.keys()))
+            out.extend(key)
+            continue
+        out.append(rng.choice(choices))
+    return " ".join(out[:n])
+
+
+PERTURBATIONS.update({
+    "ngram_2": lambda t, rng: ngram_generate(t, rng, order=2),
+    "ngram_3": lambda t, rng: ngram_generate(t, rng, order=3),
+    "ngram_4": lambda t, rng: ngram_generate(t, rng, order=4),
+})
+
+
+def _corpus_full(min_words=200, cap=20000):
+    """The whole COLING dev split, not just the sampled pool.
+
+    A wider vocabulary than the 650 pooled human texts can supply: the pooled
+    n-grams reached PC1 = 262 where opt_2.7b sits at 454, and the shortfall is
+    the diversity of the source material rather than of the mechanism.
+    """
+    import os
+
+    import pandas as pd
+
+    path = os.path.join(os.path.dirname(__file__), "..", "..", "coling",
+                        "dev.parquet")
+    d = pd.read_parquet(path, columns=["text", "model"])
+    d = d[d["model"] == "human"]
+    d = d[d["text"].str.split().str.len() >= min_words]
+    return d["text"].head(cap).tolist()
+
+
+def ngram_generate_wide(text, rng, order=3):
+    """As ngram_generate, but with statistics from the full corpus."""
+    table = _build_ngram(order, _corpus_full(), tag="wide")
+    words = text.split()
+    n = len(words)
+    out = list(words[:order - 1])
+    for _ in range(n - len(out)):
+        key = tuple(out[-(order - 1):])
+        choices = table.get(key)
+        if not choices:
+            key = rng.choice(list(table.keys()))
+            out.extend(key)
+            continue
+        out.append(rng.choice(choices))
+    return " ".join(out[:n])
+
+
+PERTURBATIONS.update({
+    "ngram_wide_2": lambda t, rng: ngram_generate_wide(t, rng, order=2),
+    "ngram_wide_3": lambda t, rng: ngram_generate_wide(t, rng, order=3),
+})
+
+
+# ---------------------------------------------------------------------------
+# Incoherence at the discourse scale rather than the word scale.
+#
+# n-gram generation breaks the text inside the sentence: adjacent word pairs
+# are real but nothing is a statement. Splicing does the opposite -- every
+# sentence is a real, fully coherent sentence written by a person, and only the
+# sequence is meaningless. Comparing the two says whether the dimension
+# responds to incoherence as such or to the scale at which it occurs.
+# ---------------------------------------------------------------------------
+
+_BANK = {}
+
+
+def _sentence_bank(same_domain=None):
+    import os
+
+    import pandas as pd
+
+    path = os.path.join(os.path.dirname(__file__), "..", "..", "coling",
+                        "pool.parquet")
+    p = pd.read_parquet(path)
+    p = p[p["is_human"]]
+    if same_domain:
+        p = p[p["sub_source"] == same_domain]
+    bank = []
+    for t in p["text"]:
+        bank.extend(s for s in sentences(t) if 6 <= len(s.split()) <= 45)
+    return bank
+
+
+def splice_sentences(text, rng, same_domain=None):
+    """Fill the original length with sentences drawn from unrelated texts."""
+    key = same_domain or "*"
+    if key not in _BANK:
+        _BANK[key] = _sentence_bank(same_domain)
+    bank = _BANK[key]
+    if not bank:
+        return text
+    target = len(text.split())
+    out, n = [], 0
+    while n < target:
+        out.append(bank[rng.randrange(len(bank))])
+        n += len(out[-1].split())
+    return " ".join(" ".join(out).split()[:target])
+
+
+def splice_pairs(text, rng):
+    """Alternate a sentence of the original with a foreign one: half the
+    discourse survives, so this sits between untouched and fully spliced."""
+    if "*" not in _BANK:
+        _BANK["*"] = _sentence_bank(None)
+    bank = _BANK["*"]
+    own = sentences(text)
+    target = len(text.split())
+    out, n, i = [], 0, 0
+    while n < target and own:
+        s = own[i % len(own)] if i % 2 == 0 else bank[rng.randrange(len(bank))]
+        out.append(s)
+        n += len(s.split())
+        i += 1
+    return " ".join(" ".join(out).split()[:target])
+
+
+PERTURBATIONS.update({
+    "splice_sentences": splice_sentences,
+    "splice_pairs": splice_pairs,
+})

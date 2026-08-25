@@ -1,0 +1,9 @@
+360 requests, model=claude-sonnet-4-5-20250929, 8 workers
+  100/360  ошибок: 0
+  200/360  ошибок: 0
+  300/360  ошибок: 0
+
+saved -> results/coling_hard_edits.json
+  ideas_up_hard             120 текстов
+  topics_up_hard            120 текстов
+  lexical_diversity_up_hard  120 текстов

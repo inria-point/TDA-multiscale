@@ -1,0 +1,25 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/134 [00:00<?, ?it/s]Loading weights: 100%|██████████| 134/134 [00:00<00:00, 6972.30it/s]
+[transformers] [1mModernBertModel LOAD REPORT[0m from: answerdotai/ModernBERT-base
+Key               | Status     |  | 
+------------------+------------+--+-
+head.dense.weight | UNEXPECTED |  | 
+decoder.bias      | UNEXPECTED |  | 
+head.norm.weight  | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+coling: 120 texts
+  identity                    120 texts  (56s)
+  loop_local_1                120 texts  (70s)
+  loop_local_3                120 texts  (71s)
+  loop_tail_word              120 texts  (70s)
+  loop_tail_short             120 texts  (70s)
+  loop_tail_mid               120 texts  (71s)
+  loop_tail_early             120 texts  (69s)
+  loop_tail_drift             120 texts  (70s)
+  collapse_vocab_60           120 texts  (70s)
+  collapse_vocab_25           120 texts  (70s)
+  collapse_vocab_10           120 texts  (71s)
+saved -> /Users/admin/Desktop/Research/TDA/phdq_ext/scripts/../results/perturb_L201_loops.csv.gz
+saved -> /Users/admin/Desktop/Research/TDA/phdq_ext/scripts/../results/perturbed_texts_loops.json

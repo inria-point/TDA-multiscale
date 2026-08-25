@@ -45,6 +45,9 @@ EXPECTED = {
     "topics_up": ("idea_spread", +1),
     "topics_down": ("idea_spread", -1),
     "topics_up_v2": ("idea_spread", +1),
+    "ideas_up_hard": ("idea_spread", +1),
+    "topics_up_hard": ("idea_spread", +1),
+    "lexical_diversity_up_hard": ("ttr", +1),
     "topics_down_v2": ("idea_spread", -1),
     "lexical_diversity_up_s": ("ttr", +1),
     "lexical_diversity_down_s": ("ttr", -1),
@@ -135,6 +138,7 @@ def main():
     ap.add_argument("--edits", default=os.path.join(BASE, "results",
                                                     "llm_edits.json"))
     ap.add_argument("--source", default="human")
+    ap.add_argument("--corpus", choices=["flat", "coling"], default="flat")
     args = ap.parse_args()
 
     with open(args.edits) as f:
@@ -142,9 +146,16 @@ def main():
     ranks, counts = corpus_ranks()
     vocab = set(counts)
     originals = {}
-    for genre in GENRES:
-        for text_id, text in load(genre, args.source):
-            originals[f"{genre}::{text_id}"] = text
+    if args.corpus == "coling":
+        import pandas as _pd
+
+        pool = _pd.read_parquet(os.path.join(BASE, "..", "coling",
+                                             "pool.parquet"))
+        originals = {f"coling::{r.id}": r.text for r in pool.itertuples()}
+    else:
+        for genre in GENRES:
+            for text_id, text in load(genre, args.source):
+                originals[f"{genre}::{text_id}"] = text
 
     # sentence vectors only where a semantic metric is actually needed
     needs_sem = {p for p, (m, _) in EXPECTED.items() if m == "idea_spread"}
