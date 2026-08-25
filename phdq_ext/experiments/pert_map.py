@@ -34,6 +34,26 @@ def main():
     P = P.set_index("name")
     P.round(1).to_csv(os.path.join(BASE, "results", "pert_map.csv"))
 
+    # the pruned-out duplicates are kept as a table, not deleted: two different
+    # instructions landing in the same place is a claim about the estimator
+    # that deserves its own check, and the raw profiles are all still in
+    # perturb_L201_coling_all.csv.gz
+    raw = pd.read_csv(os.path.join(BASE, "results", "pc_space.csv"),
+                      index_col=0)
+    dup = []
+    for name, (kept, dist) in T.DROPPED.items():
+        if name not in raw.index or kept not in raw.index:
+            continue
+        a, b = raw.loc[name], raw.loc[kept]
+        dup.append({"dropped": name, "duplicates": T.KEEP.get(kept, kept),
+                    "group": T.group_of(T.KEEP[kept]), "L2": dist,
+                    "PC1": a["PC1"], "PC2": a["PC2"], "PC3": a["PC3"],
+                    "kept_PC1": b["PC1"], "kept_PC2": b["PC2"],
+                    "kept_PC3": b["PC3"]})
+    D = pd.DataFrame(dup).sort_values("L2")
+    D.to_csv(os.path.join(BASE, "results", "pert_duplicates.csv"), index=False)
+    print(f"дубликаты отложены в results/pert_duplicates.csv: {len(D)}")
+
     for a, b in [("PC1", "PC2"), ("PC2", "PC3")]:
         # two panels: the whole cloud, then the crowd around the origin, where
         # most of the weak perturbations sit and labels would otherwise collide

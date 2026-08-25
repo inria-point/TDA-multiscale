@@ -1,0 +1,14 @@
+dropped,duplicates,group,L2,PC1,PC2,PC3,kept_PC1,kept_PC2,kept_PC3
+burst_flatten,syntax/burst_1to4,syntax,3.9,9.2,8.7,-18.1,10.4,5.0,-18.2
+shuffle_within_sentences,shuffle/words,shuffle,4.2,70.0,115.0,-21.1,66.6,117.4,-20.7
+topics_down_v2,deplete/lexdiv_down,deplete,5.1,-41.0,0.9,-13.9,-45.8,-0.8,-14.0
+strip_digits,surface/lowercase,surface,9.9,0.7,4.9,-3.0,-2.4,3.6,-12.3
+lexical_diversity_up_hard,enrich/lexdiv_up,enrich,11.7,115.1,2.9,20.1,126.4,5.9,19.0
+ideas_up_v2,enrich/lexdiv_up,enrich,12.4,116.5,-1.4,20.6,126.4,5.9,19.0
+ngram_wide_2,ngram/n2,ngram,15.9,278.1,77.1,43.5,264.8,69.5,47.8
+ngram_wide_3,ngram/n2,ngram,16.8,265.0,54.9,39.4,264.8,69.5,47.8
+ideas_up_hard,enrich/lexdiv_up,enrich,19.6,139.6,11.0,32.6,126.4,5.9,19.0
+style_literary_T1.7,style/literary,style,20.1,173.5,-11.6,10.9,164.0,1.3,-1.3
+topics_up_v2,enrich/topics_up_hard,enrich,24.7,195.0,3.7,27.7,219.7,3.9,28.2
+style_literary_T1.3,style/literary,style,25.2,185.9,-9.5,4.9,164.0,1.3,-1.3
+ngram_3,ngram/n2,ngram,29.3,253.0,44.6,37.8,264.8,69.5,47.8
