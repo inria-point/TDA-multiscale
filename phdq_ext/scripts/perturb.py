@@ -737,6 +737,29 @@ PERTURBATIONS.update({
 # ---------------------------------------------------------------------------
 
 _VOCAB = {}
+_TOK = {}
+_NTOK = {}
+
+
+def _ntok(word):
+    """How many tokens the embedder splits a word into, with a leading space.
+
+    Rare words fragment: substituting one for a common word of the same
+    character length still changes the token stream, and the token stream is
+    what qPHD measures. Matching on token count as well as on length keeps a
+    vocabulary substitution a substitution of words rather than of tokens.
+    """
+    if word in _NTOK:
+        return _NTOK[word]
+    if "tok" not in _TOK:
+        from transformers import AutoTokenizer
+
+        from embedder import MODEL_NAME
+
+        _TOK["tok"] = AutoTokenizer.from_pretrained(MODEL_NAME)
+    n = len(_TOK["tok"](" " + word, add_special_tokens=False)["input_ids"])
+    _NTOK[word] = n
+    return n
 
 
 def _vocab_pool():
@@ -759,9 +782,10 @@ def _vocab_pool():
     for w, r in sorted(rank.items(), key=lambda kv: kv[1]):
         if w in FUNCTION_WORDS or len(w) <= 3 or df[w] < 3:
             continue
-        by_len[len(w)].append(w)
+        by_len[(len(w), _ntok(w))].append(w)
     _VOCAB.update(by_len=dict(by_len), rank=rank,
-                  ranks={L: [rank[w] for w in ws] for L, ws in by_len.items()})
+                  ranks={k: [rank[w] for w in ws]
+                         for k, ws in by_len.items()})
     return _VOCAB
 
 
@@ -788,12 +812,12 @@ def expand_vocabulary(text, rng, share=1.0, window=60):
         if low in FUNCTION_WORDS or len(low) <= 3 or rng.random() > share:
             out.append(w)
             continue
-        L = len(low) if by_len.get(len(low)) else len(low) - 1
-        bucket = by_len.get(L)
+        key = (len(low), _ntok(low))
+        bucket = by_len.get(key)
         if not bucket:
             out.append(w)
             continue
-        rs = ranks[L]
+        rs = ranks[key]
         i0 = bisect.bisect_left(rs, rank.get(low, rs[len(rs) // 2]))
         cand = [x for x in bucket[max(0, i0 - window):i0 + window]
                 if x not in own and x not in used]
@@ -863,8 +887,10 @@ def map_vocabulary(text, rng, band="rare", share=1.0, head=0.10, tail=0.30):
     for low in types:
         if rng.random() > share:
             continue
-        L = len(low) if by_len.get(len(low)) else len(low) - 1
-        bucket = by_len.get(L)
+        # buckets are keyed by (character length, token count): a replacement
+        # must split into the same number of tokens, or the substitution
+        # changes the token stream rather than the vocabulary
+        bucket = by_len.get((len(low), _ntok(low)))
         if not bucket:
             continue
         n = len(bucket)
@@ -932,6 +958,9 @@ PERTURBATIONS.update({
 
 PERTURBATIONS.update({
     "rarify_types": lambda t, rng: map_vocabulary(t, rng, band="rare"),
+    # same as above but the replacement must split into the same number of
+    # tokens, so the token stream keeps its shape and only the word frequency
+    # band changes
     "rarify_types_50": lambda t, rng: map_vocabulary(t, rng, band="rare",
                                                      share=0.5),
     "commonize_types": lambda t, rng: map_vocabulary(t, rng, band="common"),
@@ -966,6 +995,29 @@ PERTURBATIONS.update({
 # ---------------------------------------------------------------------------
 
 _DOMAIN_VOCAB = {}
+_TOK = {}
+_NTOK = {}
+
+
+def _ntok(word):
+    """How many tokens the embedder splits a word into, with a leading space.
+
+    Rare words fragment: substituting one for a common word of the same
+    character length still changes the token stream, and the token stream is
+    what qPHD measures. Matching on token count as well as on length keeps a
+    vocabulary substitution a substitution of words rather than of tokens.
+    """
+    if word in _NTOK:
+        return _NTOK[word]
+    if "tok" not in _TOK:
+        from transformers import AutoTokenizer
+
+        from embedder import MODEL_NAME
+
+        _TOK["tok"] = AutoTokenizer.from_pretrained(MODEL_NAME)
+    n = len(_TOK["tok"](" " + word, add_special_tokens=False)["input_ids"])
+    _NTOK[word] = n
+    return n
 
 
 def _domain_vocab():

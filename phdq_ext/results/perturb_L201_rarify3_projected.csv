@@ -1,0 +1,6 @@
+perturbation,PC1,PC2,PC3,|v|
+commonize_types,3.7,4.0,-1.6,5.7
+expand_vocab_100,157.5,109.9,42.7,196.7
+expand_vocab_50,96.4,78.3,30.0,127.8
+rarify_types,3.7,4.0,-1.6,5.7
+rarify_types_50,3.7,4.0,-1.6,5.7

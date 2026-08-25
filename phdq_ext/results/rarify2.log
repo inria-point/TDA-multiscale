@@ -1,0 +1,17 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/134 [00:00<?, ?it/s]Loading weights: 100%|██████████| 134/134 [00:00<00:00, 7060.05it/s]
+[transformers] [1mModernBertModel LOAD REPORT[0m from: answerdotai/ModernBERT-base
+Key               | Status     |  | 
+------------------+------------+--+-
+head.dense.weight | UNEXPECTED |  | 
+head.norm.weight  | UNEXPECTED |  | 
+decoder.bias      | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+coling: 120 texts
+  rarify_types                120 texts  (59s)
+  rarify_types_50             120 texts  (59s)
+  commonize_types             120 texts  (59s)
+saved -> /Users/admin/Desktop/Research/TDA/phdq_ext/scripts/../results/perturb_L201_rarify2.csv.gz
+saved -> /Users/admin/Desktop/Research/TDA/phdq_ext/scripts/../results/perturbed_texts_rarify2.json

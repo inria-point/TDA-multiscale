@@ -53,11 +53,19 @@ class Embedder:
         return embeds
 
     def embed_cached(self, text, cache_key=None):
-        """Embed with on-disk cache (npz keyed by md5 of model+text)."""
+        """Embed with on-disk cache (npz keyed by md5 of model+text).
+
+        A caller-supplied key is only a readable prefix: the digest of the
+        text is always appended. Without it, re-running a perturbation whose
+        implementation has changed silently returns the embeddings of the old
+        text, and the result looks identical to the previous run down to the
+        last decimal.
+        """
         os.makedirs(CACHE_DIR, exist_ok=True)
-        key = cache_key or hashlib.md5(
+        digest = hashlib.md5(
             (self.model_name + "\x00" + text).encode()
         ).hexdigest()
+        key = f"{cache_key}_{digest[:10]}" if cache_key else digest
         path = os.path.join(CACHE_DIR, key + ".npz")
         if os.path.exists(path):
             return np.load(path)["embeds"]
