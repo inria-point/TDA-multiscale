@@ -8,7 +8,5 @@ ideas_up_v2,enrich/lexdiv_up,enrich,12.4,116.6,-2.3,19.8,126.6,4.8,17.9
 ngram_wide_2,ngram/n2,ngram,15.9,279.3,75.1,39.7,265.9,67.8,44.2
 ngram_wide_3,ngram/n2,ngram,16.8,265.9,52.9,36.3,265.9,67.8,44.2
 ideas_up_hard,enrich/lexdiv_up,enrich,19.6,139.9,10.3,31.4,126.6,4.8,17.9
-style_literary_T1.7,style/literary,style,20.1,173.3,-13.5,10.0,164.0,-1.0,-2.4
 topics_up_v2,enrich/topics_up_hard,enrich,24.7,195.1,1.9,26.0,219.8,1.8,26.3
-style_literary_T1.3,style/literary,style,25.2,185.7,-11.8,3.9,164.0,-1.0,-2.4
 ngram_3,ngram/n2,ngram,29.3,253.7,42.7,35.0,265.9,67.8,44.2

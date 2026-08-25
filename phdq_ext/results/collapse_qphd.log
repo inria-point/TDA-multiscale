@@ -1,0 +1,21 @@
+loaded 6 perturbations from results/coling_collapse_probes.json
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/134 [00:00<?, ?it/s]Loading weights: 100%|██████████| 134/134 [00:00<00:00, 20514.54it/s]
+[transformers] [1mModernBertModel LOAD REPORT[0m from: answerdotai/ModernBERT-base
+Key               | Status     |  | 
+------------------+------------+--+-
+head.dense.weight | UNEXPECTED |  | 
+decoder.bias      | UNEXPECTED |  | 
+head.norm.weight  | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+coling: 120 texts
+  style_record_fields          88 texts (32 skipped)  (53s)
+  style_anaphora               87 texts (33 skipped)  (52s)
+  style_catechism              88 texts (32 skipped)  (54s)
+  style_code                   88 texts (32 skipped)  (58s)
+  style_equations              89 texts (31 skipped)  (59s)
+  style_literary_apiyi         78 texts (42 skipped)  (47s)
+saved -> /Users/admin/Desktop/Research/TDA/phdq_ext/scripts/../results/perturb_L201_collapse.csv.gz
+saved -> /Users/admin/Desktop/Research/TDA/phdq_ext/scripts/../results/perturbed_texts_collapse.json

@@ -1,0 +1,12 @@
+120 requests, model=claude-sonnet-4-5-20250929, 8 workers
+  100/120  ошибок: 25
+
+saved -> results/coling_literary_T0.7_apiyi.json
+  style_literary             78 текстов
+
+42 ошибок, первые пять:
+   ('style_literary', 'coling::22aa3208-6e8c-4005-9386-819f202c1c74', 'apiyi 403: {"error":{"message":"user [53750] quota [4169] preConsumedQuota [15679] is not enough","localized_message":"I')
+   ('style_literary', 'coling::8c3cf713-de3f-4e3d-9e94-ba8bcf48962d', 'apiyi 403: {"error":{"message":"user [53750] quota [4169] preConsumedQuota [13435] is not enough","localized_message":"I')
+   ('style_literary', 'coling::b53fdf6a-f822-4baa-8af9-8f0d42fe78ea', 'apiyi 403: {"error":{"message":"user [53750] quota [1025] preConsumedQuota [14234] is not enough","localized_message":"I')
+   ('style_literary', 'coling::6ec72689-8b99-420d-9182-0a2fa5a40cbc', 'apiyi 403: {"error":{"message":"user [53750] quota [1025] preConsumedQuota [16976] is not enough","localized_message":"I')
+   ('style_literary', 'coling::040c1d28-4583-4101-87e6-0631f517d0b5', 'apiyi 403: {"error":{"message":"user [53750] quota [1025] preConsumedQuota [17015] is not enough","localized_message":"I')

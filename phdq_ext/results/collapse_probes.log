@@ -1,1 +1,21 @@
 600 requests, model=gemini-3.6-flash, 10 workers
+  100/600  ошибок: 0
+  200/600  ошибок: 0
+  300/600  ошибок: 0
+  400/600  ошибок: 0
+  500/600  ошибок: 60
+  600/600  ошибок: 158
+
+saved -> results/coling_collapse_probes.json
+  style_record_fields        89 текстов
+  style_anaphora             87 текстов
+  style_catechism            89 текстов
+  style_code                 88 текстов
+  style_equations            89 текстов
+
+158 ошибок, первые пять:
+   ('style_anaphora', 'coling::f3328e08-1b91-430d-bea9-e5b836b0102f', 'apiyi 403: {"error":{"message":"user [53750] quota [10850] preConsumedQuota [11565] is not enough","localized_message":"')
+   ('style_catechism', 'coling::f3328e08-1b91-430d-bea9-e5b836b0102f', 'apiyi 403: {"error":{"message":"user [53750] quota [10850] preConsumedQuota [11567] is not enough","localized_message":"')
+   ('style_code', 'coling::f3328e08-1b91-430d-bea9-e5b836b0102f', 'apiyi 403: {"error":{"message":"user [53750] quota [10850] preConsumedQuota [11566] is not enough","localized_message":"')
+   ('style_anaphora', 'coling::3acbf3b4-cdc2-42b4-9b2c-839dd8bb95f5', 'apiyi 403: {"error":{"message":"user [53750] quota [4169] preConsumedQuota [11272] is not enough","localized_message":"I')
+   ('style_code', 'coling::3acbf3b4-cdc2-42b4-9b2c-839dd8bb95f5', 'apiyi 403: {"error":{"message":"user [53750] quota [1025] preConsumedQuota [11272] is not enough","localized_message":"I')

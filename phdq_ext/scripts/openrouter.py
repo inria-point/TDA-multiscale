@@ -15,6 +15,7 @@ import urllib.request
 BASE = os.path.join(os.path.dirname(__file__), "..")
 CACHE_DIR = os.path.join(BASE, "cache", "openrouter")
 ENV_PATH = os.path.join(BASE, ".env")
+USAGE_LOG = os.path.join(BASE, "results", "api_usage.jsonl")
 
 PROVIDERS = {
     "openrouter": {"url": "https://openrouter.ai/api/v1/chat/completions",
@@ -42,9 +43,31 @@ def get_key(provider=None):
     raise RuntimeError(f"no {name}: set it in the environment or in {ENV_PATH}")
 
 
+def probe_cost(prompt, model, provider=None, **kw):
+    """One call, reporting the tokens it actually consumed.
+
+    Run this before any batch. A reasoning model can answer a 600-token request
+    with tens of thousands of tokens of hidden thinking, which does not appear
+    in the reply and does appear on the bill: a 442-call batch on a flash-tier
+    model cost several times what 1200 calls on a frontier model did, purely
+    from that. The reply length tells you nothing; the usage block does.
+    """
+    out, usage = complete(prompt, model, provider=provider, use_cache=False,
+                          return_usage=True, **kw)
+    print(f"{model}: {usage}; ответ {len(out.split())} слов")
+    return usage
+
+
 def complete(prompt, model, temperature=0.7, max_tokens=2048, system=None,
-             retries=4, timeout=180, use_cache=True, provider=None):
-    """One chat completion. Cached on disk by (model, system, prompt, temp)."""
+             retries=4, timeout=180, use_cache=True, provider=None,
+             thinking=False, return_usage=False):
+    """One chat completion. Cached on disk by (model, system, prompt, temp).
+
+    thinking=False asks the provider to switch reasoning off in each of the
+    spellings the OpenAI-compatible gateways accept. A gateway that ignores
+    all of them will still bill for the thinking, so check with probe_cost
+    before launching a batch.
+    """
     os.makedirs(CACHE_DIR, exist_ok=True)
     # the provider is not part of the cache key: the same model through a
     # different gateway is the same request
@@ -56,15 +79,21 @@ def complete(prompt, model, temperature=0.7, max_tokens=2048, system=None,
     )
     if use_cache and os.path.exists(cache_path):
         with open(cache_path) as f:
-            return json.load(f)["text"]
+            hit = json.load(f)
+        return ((hit["text"], hit.get("usage", {})) if return_usage
+                else hit["text"])
 
     messages = ([{"role": "system", "content": system}] if system else []) + [
         {"role": "user", "content": prompt}
     ]
-    payload = json.dumps(
-        {"model": model, "messages": messages, "temperature": temperature,
-         "max_tokens": max_tokens}
-    ).encode()
+    body = {"model": model, "messages": messages, "temperature": temperature,
+            "max_tokens": max_tokens}
+    if not thinking:
+        body["reasoning_effort"] = "none"
+        body["thinking"] = {"type": "disabled"}
+        body["extra_body"] = {"google": {"thinking_config":
+                                         {"thinking_budget": 0}}}
+    payload = json.dumps(body).encode()
 
     last = None
     for attempt in range(retries):
@@ -79,12 +108,21 @@ def complete(prompt, model, temperature=0.7, max_tokens=2048, system=None,
         )
         try:
             with urllib.request.urlopen(req, timeout=timeout) as resp:
-                body = json.loads(resp.read().decode())
-            text = body["choices"][0]["message"]["content"]
+                rb = json.loads(resp.read().decode())
+            text = rb["choices"][0]["message"]["content"]
+            usage = rb.get("usage", {})
+            try:
+                os.makedirs(os.path.dirname(USAGE_LOG), exist_ok=True)
+                with open(USAGE_LOG, "a") as f:
+                    f.write(json.dumps({"model": model, "provider": prov,
+                                        **usage}) + "\n")
+            except OSError:
+                pass
             if use_cache:
                 with open(cache_path, "w") as f:
-                    json.dump({"model": model, "text": text}, f)
-            return text
+                    json.dump({"model": model, "text": text, "usage": usage},
+                              f)
+            return (text, usage) if return_usage else text
         except (urllib.error.HTTPError, urllib.error.URLError,
                 KeyError, TimeoutError) as exc:
             last = exc

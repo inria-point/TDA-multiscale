@@ -16,3 +16,4 @@ data_completion.zip
 
 # COLING parquet: 234 MB, re-downloadable from HF
 coling/dev.parquet
+phdq_ext/results/api_usage.jsonl

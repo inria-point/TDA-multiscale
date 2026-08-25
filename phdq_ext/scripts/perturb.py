@@ -748,10 +748,16 @@ def _vocab_pool():
     counts = Counter()
     for t in _corpus():
         counts.update(WORD.findall(t.lower()))
+    # a word must occur in at least three different documents to count as
+    # vocabulary: the tail of a single-document count is typos, fragments and
+    # identifiers, and drawing "rare words" from it would measure noise
+    df = Counter()
+    for t in _corpus():
+        df.update(set(WORD.findall(t.lower())))
     rank = {w: i for i, (w, _) in enumerate(counts.most_common())}
     by_len = defaultdict(list)
     for w, r in sorted(rank.items(), key=lambda kv: kv[1]):
-        if w in FUNCTION_WORDS or len(w) <= 3:
+        if w in FUNCTION_WORDS or len(w) <= 3 or df[w] < 3:
             continue
         by_len[len(w)].append(w)
     _VOCAB.update(by_len=dict(by_len), rank=rank,
@@ -805,4 +811,131 @@ def expand_vocabulary(text, rng, share=1.0, window=60):
 PERTURBATIONS.update({
     "expand_vocab_100": lambda t, rng: expand_vocabulary(t, rng, share=1.0),
     "expand_vocab_50": lambda t, rng: expand_vocabulary(t, rng, share=0.5),
+})
+
+
+# ---------------------------------------------------------------------------
+# Two routes to a lower PC2 that are not loops.
+#
+# PC2 is the fine scale minus the coarse one, and in the whole set it only
+# goes substantially negative for loops, which collapse the fine scale. Two
+# non-loops reach it weakly and by the opposite mechanism -- asking for
+# scientific terminology or for rarer words raises the *coarse* scale while
+# the fine one barely moves (+3.9 against -3.7, and +3.6 against +0.8). One
+# type of change is not a basis for a conclusion, so both routes get a
+# mechanical perturbation with a dose.
+#
+# map_vocabulary is the route through the coarse scale. Unlike
+# expand_vocabulary it maps *types*, not occurrences: every occurrence of a
+# word gets the same replacement, so the repetition geometry that the fine
+# scale is made of survives untouched and only the rarity of the vocabulary
+# changes.
+#
+# interleave_marker is the route through the fine scale without repeating
+# anything from the text: the original is kept whole and in order, and a
+# constant foreign token is inserted every k words, which plants identical
+# contexts at a controlled period.
+# ---------------------------------------------------------------------------
+
+
+def map_vocabulary(text, rng, band="rare", share=1.0, head=0.10, tail=0.30):
+    """Replace content word *types* consistently with words from a rank band.
+
+    band  -- "rare" draws from the tail of the frequency order, "common" from
+             the head; length is matched so word length does not move
+    share -- fraction of types remapped
+    """
+    pool = _vocab_pool()
+    by_len = pool["by_len"]
+    words = text.split()
+    cores = [WORD.search(w) for w in words]
+    types = []
+    for c in cores:
+        if not c:
+            continue
+        low = c.group().lower()
+        if low not in FUNCTION_WORDS and len(low) > 3 and low not in types:
+            types.append(low)
+    if not types:
+        return text
+
+    mapping, used = {}, set(types)
+    for low in types:
+        if rng.random() > share:
+            continue
+        L = len(low) if by_len.get(len(low)) else len(low) - 1
+        bucket = by_len.get(L)
+        if not bucket:
+            continue
+        n = len(bucket)
+        cand = (bucket[int((1 - tail) * n):] if band == "rare"
+                else bucket[:max(1, int(head * n))])
+        cand = [x for x in cand if x not in used]
+        if not cand:
+            continue
+        repl = cand[rng.randrange(len(cand))]
+        mapping[low] = repl
+        used.add(repl)
+
+    out = []
+    for w, c in zip(words, cores):
+        if not c or c.group().lower() not in mapping:
+            out.append(w)
+            continue
+        repl = mapping[c.group().lower()]
+        if c.group()[0].isupper():
+            repl = repl.capitalize()
+        out.append(w.replace(c.group(), repl))
+    return " ".join(out)
+
+
+def interleave_marker(text, rng, period=6, marker="item"):
+    """Insert one constant token every `period` words, keeping the text whole.
+
+    Nothing from the text is repeated: the identical contexts come from a
+    foreign token planted at a fixed period, so the fine scale can be moved
+    without the text degenerating into a repeat of itself.
+    """
+    words = text.split()
+    out = []
+    for i, w in enumerate(words):
+        out.append(w)
+        if (i + 1) % period == 0:
+            out.append(marker)
+    return " ".join(out[:len(words)])
+
+
+def echo_partial(text, rng, span=6, repeats=1, share=0.25):
+    """loop_local applied to only a share of the chunks, chosen at random.
+
+    A full echo overshoots: it lands at PC1 -189 where the generators that
+    share its PC2 sit at -54 to -106. Echoing part of the text moves the point
+    along the same ray without leaving it.
+    """
+    words = text.split()
+    out, i = [], 0
+    while i < len(words):
+        chunk = words[i:i + span]
+        out.extend(chunk)
+        if rng.random() < share:
+            for _ in range(repeats):
+                out.extend(chunk)
+        i += span
+    return " ".join(out[:len(words)])
+
+
+PERTURBATIONS.update({
+    "echo_p25": lambda t, rng: echo_partial(t, rng, share=0.25),
+    "echo_p50": lambda t, rng: echo_partial(t, rng, share=0.50),
+})
+
+
+PERTURBATIONS.update({
+    "rarify_types": lambda t, rng: map_vocabulary(t, rng, band="rare"),
+    "rarify_types_50": lambda t, rng: map_vocabulary(t, rng, band="rare",
+                                                     share=0.5),
+    "commonize_types": lambda t, rng: map_vocabulary(t, rng, band="common"),
+    "marker_p3": lambda t, rng: interleave_marker(t, rng, period=3),
+    "marker_p6": lambda t, rng: interleave_marker(t, rng, period=6),
+    "marker_p12": lambda t, rng: interleave_marker(t, rng, period=12),
 })

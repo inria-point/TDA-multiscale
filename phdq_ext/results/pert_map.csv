@@ -24,7 +24,9 @@ style/telegraphic,14.9,36.1,37.7,style
 style/scientific_terms,48.5,-10.4,10.4,style
 style/bulletin_abbrev,55.7,53.6,40.4,style
 style/news_dates,77.6,10.8,-1.6,style
-style/literary,164.0,-1.0,-2.4,style
+style/literary_T0.7,164.0,-1.0,-2.4,style
+style/literary_T1.3,185.7,-11.8,3.9,style
+style/literary_T1.7,173.3,-13.5,10.0,style
 shuffle/words,68.1,116.1,-24.2,shuffle
 splice/every2nd_sent,135.1,11.7,15.3,splice
 splice/all_sents,251.9,33.2,22.7,splice

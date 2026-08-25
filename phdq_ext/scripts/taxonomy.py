@@ -74,7 +74,12 @@ KEEP = {
     "style_scientific_terms":       "style/scientific_terms",
     "style_bulletin_abbreviations": "style/bulletin_abbrev",
     "style_news_dates_suffixes":    "style/news_dates",
-    "style_literary":               "style/literary",
+    "style_literary":               "style/literary_T0.7",
+    # the temperature series is kept although it duplicates the base prompt by
+    # the pruning rule: PC2-negative coverage is the scarce resource in this
+    # set, and these are the only non-loop points that lower PC2 at all
+    "style_literary_T1.3":          "style/literary_T1.3",
+    "style_literary_T1.7":          "style/literary_T1.7",
     # --- word order destroyed
     "shuffle_words":       "shuffle/words",
     # --- sentences taken from unrelated texts
@@ -110,8 +115,6 @@ DROPPED = {
     "ngram_wide_2":              ("ngram_2", 15.9),
     "ngram_wide_3":              ("ngram_2", 16.8),
     "ngram_3":                   ("ngram_2", 29.3),
-    "style_literary_T1.3":       ("style_literary", 25.2),
-    "style_literary_T1.7":       ("style_literary", 20.1),
 }
 
 
