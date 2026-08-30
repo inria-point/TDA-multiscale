@@ -12,6 +12,7 @@ genre because text ids restart at zero in every genre file.
 import argparse
 import json
 import os
+import random
 import sys
 import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -335,7 +336,100 @@ PROMPTS.update({
 })
 
 
-def build_prompt(instruction, text):
+# ---------------------------------------------------------------------------
+# Strengthening the two levers that move the middle band alone.
+#
+# The middle band, q0.5_range at q >= 0.3, is the one place where the whole
+# perturbation set is weak: only two operations move it without touching the
+# others, and both only reach -7 where the instruct-tuned models need about
+# -25. Everything else that could push it down drags the coarse band with it.
+#
+# Both are phrased comparatively and fed their own previous output, because
+# the absolute forms are idempotent -- a text that already satisfies "use
+# fewer distinct words" is returned unchanged on a second pass, while "fewer
+# than it currently has" always has somewhere to go.
+PROMPTS.update({
+    "lexdiv_down_more": (
+        "This text has already been rewritten once to use fewer distinct "
+        "words. Push it FURTHER than it currently is: take every content word "
+        "that still appears only once and replace it with a word already used "
+        "elsewhere in the text, even where that makes the wording plainer or "
+        "more repetitive. Judge against the text as given, not against some "
+        "ideal. Keep the same subject matter and the same length."
+    ),
+    "topics_down_more": (
+        "This text has already been rewritten once to cover fewer topics. "
+        "Push it FURTHER than it currently is: find every sentence that still "
+        "introduces a subject, an example or a field not already present and "
+        "rewrite it to restate what the text has already said. Judge against "
+        "the text as given. Keep the same length."
+    ),
+})
+
+
+# ---------------------------------------------------------------------------
+# Synonymy as an axis of its own, and a thematic injection.
+#
+# The lexical-diversity prompts used so far ask for "more" or "less" variety
+# and get it by any means, including changing what is said. These two fix the
+# content and vary only whether a recurring notion is named the same way twice.
+#
+# The injection is the counterpart of hapax_swap. That one replaced the
+# once-used words with foreign ones and dropped the coarse band 20%, and the
+# wide/local control showed the spread among the injected words is irrelevant
+# -- what mattered was that they were foreign to the text. Here a model is
+# asked to work the words in so that they are *not* foreign: same count of new
+# once-used vocabulary, but integrated. If the coarse band goes up instead of
+# down, the distinction is integration, not novelty.
+def _inject(text, index):
+    from perturb import _domain_vocab
+
+    vocab = _domain_vocab()
+    doms = sorted(vocab)
+    dom = doms[index % len(doms)]
+    words = [w for ws in vocab[dom].values() for w in ws]
+    rng = random.Random(index)
+    picked = rng.sample(words, min(20, len(words)))
+    return (
+        "Rewrite the text so that it uses every one of these words at least "
+        "once: " + ", ".join(picked) + ". Work them in so the result reads as "
+        "a natural, factually coherent text on the same subject as the "
+        "original -- do not list them, do not force them into one paragraph, "
+        "and do not let the text become nonsense. Keep the same length."
+    )
+
+
+PROMPTS.update({
+    "syn_none": (
+        "Rewrite so that every recurring notion is named by exactly the same "
+        "word every time it appears. Never use a synonym, a pronoun or a "
+        "paraphrase where the word itself can stand. Keep the same content, "
+        "the same sentence structure and the same length."
+    ),
+    "syn_max": (
+        "Rewrite so that no content word appears twice anywhere in the text. "
+        "Every recurring notion must be named differently each time, by a "
+        "synonym or a short paraphrase that genuinely fits that place -- the "
+        "result must read as correct, natural prose, not as a thesaurus "
+        "exercise. Keep the same content and the same length."
+    ),
+    "inject_topic": _inject,
+})
+
+
+def build_prompt(instruction, text, index=0):
+    """The instruction may be a callable, when it has to depend on the text.
+
+    Injecting a word list is the case that needs it: the words are drawn per
+    text so that the same list is not reused across the corpus, which would
+    turn a lexical manipulation into a single shared topic.
+    """
+    if callable(instruction):
+        instruction = instruction(text, index)
+    return _build_prompt(instruction, text)
+
+
+def _build_prompt(instruction, text):
     n = len(text.split())
     lo, hi = int(n * 0.95), int(n * 1.1)
     return (
@@ -409,7 +503,7 @@ def main():
     def run(job):
         pname, genre, text_id, text = job
         out = complete(
-            build_prompt(PROMPTS[pname], text),
+            build_prompt(PROMPTS[pname], text, abs(hash(text_id)) % 10**6),
             model=args.model,
             system=SYSTEM,
             temperature=args.temperature,

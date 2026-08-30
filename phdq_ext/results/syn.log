@@ -1,0 +1,9 @@
+300 requests, model=claude-sonnet-4-5-20250929, 8 workers
+  100/300  ошибок: 0
+  200/300  ошибок: 0
+  300/300  ошибок: 0
+
+saved -> results/coling_syn.json
+  syn_none                  100 текстов
+  syn_max                   100 текстов
+  inject_topic              100 текстов

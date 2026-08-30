@@ -1,0 +1,8 @@
+88 requests, model=claude-sonnet-4-5-20250929, 8 workers
+
+saved -> results/coling_lexdiv_more.json
+  lexdiv_down_more           88 текстов
+88 requests, model=claude-sonnet-4-5-20250929, 8 workers
+
+saved -> results/coling_topics_more.json
+  topics_down_more           88 текстов
