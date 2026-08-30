@@ -417,6 +417,45 @@ PROMPTS.update({
 })
 
 
+# ---------------------------------------------------------------------------
+# Separating new content from rich vocabulary.
+#
+# Everything in the set that raises the coarse band raises the middle band with
+# it, which is why the octant the instruct-tuned models occupy stayed empty:
+# they raise the coarse band and lower the middle one. The two knobs have never
+# been turned separately, because the operations we had -- the literary
+# rewrite, "more topics" -- move both at once.
+#
+# These two turn one each. A screenplay whose every sentence brings a new event
+# but whose language is deliberately plain: novelty of content without
+# richness of vocabulary. An essay in genuinely rich English that never leaves
+# its single subject: richness without new content.
+#
+# Prediction registered before the run: the screenplay raises the coarse band
+# and leaves the middle one flat or below; the essay raises the middle band
+# with the coarse one flat.
+PROMPTS.update({
+    "script_events": (
+        "Rewrite the content as a screenplay scene about the same subject. "
+        "Every sentence must introduce a new event that has not occurred "
+        "earlier in the text -- an action, an arrival, a change of state -- so "
+        "that the scene keeps moving forward and never restates itself. At the "
+        "same time keep the language deliberately plain: short common words, "
+        "no literary flourish, no rare or technical terms, no elaborate "
+        "sentence construction. Keep the same length."
+    ),
+    "essay_one_topic": (
+        "Rewrite as a reflective essay in rich, varied, elegant English: "
+        "precise word choice, no word repeated where a better one exists, "
+        "cadence and balance in the sentences, and an argument that is "
+        "genuinely interesting to read. But stay entirely on the single "
+        "subject of the original -- introduce no new topic, no example from "
+        "another field, no digression, and no fact that is not already in the "
+        "text. Keep the same length."
+    ),
+})
+
+
 def build_prompt(instruction, text, index=0):
     """The instruction may be a callable, when it has to depend on the text.
 

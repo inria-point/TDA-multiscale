@@ -1,0 +1,7 @@
+200 requests, model=claude-sonnet-4-5-20250929, 8 workers
+  100/200  ошибок: 0
+  200/200  ошибок: 0
+
+saved -> results/coling_script_essay.json
+  script_events             100 текстов
+  essay_one_topic           100 текстов

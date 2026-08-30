@@ -52,7 +52,8 @@ FILES = ["perturb_L201_coling_all.csv.gz", "perturb_L201_hapax.csv.gz",
          "perturb_L201_pc2neg.csv.gz", "perturb_L201_pc2probes.csv.gz",
          "perturb_L201_collapse.csv.gz", "perturb_L201_composed.csv.gz",
          "perturb_L201_rarify4.csv.gz", "perturb_L201_rarify3.csv.gz",
-         "perturb_L201_downmore.csv.gz", "perturb_L201_syn.csv.gz"]
+         "perturb_L201_downmore.csv.gz", "perturb_L201_syn.csv.gz",
+         "perturb_L201_scriptessay.csv.gz"]
 
 
 def bands_from(pr_by_mode):
