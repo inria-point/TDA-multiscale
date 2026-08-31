@@ -57,7 +57,8 @@ def token_class(tok):
     return "служ." if w.lower() in FUNCTION_WORDS else "смысл."
 
 
-def stats(text, emb, ranks, L=cfg.L_DEFAULT, seed=0, long_end=True):
+def stats(text, emb, ranks, L=cfg.L_DEFAULT, seed=0, long_end=True,
+          frac=FRAC):
     e, toks = emb.embed(text, return_tokens=True)
     keep = [i for i, t in enumerate(toks) if t not in SKIP]
     if len(keep) < L:
@@ -68,7 +69,7 @@ def stats(text, emb, ranks, L=cfg.L_DEFAULT, seed=0, long_end=True):
     d = np.linalg.norm(v[:, None] - v[None], axis=-1)
     m = minimum_spanning_tree(d).tocoo()
     o = np.argsort(m.data)
-    k = max(1, int(FRAC * len(o)))
+    k = max(1, int(frac * len(o)))
     sel = o[-k:] if long_end else o[:k]
     rows, cols = m.row[sel], m.col[sel]
 

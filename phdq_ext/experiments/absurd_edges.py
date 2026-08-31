@@ -36,6 +36,12 @@ from mech_props import corpus_ranks
 BASE = os.path.join(HERE, "..")
 PAIR = ("chained", "absurd")
 RU = {"chained": "факты верны", "absurd": "факты абсурдны"}
+# the coarse band averages d over q = 0.5 ... 0.9, i.e. over keeping the
+# longest 50% down to the longest 10% of edges -- a mean of 30%. Reading the
+# graph at a single 20% was inside that window but not centred on it, so the
+# sweep covers the whole band and the headline number is taken at 0.30.
+FRACS = (0.10, 0.20, 0.30, 0.40, 0.50)
+KEY = "хотя бы один hapax, %"
 
 
 def spread(text, emb, L=cfg.L_DEFAULT, seed=0):
@@ -70,12 +76,19 @@ def main():
         rec = {}
         ok = True
         for v in PAIR:
-            s = stats(texts[v][q], emb, ranks, seed=i)
             sp = spread(texts[v][q], emb, seed=i)
-            if s is None or sp is None:
+            if sp is None:
                 ok = False
                 break
-            rec |= {f"{v}::{k}": val for k, val in (s | sp).items()}
+            rec |= {f"{v}::{k}@0.20": val for k, val in sp.items()}
+            for fr in FRACS:
+                s = stats(texts[v][q], emb, ranks, seed=i, frac=fr)
+                if s is None:
+                    ok = False
+                    break
+                rec |= {f"{v}::{k}@{fr:.2f}": val for k, val in s.items()}
+            if not ok:
+                break
         if ok:
             rec["qid"] = q
             rows.append(rec)
@@ -89,13 +102,23 @@ def main():
     for k in keys:
         a, b = D[f"chained::{k}"], D[f"absurd::{k}"]
         d = (b - a).dropna()
-        out.append({"признак": k, RU["chained"]: a.mean(), RU["absurd"]: b.mean(),
+        frac = k.rsplit("@", 1)[1] if "@" in k else ""
+        out.append({"признак": k.rsplit("@", 1)[0], "доля рёбер": frac,
+                    RU["chained"]: a.mean(), RU["absurd"]: b.mean(),
                     "сдвиг": d.mean(), "упало у": (d < 0).mean(),
                     "p": st.wilcoxon(d).pvalue if len(d) > 5 else np.nan})
     R = pd.DataFrame(out)
-    pd.set_option("display.width", 200)
-    print(f"\n{len(D)} пар, длинные 20% рёбер MST\n")
-    print(R.round(3).to_string(index=False))
+    pd.set_option("display.width", 210)
+    pd.set_option("display.max_rows", 200)
+    print(f"\n{len(D)} пар. Крупная полоса усредняет по доле длинных рёбер "
+          f"от 0.10 до 0.50, центр 0.30\n")
+    print("=== доля длинных рёбер, где хотя бы один конец hapax")
+    h = R[R["признак"] == KEY].set_index("доля рёбер")
+    print(h[[RU["chained"], RU["absurd"], "сдвиг", "упало у", "p"]]
+          .round(3).to_string())
+    print("\n=== всё остальное, на центре полосы (0.30)")
+    print(R[(R["доля рёбер"].isin(["0.30", "0.20"])) & (R["признак"] != KEY)]
+          .round(3).to_string(index=False))
     R.round(4).to_csv(os.path.join(BASE, "results", "absurd_edges_summary.csv"),
                       index=False)
 
