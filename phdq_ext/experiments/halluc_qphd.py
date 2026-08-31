@@ -26,7 +26,7 @@ from qphd import qphd
 
 BASE = os.path.join(HERE, "..")
 L = cfg.L_DEFAULT
-VERSIONS = ["raw", "polished", "fixed", "chained", "absurd"]
+VERSIONS = ["raw", "polished", "fixed", "chained", "absurd", "flat"]
 
 
 def load_versions():

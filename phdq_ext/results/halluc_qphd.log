@@ -1,20 +1,20 @@
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-Loading weights:   0%|          | 0/134 [00:00<?, ?it/s]Loading weights: 100%|██████████| 134/134 [00:00<00:00, 19300.05it/s]
+Loading weights:   0%|          | 0/134 [00:00<?, ?it/s]Loading weights: 100%|██████████| 134/134 [00:00<00:00, 19685.36it/s]
 [transformers] [1mModernBertModel LOAD REPORT[0m from: answerdotai/ModernBERT-base
 Key               | Status     |  | 
 ------------------+------------+--+-
-head.dense.weight | UNEXPECTED |  | 
-decoder.bias      | UNEXPECTED |  | 
 head.norm.weight  | UNEXPECTED |  | 
+decoder.bias      | UNEXPECTED |  | 
+head.dense.weight | UNEXPECTED |  | 
 
 Notes:
 - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
-56 вопросов x 5 версий, L=201
-  10/56  25s
-  20/56  50s
-  30/56  75s
-  40/56  101s
-  50/56  126s
+56 вопросов x 6 версий, L=201
+  10/56  29s
+  20/56  60s
+  30/56  91s
+  40/56  122s
+  50/56  152s
 
 56 вопросов прошло, 0 коротких отброшено
 saved /Users/admin/Desktop/Research/TDA/phdq_ext/experiments/../results/halluc_qphd_L201.csv.gz

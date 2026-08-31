@@ -28,10 +28,11 @@ from mech_props import NAMES as MECH, corpus_ranks, measure
 from three_bands import BANDS
 
 BASE = os.path.join(HERE, "..")
-VERSIONS = ["raw", "polished", "chained", "absurd", "fixed"]
+VERSIONS = ["raw", "polished", "chained", "absurd", "flat", "fixed"]
 LABEL = {"raw": "выдумка, как есть", "polished": "та же выдумка, гладко",
          "chained": "гладкая, факты исправлены",
-         "absurd": "те же фразы, факты абсурдны",
+         "absurd": "абсурд, странные слова",
+         "flat": "абсурд, обычные слова",
          "fixed": "правка прямо из исходника"}
 CJK = re.compile(r"[　-鿿]")
 
@@ -90,7 +91,8 @@ def main():
         # the chained pair is the clean one: same polished sentences in,
         # only the false claims out
         for a, b in [("raw", "polished"), ("polished", "chained"),
-                     ("chained", "absurd"), ("raw", "chained"),
+                     ("chained", "absurd"), ("chained", "flat"),
+                     ("raw", "chained"),
                      ("polished", "fixed")]:
             d = (col[b] - col[a]).dropna()
             rel = (d / col[a].reindex(d.index) * 100)
@@ -110,7 +112,7 @@ def main():
 
 
 def figure(W, R):
-    show = ["raw", "polished", "chained", "absurd"]
+    show = ["raw", "polished", "chained", "flat"]
     fig, axes = plt.subplots(1, 3, figsize=(16, 5.6))
     for ax, band in zip(axes, BANDS):
         col = W[band]
@@ -123,7 +125,7 @@ def figure(W, R):
         ax.plot(range(len(show)), [col[v].mean() for v in show], color="#c53030",
                 lw=2.5, marker="o", zorder=5)
         sub = R[R["полоса"] == band].set_index("контраст")
-        key = f"{LABEL['chained']} → {LABEL['absurd']}"
+        key = f"{LABEL['chained']} → {LABEL['flat']}"
         ax.set_title(f"{band} масштаб\n"
                      f"замена фактов на абсурд: "
                      f"{sub.loc[key, 'сдвиг %']:+.1f}%, p={sub.loc[key, 'p']:.2f}",

@@ -63,9 +63,13 @@ def stats(text, emb, ranks, L=cfg.L_DEFAULT, seed=0, long_end=True,
     keep = [i for i, t in enumerate(toks) if t not in SKIP]
     if len(keep) < L:
         return None
+    # a token that does not open with the space marker continues the previous
+    # word, so a running count of openers labels every token with its word
+    wid = np.cumsum([t.startswith(("Ġ", "▁")) for t in toks])
     rng = np.random.default_rng(seed)
     idx = np.array(keep)[rng.choice(len(keep), size=L, replace=False)]
     v, t = e[idx], [toks[i] for i in idx]
+    w = wid[idx]
     d = np.linalg.norm(v[:, None] - v[None], axis=-1)
     m = minimum_spanning_tree(d).tocoo()
     o = np.argsort(m.data)
@@ -102,6 +106,9 @@ def stats(text, emb, ranks, L=cfg.L_DEFAULT, seed=0, long_end=True,
     full = Counter(toks[j] for j in keep)
     hap = np.array([full[x] == 1 for x in t])
     out["хотя бы один hapax, %"] = float((hap[rows] | hap[cols]).mean()) * 100
+    # both ends inside one word: the edge says nothing about the text, only
+    # that the tokeniser split a word the encoder then kept together
+    out["куски одного слова, %"] = float((w[rows] == w[cols]).mean()) * 100
     out["разрыв"] = float(np.mean(np.abs(idx[rows] - idx[cols])))
     deg = Counter(np.concatenate([rows, cols]).tolist())
     top = sorted(deg.values(), reverse=True)[:max(1, L // 10)]

@@ -34,8 +34,9 @@ from long_edge_types import SKIP, stats, token_class
 from mech_props import corpus_ranks
 
 BASE = os.path.join(HERE, "..")
-PAIR = ("chained", "absurd")
-RU = {"chained": "факты верны", "absurd": "факты абсурдны"}
+PAIR = tuple(os.environ.get("PAIR", "chained,flat").split(","))
+RU = {"chained": "факты верны", "absurd": "абсурд, странные слова",
+      "flat": "абсурд, обычные слова"}
 # the coarse band averages d over q = 0.5 ... 0.9, i.e. over keeping the
 # longest 50% down to the longest 10% of edges -- a mean of 30%. Reading the
 # graph at a single 20% was inside that window but not centred on it, so the
@@ -95,16 +96,18 @@ def main():
         if (i + 1) % 15 == 0:
             print(f"  {i + 1}/{len(qids)}", flush=True)
     D = pd.DataFrame(rows).set_index("qid")
-    D.to_csv(os.path.join(BASE, "results", "absurd_edges.csv"))
+    D.to_csv(os.path.join(BASE, "results",
+                          f"absurd_edges_{PAIR[1]}.csv"))
 
-    keys = [k.split("::", 1)[1] for k in D.columns if k.startswith("chained::")]
+    keys = [k.split("::", 1)[1] for k in D.columns
+            if k.startswith(f"{PAIR[0]}::")]
     out = []
     for k in keys:
-        a, b = D[f"chained::{k}"], D[f"absurd::{k}"]
+        a, b = D[f"{PAIR[0]}::{k}"], D[f"{PAIR[1]}::{k}"]
         d = (b - a).dropna()
         frac = k.rsplit("@", 1)[1] if "@" in k else ""
         out.append({"признак": k.rsplit("@", 1)[0], "доля рёбер": frac,
-                    RU["chained"]: a.mean(), RU["absurd"]: b.mean(),
+                    RU[PAIR[0]]: a.mean(), RU[PAIR[1]]: b.mean(),
                     "сдвиг": d.mean(), "упало у": (d < 0).mean(),
                     "p": st.wilcoxon(d).pvalue if len(d) > 5 else np.nan})
     R = pd.DataFrame(out)
@@ -114,13 +117,17 @@ def main():
           f"от 0.10 до 0.50, центр 0.30\n")
     print("=== доля длинных рёбер, где хотя бы один конец hapax")
     h = R[R["признак"] == KEY].set_index("доля рёбер")
-    print(h[[RU["chained"], RU["absurd"], "сдвиг", "упало у", "p"]]
+    print(h[[RU[PAIR[0]], RU[PAIR[1]], "сдвиг", "упало у", "p"]]
+          .round(3).to_string())
+    print("\n=== доля длинных рёбер между кусками ОДНОГО слова")
+    ww = R[R["признак"] == "куски одного слова, %"].set_index("доля рёбер")
+    print(ww[[RU[PAIR[0]], RU[PAIR[1]], "сдвиг", "упало у", "p"]]
           .round(3).to_string())
     print("\n=== всё остальное, на центре полосы (0.30)")
     print(R[(R["доля рёбер"].isin(["0.30", "0.20"])) & (R["признак"] != KEY)]
           .round(3).to_string(index=False))
-    R.round(4).to_csv(os.path.join(BASE, "results", "absurd_edges_summary.csv"),
-                      index=False)
+    R.round(4).to_csv(os.path.join(
+        BASE, "results", f"absurd_edges_summary_{PAIR[1]}.csv"), index=False)
 
 
 if __name__ == "__main__":
