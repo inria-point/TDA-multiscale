@@ -1,0 +1,69 @@
+qid,subject,question,answer_text
+q000,sociology,Economic aid has largely failed to promote modernization in the developing countries because:,debt repayments with interest can be greater than the amount of money received
+q001,prehistory,The Lake Forest Archaic tradition relied on ____________ resources; the Maritime Archaic hunted ___________ creatures.,lacustrine; pelagic
+q002,security_studies,How can the origins of weak state insecurity be explained?,"The contemporary state-building condition is constrained by the shortened time-frame operating within the established guidelines of international norms, a particular problematic rule of which is sovereignty. Thus, unlike some European entities which could not complete the state-building process and were absorbed into more viable units, weak states will remain quasi entities."
+q003,medical_genetics,Male breast cancer is associated with mutations in ___.,BRCA2
+q004,college_medicine,"What is the most likely outcome of this modification?
+﻿
+An RNA strand that normally produces a transmembrane protein that facilitates potassium entry into muscle cells is modified to produce a different strand. The original strand is as follows:
+
+ GAAUAGAUGGGAAGCGCCAGAUACAGUAACAGA… 
+
+The modified sequence is as follows:
+
+ GAAUAGAUGGGAAGCGCCAGAUACAGUACCAGA…","Production of a larger, likely dysfunctional protein"
+q005,anatomy,Parasympathetic preganglionic nerves leave the central nervous system with the,third cranial nerves.
+q006,prehistory,The evolutionary histories of different kinds of organisms and their relationships to each other are illustrated in a:,phylogeny.
+q007,security_studies,What differences emerged with regard to theorizing on both sides of the Atlantic?,The different forms of knowledge relate to a conflicting conception of the relationship to policy: the problem-solving tradition in US political science vs. the critical studies in Europe.
+q008,sociology,Sullivan's (2000) study suggested that the proportion of housework men did was greatest when:,they were unemployed or both partners worked full time
+q009,nutrition,"The test for checking mean plasma glucose concentration over the previous 8-10 weeks is:
+",Hemoglobin A1c
+q010,astronomy,Why do we look for water-ice in craters at Mercury's pole?,These craters contain the only permanently shadowed regions on Mercury
+q011,college_medicine,"In an SDS-PAGE procedure, the SDS serves as a detergent. Why are the proteins treated with a detergent before being run through the electrophoresis gel?",To allow the electrophoresis to separate the proteins solely on the basis of the length of the primary sequence.
+q012,nutrition,"The critical pH below which demineralisation of tooth enamel occurs is usually around:
+",5.5
+q013,jurisprudence,On what grounds does John Finnis reject Hume's conception of practical reason?,That human reason can help us to determine what constitutes a worthwhile life.
+q014,nutrition,"In a healthy person maintaining energy balance in equilibrium (i.e. mathematical equality of energy intake and energy expenditure) is generally achieved on a:
+",1-2 week basis
+q015,virology,What is the essential pathology of astroviruses?,Very restricted replication in the gut
+q016,professional_medicine,"A 50-year-old female presents to the office with the complaints of chronic achiness, stiffness, and fatigue. Physical examination reveals multiple bilateral tender points in the trapezius, gluteal, and suboccipital muscle groups. Radiograph findings and laboratory study results are normal. The most likely diagnosis is",fibromyalgia
+q017,astronomy,Where is the crater from the impact that is believed to be responsible for the mass extinction of dinosaurs 65 million years ago?,Chicxulub Crater Yucatan Peninsula in Mexico.
+q018,global_facts,What is the median international income as of 2020?,"$10,000 "
+q019,medical_genetics,A high blood ammonia level occurs in:,ornithine transcarbamylase (OTC) deficiency.
+q020,prehistory,Genetic evidence indicates that the modern Inuit are the descendants of which people?,Thule
+q021,virology,"Globally, the most deaths are caused by:",Diarrheal diseases
+q022,human_aging,Being in bright light during the later parts of the day seems to,Restore normal circadian rhythm
+q023,world_religions,Which pope promoted the cults of St. Peter and St. Paul to bolster authority in Rome?,Gregory
+q024,prehistory,A(n) _________ contains primary refuse; a _________ contains secondary refuse.,picnic site; trash dump
+q025,global_facts,What is the percentage of children aged 13-15 in Japan who reported being bullied at least once in the past couple of months as of 2015?,36%
+q026,astronomy,The two moons of Mars are called ...,Phobos and Deimos
+q027,nutrition,"What is the density of fat free mass?
+",1.100 g/cm3
+q028,human_aging,Validation therapy refers to treatments in which the person with dementia,Is treated like a fellow human being
+q029,world_religions," In Buddhism, what are ordained women known as?",Bhikshunis
+q030,jurisprudence,Why does a Marxist account of law reject individual rights?,Because they are an expression of a capitalist economy and are unnecessary in a socialist society.
+q031,virology,What is the biggest risk factor for infection with Ebola?,Working in a category IV laboratory
+q032,college_medicine,Fatty acids are transported into the mitochondria bound to:,carnitine.
+q033,global_facts,"As of 2019, about what percentage of Germans say the relationship between the U.S. and Germany is good?",34%
+q034,medical_genetics,The polymerase chain reaction or PCR is a technique that,uses short DNA primers and a thermostable DNA polymerase to replicate specific DNA sequences in vitro.
+q035,human_aging,The cause of Alzheimer's appears to be,Mostly genetic
+q036,security_studies,How can we define the role of the state in achieving human security?,All of these options.
+q037,world_religions, What term refers the divine order as an ell-embracing higher principle in Sikhism?,Hukam
+q038,professional_medicine,"A 77-year-old female presents to the office for evaluation of a syncopal event that occurred while she was walking. Cardiac examination reveals a grade 3/6 systolic murmur, heard best at the right upper sternal border. There is radiation of the murmur into the neck. The valvular abnormality that most likely caused this episode is",aortic stenosis
+q039,anatomy,"When an emergency opening into the airway is required, the cricothyroid membrane should be pierced immediately",inferior to the thyroid cartilage.
+q040,global_facts,"As of 2019, about what percentage of people from the United States says homosexuality should be accepted by society?",72%
+q041,security_studies,"In what ways did the Human Development Report, published by the United Nations Development Program in 1994, challenge the traditional security paradigm?",All of these options.
+q042,medical_genetics,The most common cystic fibrosis mutation consists of:,a deletion.
+q043,astronomy,The term Schwarzschild radius usually describes properties of ...,black holes.
+q044,jurisprudence,Which statement best describes the nature and function of Kelsen's Grundnorm?,A presupposition that facilitates our understanding of the legal system.
+q045,professional_medicine,"A 15-year-old male is brought to the office with a 2-day history of painful swelling over the sacral prominence that began after a fall during a high school wrestling match. The patient has a low-grade fever. Examination reveals an erythematous, fluctuant, elevated mass with 3 midline pores. Rectal examination reveals no induration or pain. The most likely diagnosis is",pilonidal abscess
+q046,jurisprudence,Kelsen’s theory of law is called pure theory because Kelsen :,Purely discussed jurisprudence only
+q047,human_aging,"The program that takes over care for those with 6 or fewer months to live, attempts to keep them at home, provides pain relief, and ends all life-prolonging technologies is called",Hospice
+q048,college_medicine,The body compensates for increased environmental temperature by:,increasing water lost through skin
+q049,professional_medicine,A 68-year-old female presents to the emergency department with a 3-day history of worsening fever and headache. Today the patient is nauseated and less responsive. Lumbar puncture reveals a protein level of 89 mg/dL (reference range: 15-45 mg/dL) with pleocytosis. The most likely etiologic organism is,Streptococcus pneumoniae
+q050,virology,What is the most important factor for virus classification?,Chemistry of the DNA and RNA
+q051,anatomy,The major concentrations of proprioceptive receptors providing information about position of the TMJ are located in,the capsule and ligaments of the TMJ and the lateral pterygoid muscle.
+q052,anatomy,The mucosa of the hard palate is,keratinised and has submucosa and minor salivary glands posterolaterally.
+q053,world_religions,Which form of Buddhism taught the only hope for salvation was in the saving grace of Amida?,Pure Land
+q054,sociology,Marxist feminists explain patriarchy in terms of:,women's domestic labour being exploited by the capitalist economy
+q055,sociology,The 'post-industrial society' identified by Bell (1973) involved:,"a shift towards a service economy, based on knowledge and information"
