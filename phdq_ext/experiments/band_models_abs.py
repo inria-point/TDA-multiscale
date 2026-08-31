@@ -170,7 +170,7 @@ def main():
         print(f"\n=== {r['вариант']} | {r['полоса']} | {r['режим']}")
         print(g[["шаг", "признак", "тип", "коэффициент", "R2 накопл."]]
               .round(2).to_string(index=False))
-    figure(T, I)
+    figure(T, I, int((W.perturbation == 'identity').sum()))
 
 
 def panel(ax, g, r, unit, title):
@@ -181,43 +181,42 @@ def panel(ax, g, r, unit, title):
     ax.set_yticks(range(len(g)))
     ax.set_yticklabels(g["признак"], fontsize=9)
     ax.axvline(0, c="k", lw=1)
-    ax.set_title(title, fontsize=10)
-    ax.set_xlabel(f"{unit} на 1 sd признака")
     ax.grid(axis="x", alpha=0.25)
     # R2 alone hides the scale, so the median miss is given against the
-    # do-nothing baseline that always predicts the average
+    # do-nothing baseline that always predicts the average. It goes above the
+    # axes rather than inside them, where it sat on top of the bars.
     gain = 1 - r["ошибка: медиана"] / r["без модели: медиана"]
     # d is a dimension, not a percentage, so the miss is also given as a share
     # of the mean d -- otherwise "1.95" reads as suspiciously small
     share = (f" ({r['ошибка: медиана'] / r['среднее цели']:.0%} от d)"
              if unit == "единиц d" else "")
-    ax.text(0.98, 0.04,
-            f"R² {r['R2']:.2f}\n"
-            f"типичный промах {r['ошибка: медиана']:.2f} {unit}{share}\n"
-            f"без модели {r['без модели: медиана']:.2f} → выигрыш {gain:.0%}\n"
-            f"худшая десятая: {r['ошибка: 90-й']:.2f} против "
-            f"{r['без модели: 90-й']:.2f}",
-            transform=ax.transAxes, ha="right", va="bottom", fontsize=8,
-            bbox=dict(boxstyle="round,pad=0.4", fc="#fff8e6" if gain < 0.15
-                      else "#eef7ee", ec="#bbb", lw=0.8))
+    ax.set_title(
+        f"{title}\n"
+        f"R² {r['R2']:.2f}\n"
+        f"промах {r['ошибка: медиана']:.2f} {unit}{share} против "
+        f"{r['без модели: медиана']:.2f} без модели\n"
+        f"худшая десятая {r['ошибка: 90-й']:.2f} против "
+        f"{r['без модели: 90-й']:.2f}", fontsize=9)
+    ax.set_xlabel(f"{unit} на 1 sd признака")
 
 
-def figure(T, I):
+def figure(T, I, n_src):
     B = I[I["вариант"].str.startswith("B")]
-    fig, axes = plt.subplots(1, 3, figsize=(17, 5.6))
+    fig, axes = plt.subplots(1, 3, figsize=(18.5, 6.8))
     for ax, band in zip(axes, BANDS):
         g = T[(T["вариант"].str.startswith("B")) & (T["полоса"] == band)]
         r = B[B["полоса"] == band].iloc[0]
         mean = r["среднее цели"]
         panel(ax, g, r, "единиц d",
-              f"{band} масштаб — сама размерность d "
-              f"(в среднем d = {mean:.1f})")
+              f"{band} масштаб — сама размерность d\n"
+              f"в среднем d = {mean:.1f}")
     h = [plt.Line2D([], [], color="#2b6cb0", lw=8, label="механика"),
          plt.Line2D([], [], color="#b7791f", lw=8, label="судья")]
     fig.legend(handles=h, loc="lower center", ncol=2, frameon=False)
+    n = int(B["n"].iloc[0])
     fig.suptitle("Абсолютные признаки против абсолютной размерности: "
                  "ни один исходник не участвует\n"
-                 "879 текстов, из них 104 неизменённых", fontsize=12)
+                 f"{n} текстов, из них {n_src} неизменённых", fontsize=12)
     fig.tight_layout(rect=(0, 0.05, 1, 0.93))
     path = os.path.join(BASE, "figures", f"band_models_abs{SUF}.png")
     fig.savefig(path, dpi=150)

@@ -180,7 +180,7 @@ def main():
 
 def figure(T, I):
     modes = ["все тексты", "внутри"]
-    fig, axes = plt.subplots(2, 3, figsize=(17, 10))
+    fig, axes = plt.subplots(2, 3, figsize=(17, 11.5))
     for j, band in enumerate(BANDS):
         for i, mode in enumerate(modes):
             ax = axes[i][j]
@@ -194,23 +194,20 @@ def figure(T, I):
             ax.set_yticks(range(len(g)))
             ax.set_yticklabels(g["признак"], fontsize=9)
             ax.axvline(0, c="k", lw=1)
-            ax.set_title(f"{band} масштаб — {mode}", fontsize=11)
             ax.set_xlabel("% сдвига полосы на 1 sd признака")
             ax.grid(axis="x", alpha=0.25)
             r = I[(I["полоса"] == band) & (I["режим"] == mode)].iloc[0]
             gain = 1 - r["ошибка: медиана"] / r["без модели: медиана"]
-            ax.text(0.98, 0.04,
-                    f"R² {r[f'R2 отложенных ({SPLIT})']:.2f}\n"
-                    f"типичный промах {r['ошибка: медиана']:.1f}%\n"
-                    f"без модели {r['без модели: медиана']:.1f}% → "
-                    f"выигрыш {gain:.0%}\n"
-                    f"худшая десятая: {r['ошибка: 90-й']:.1f} против "
-                    f"{r['без модели: 90-й']:.1f}",
-                    transform=ax.transAxes, ha="right", va="bottom",
-                    fontsize=8,
-                    bbox=dict(boxstyle="round,pad=0.4",
-                              fc="#fff8e6" if gain < 0.15 else "#eef7ee",
-                              ec="#bbb", lw=0.8))
+            # above the axes: inside them it covered the bars it describes
+            # short lines: the one-line version ran off the right edge of the
+            # rightmost column
+            ax.set_title(
+                f"{band} масштаб — {mode}\n"
+                f"R² {r[f'R2 отложенных ({SPLIT})']:.2f}\n"
+                f"промах {r['ошибка: медиана']:.1f}% против "
+                f"{r['без модели: медиана']:.1f}% без модели\n"
+                f"худшая десятая {r['ошибка: 90-й']:.1f} против "
+                f"{r['без модели: 90-й']:.1f}", fontsize=9)
     h = [plt.Line2D([], [], color="#2b6cb0", lw=8, label="механика"),
          plt.Line2D([], [], color="#b7791f", lw=8, label="судья")]
     fig.legend(handles=h, loc="lower center", ncol=2, frameon=False)
