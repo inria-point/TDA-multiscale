@@ -28,7 +28,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from sklearn.linear_model import LinearRegression
-from sklearn.model_selection import GroupKFold, KFold, cross_val_score
+from sklearn.model_selection import (GroupKFold, KFold,
+                                     cross_val_predict,
+                                     cross_val_score)
 
 HERE = os.path.dirname(__file__)
 sys.path.insert(0, HERE)
@@ -121,10 +123,20 @@ def fit(D, band, cols, label, family, within):
              "коэффициент": b, "1 sd признака": sd[c],
              "шаг": i + 1, "R2 накопл.": hist[i][1]}
             for i, (c, b) in enumerate(zip(chosen, m.coef_))]
+    # R2 is a ratio of squared errors and so is driven by the tails; the median
+    # miss against the predict-the-average baseline is what says whether the
+    # model helps on an ordinary text
+    pred = cross_val_predict(m, Xs[chosen], y, cv=splitter(),
+                             groups=sub["perturbation"])
+    err, base = np.abs(y - pred), np.abs(y - y.mean())
     info = {"полоса": band, "режим": "внутри" if within else "все тексты",
             "n": len(sub), "признаков": len(chosen),
             "R2 на своих": m.score(Xs[chosen], y),
-            f"R2 отложенных ({SPLIT})": held}
+            f"R2 отложенных ({SPLIT})": held,
+            "ошибка: медиана": err.median(),
+            "без модели: медиана": base.median(),
+            "ошибка: 90-й": err.quantile(0.9),
+            "без модели: 90-й": base.quantile(0.9)}
     return pd.DataFrame(rows), info
 
 
@@ -159,10 +171,10 @@ def main():
             print(f"\n=== {band} масштаб, {mode}")
             print(g[["шаг", "признак", "тип", "коэффициент", "1 sd признака",
                      "R2 накопл."]].round(2).to_string(index=False))
-    figure(T)
+    figure(T, I)
 
 
-def figure(T):
+def figure(T, I):
     modes = ["все тексты", "внутри"]
     fig, axes = plt.subplots(2, 3, figsize=(17, 10))
     for j, band in enumerate(BANDS):
@@ -178,11 +190,23 @@ def figure(T):
             ax.set_yticks(range(len(g)))
             ax.set_yticklabels(g["признак"], fontsize=9)
             ax.axvline(0, c="k", lw=1)
-            ax.set_title(f"{band} масштаб — {mode}\n"
-                         f"R² на чужих пертурбациях "
-                         f"{g['R2 накопл.'].iloc[0]:.2f}", fontsize=10)
+            ax.set_title(f"{band} масштаб — {mode}", fontsize=11)
             ax.set_xlabel("% сдвига полосы на 1 sd признака")
             ax.grid(axis="x", alpha=0.25)
+            r = I[(I["полоса"] == band) & (I["режим"] == mode)].iloc[0]
+            gain = 1 - r["ошибка: медиана"] / r["без модели: медиана"]
+            ax.text(0.98, 0.04,
+                    f"R² {r[f'R2 отложенных ({SPLIT})']:.2f}\n"
+                    f"типичный промах {r['ошибка: медиана']:.1f}%\n"
+                    f"без модели {r['без модели: медиана']:.1f}% → "
+                    f"выигрыш {gain:.0%}\n"
+                    f"худшая десятая: {r['ошибка: 90-й']:.1f} против "
+                    f"{r['без модели: 90-й']:.1f}",
+                    transform=ax.transAxes, ha="right", va="bottom",
+                    fontsize=8,
+                    bbox=dict(boxstyle="round,pad=0.4",
+                              fc="#fff8e6" if gain < 0.15 else "#eef7ee",
+                              ec="#bbb", lw=0.8))
     h = [plt.Line2D([], [], color="#2b6cb0", lw=8, label="механика"),
          plt.Line2D([], [], color="#b7791f", lw=8, label="судья")]
     fig.legend(handles=h, loc="lower center", ncol=2, frameon=False)
