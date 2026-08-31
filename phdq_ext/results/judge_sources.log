@@ -1,0 +1,12 @@
+104 исходников к оценке
+  25/104  10s
+  50/104  22s
+  75/104  33s
+  100/104  44s
+
+saved /Users/admin/Desktop/Research/TDA/phdq_ext/experiments/../results/judge_sources.csv: 104 исходников
+      base_integration  base_coherence  base_domains  base_novelty  base_literacy  base_template  base_punctuation  base_syntax_complexity  base_semantic_complexity  base_naturalness
+mean               8.1             7.6           6.4           6.9            7.3            5.4               7.3                     7.2                       6.5               7.7
+std                0.6             0.8           0.8           0.5            1.0            0.8               1.1                     0.6                       1.1               0.8
+min                6.0             6.0           5.0           4.0            5.0            5.0               4.0                     6.0                       4.0               5.0
+max                9.0             9.0           7.0           7.0            9.0            8.0               9.0                     8.0                       9.0               9.0

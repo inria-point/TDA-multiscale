@@ -48,11 +48,21 @@ def demean(df, cols, by):
 
 def main():
     D = pd.read_csv(os.path.join(BASE, "results", f"annotated{SUF}.csv"))
+    # judged properties enter as paired shifts too: scoring the 104 sources
+    # made the same correction available that pairing gave the counted measures
+    S = pd.read_csv(os.path.join(BASE, "results", f"judge_sources{SUF}.csv"))
+    for f in (D, S):
+        f["text_id"] = f["text_id"].astype(str).str.replace("^coling::", "",
+                                                            regex=True)
+    D = D.merge(S, on="text_id", how="left")
+    for k in PROPS:
+        if k in D and f"base_{k}" in D:
+            D[f"d_{k}"] = D[k] - D[f"base_{k}"]
     for m in MECH:
         if f"src_{m}" in D:
             D[f"d_{m}"] = D[m] - D[f"src_{m}"]
     mech = [f"d_{m}" for m in MECH if f"d_{m}" in D]
-    judge = [k for k in PROPS if k in D]
+    judge = [f"d_{k}" for k in PROPS if f"d_{k}" in D]
 
     rows = []
     for band in BANDS:

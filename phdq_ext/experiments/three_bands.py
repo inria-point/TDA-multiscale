@@ -51,7 +51,10 @@ SUF = "" if VARIANT == "base" else f"_{VARIANT}"
 FILES = ["perturb_L201_coling_all.csv.gz", "perturb_L201_hapax.csv.gz",
          "perturb_L201_pc2neg.csv.gz", "perturb_L201_pc2probes.csv.gz",
          "perturb_L201_collapse.csv.gz", "perturb_L201_composed.csv.gz",
-         "perturb_L201_rarify4.csv.gz", "perturb_L201_rarify3.csv.gz",
+         # rarify3 ran before map_vocabulary was fixed and gave the two
+         # directions byte-identical texts; rarify4 is the rerun and must
+         # therefore come last, since duplicates resolve keep="last"
+         "perturb_L201_rarify3.csv.gz", "perturb_L201_rarify4.csv.gz",
          "perturb_L201_downmore.csv.gz", "perturb_L201_syn.csv.gz",
          "perturb_L201_scriptessay.csv.gz"]
 
