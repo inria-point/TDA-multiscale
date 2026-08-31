@@ -25,8 +25,14 @@ from halluc_result import CJK, LABEL, VERSIONS, bands
 from three_bands import BANDS
 
 BASE = os.path.join(HERE, "..")
-PAIRS = [("raw", "polished"), ("polished", "fixed"), ("raw", "fixed")]
-SHORT = {"raw": "выдумка", "polished": "выдумка, гладко", "fixed": "исправлено"}
+# the chain, so each row is one edit on a fixed starting point
+PAIRS = [("raw", "polished"), ("polished", "chained"), ("raw", "chained")]
+SHORT = {"raw": "выдумка", "polished": "выдумка, гладко",
+         "chained": "гладко, факты исправлены",
+         "fixed": "правка из исходника"}
+ROW = ["полировка языка, факты те же",
+       "правка фактов на гладком тексте",
+       "обе правки вместе"]
 
 
 def main():
@@ -37,8 +43,20 @@ def main():
     D = D[(D["d_hat"] > 0) & ~D["qid"].isin(bad)]
     W = bands(D).pivot(index="qid", columns="version")
 
-    fig, axes = plt.subplots(3, 3, figsize=(15.5, 15))
-    for i, (a, b) in enumerate(PAIRS):
+    grid(W, PAIRS, "halluc_scatter.png",
+         "Каждая точка — один вопрос. Диагональ = версия ничего не изменила.\n"
+         "строки: " + " / ".join(ROW))
+    # the contrast the experiment exists for, on its own
+    grid(W, [("polished", "chained")], "halluc_scatter_facts.png",
+         "Гладкий текст до и после правки фактов — язык не менялся.\n"
+         "Каждая точка — один вопрос; диагональ = размерность не сдвинулась")
+    print(f"({len(W)} вопросов)")
+
+
+def grid(W, pairs, fname, suptitle):
+    fig, axes = plt.subplots(len(pairs), 3, squeeze=False,
+                             figsize=(15.5, 5 * len(pairs)))
+    for i, (a, b) in enumerate(pairs):
         for j, band in enumerate(BANDS):
             ax = axes[i][j]
             col = W[band]
@@ -67,13 +85,12 @@ def main():
                          f"связь между версиями ρ={r:.2f}", fontsize=9)
             ax.legend(fontsize=7.5, loc="upper left", frameon=False)
             ax.grid(alpha=.25)
-    fig.suptitle("Каждая точка — один вопрос. Диагональ = версия ничего не "
-                 "изменила.\nстроки: полировка языка / снятие выдумки при "
-                 "равной гладкости / обе правки вместе", fontsize=12)
-    fig.tight_layout(rect=(0, 0, 1, 0.955))
-    path = os.path.join(BASE, "figures", "halluc_scatter.png")
+    fig.suptitle(suptitle, fontsize=12)
+    fig.tight_layout(rect=(0, 0, 1, 1 - 0.045 / len(pairs) * 3))
+    path = os.path.join(BASE, "figures", fname)
     fig.savefig(path, dpi=140)
-    print("saved", os.path.relpath(path, BASE), f"({len(W)} вопросов)")
+    plt.close(fig)
+    print("saved", os.path.relpath(path, BASE))
 
 
 if __name__ == "__main__":
