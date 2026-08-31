@@ -6,7 +6,10 @@ import numpy as np
 import torch
 from transformers import AutoModel, AutoTokenizer
 
-MODEL_NAME = "answerdotai/ModernBERT-base"
+# swappable so the same texts can be re-embedded by a larger model without
+# touching any pipeline: the cache key already includes the model name, so old
+# and new runs coexist
+MODEL_NAME = os.environ.get("EMBED_MODEL", "answerdotai/ModernBERT-base")
 CACHE_DIR = os.path.join(os.path.dirname(__file__), "..", "cache", "embeds")
 
 
