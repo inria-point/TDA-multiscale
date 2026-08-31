@@ -28,9 +28,10 @@ from mech_props import NAMES as MECH, corpus_ranks, measure
 from three_bands import BANDS
 
 BASE = os.path.join(HERE, "..")
-VERSIONS = ["raw", "polished", "chained", "fixed"]
+VERSIONS = ["raw", "polished", "chained", "absurd", "fixed"]
 LABEL = {"raw": "выдумка, как есть", "polished": "та же выдумка, гладко",
          "chained": "гладкая, факты исправлены",
+         "absurd": "те же фразы, факты абсурдны",
          "fixed": "правка прямо из исходника"}
 CJK = re.compile(r"[　-鿿]")
 
@@ -89,7 +90,8 @@ def main():
         # the chained pair is the clean one: same polished sentences in,
         # only the false claims out
         for a, b in [("raw", "polished"), ("polished", "chained"),
-                     ("raw", "chained"), ("polished", "fixed")]:
+                     ("chained", "absurd"), ("raw", "chained"),
+                     ("polished", "fixed")]:
             d = (col[b] - col[a]).dropna()
             rel = (d / col[a].reindex(d.index) * 100)
             t = stats.wilcoxon(d) if len(d) > 5 else None
@@ -108,7 +110,7 @@ def main():
 
 
 def figure(W, R):
-    show = ["raw", "polished", "chained"]
+    show = ["raw", "polished", "chained", "absurd"]
     fig, axes = plt.subplots(1, 3, figsize=(16, 5.6))
     for ax, band in zip(axes, BANDS):
         col = W[band]
@@ -116,21 +118,21 @@ def figure(W, R):
             ax.scatter(np.full(len(col), i) + np.linspace(-.09, .09, len(col)),
                        col[v], s=18, alpha=.55, color="#2b6cb0", linewidths=0)
         for q in col.index:
-            ax.plot(range(3), [col[v][q] for v in show], color="#9aa5b1",
+            ax.plot(range(len(show)), [col[v][q] for v in show], color="#9aa5b1",
                     lw=.5, alpha=.5, zorder=0)
-        ax.plot(range(3), [col[v].mean() for v in show], color="#c53030",
+        ax.plot(range(len(show)), [col[v].mean() for v in show], color="#c53030",
                 lw=2.5, marker="o", zorder=5)
         sub = R[R["полоса"] == band].set_index("контраст")
-        key = f"{LABEL['polished']} → {LABEL['chained']}"
+        key = f"{LABEL['chained']} → {LABEL['absurd']}"
         ax.set_title(f"{band} масштаб\n"
-                     f"снятие выдумки при равной гладкости: "
+                     f"замена фактов на абсурд: "
                      f"{sub.loc[key, 'сдвиг %']:+.1f}%, p={sub.loc[key, 'p']:.2f}",
                      fontsize=10)
-        ax.set_xticks(range(3))
-        ax.set_xticklabels([LABEL[v] for v in show], fontsize=8.5)
+        ax.set_xticks(range(len(show)))
+        ax.set_xticklabels([LABEL[v] for v in show], fontsize=7.5)
         ax.set_ylabel("d")
         ax.grid(axis="y", alpha=.25)
-    fig.suptitle("Цепочка: язык, затем факты. Линия — один вопрос, "
+    fig.suptitle("Цепочка: язык, факты, абсурд. Линия — один вопрос, "
                  "красная — среднее", fontsize=12)
     fig.tight_layout(rect=(0, 0, 1, 0.93))
     path = os.path.join(BASE, "figures", "halluc.png")

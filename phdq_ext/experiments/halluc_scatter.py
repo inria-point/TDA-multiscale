@@ -26,13 +26,14 @@ from three_bands import BANDS
 
 BASE = os.path.join(HERE, "..")
 # the chain, so each row is one edit on a fixed starting point
-PAIRS = [("raw", "polished"), ("polished", "chained"), ("raw", "chained")]
+PAIRS = [("raw", "polished"), ("polished", "chained"),
+         ("chained", "absurd")]
 SHORT = {"raw": "выдумка", "polished": "выдумка, гладко",
-         "chained": "гладко, факты исправлены",
+         "chained": "гладко, факты исправлены", "absurd": "факты абсурдны",
          "fixed": "правка из исходника"}
 ROW = ["полировка языка, факты те же",
        "правка фактов на гладком тексте",
-       "обе правки вместе"]
+       "те же фразы, факты заменены на абсурд"]
 
 
 def main():
@@ -49,6 +50,9 @@ def main():
     # the contrast the experiment exists for, on its own
     grid(W, [("polished", "chained")], "halluc_scatter_facts.png",
          "Гладкий текст до и после правки фактов — язык не менялся.\n"
+         "Каждая точка — один вопрос; диагональ = размерность не сдвинулась")
+    grid(W, [("chained", "absurd")], "halluc_scatter_absurd.png",
+         "Те же фразы, факты заменены на откровенный абсурд.\n"
          "Каждая точка — один вопрос; диагональ = размерность не сдвинулась")
     print(f"({len(W)} вопросов)")
 
