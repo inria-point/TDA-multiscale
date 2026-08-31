@@ -1,0 +1,15 @@
+40 пертурбаций x до 30 текстов = 1200 вызовов
+  100/1200  40s
+  200/1200  97s
+  300/1200  137s
+  400/1200  176s
+  500/1200  214s
+  600/1200  251s
+  700/1200  288s
+  800/1200  327s
+  900/1200  366s
+  1000/1200  405s
+  ошибка: Remote end closed connection without response
+  1100/1200  443s
+
+saved /Users/admin/Desktop/Research/TDA/phdq_ext/experiments/../results/annotated.csv: 1199 строк, полностью оценено 813
