@@ -28,7 +28,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from sklearn.linear_model import LinearRegression
-from sklearn.model_selection import GroupKFold, cross_val_score
+from sklearn.model_selection import GroupKFold, KFold, cross_val_score
 
 HERE = os.path.dirname(__file__)
 sys.path.insert(0, HERE)
@@ -40,6 +40,11 @@ from three_bands import BANDS as _B, SUF
 
 BANDS = list(_B)
 BASE = os.path.join(HERE, "..")
+# "perturbation" holds out whole operations, so a feature must transfer to a
+# kind of damage never seen; "random" mixes texts from the same operation into
+# both sides, which is the right criterion when the goal is to describe the
+# space we have rather than to anticipate an unseen attack
+SPLIT = os.environ.get("SPLIT", "random")
 MAX_FEATURES = 6
 MIN_GAIN = 0.004      # a feature must buy this much held-out R2 to be kept
 N_SPLITS = 5
@@ -63,8 +68,13 @@ def features(D):
     return cols, label, family
 
 
+def splitter():
+    return (GroupKFold(n_splits=N_SPLITS) if SPLIT == "perturbation"
+            else KFold(n_splits=N_SPLITS, shuffle=True, random_state=0))
+
+
 def forward(X, y, groups, names):
-    cv = GroupKFold(n_splits=N_SPLITS)
+    cv = splitter()
     chosen, history = [], []
     best = 0.0
     while len(chosen) < MAX_FEATURES:
@@ -103,7 +113,7 @@ def fit(D, band, cols, label, family, within):
     if not chosen:
         return None, None
     m = LinearRegression().fit(Xs[chosen], y)
-    cv = GroupKFold(n_splits=N_SPLITS)
+    cv = splitter()
     held = cross_val_score(m, Xs[chosen], y, groups=sub["perturbation"],
                            cv=cv, scoring="r2").mean()
     rows = [{"полоса": band, "режим": "внутри" if within else "все тексты",
@@ -114,7 +124,7 @@ def fit(D, band, cols, label, family, within):
     info = {"полоса": band, "режим": "внутри" if within else "все тексты",
             "n": len(sub), "признаков": len(chosen),
             "R2 на своих": m.score(Xs[chosen], y),
-            "R2 на чужих пертурбациях": held}
+            f"R2 отложенных ({SPLIT})": held}
     return pd.DataFrame(rows), info
 
 
@@ -136,7 +146,7 @@ def main():
                 tabs.append(t)
                 infos.append(i)
     T = pd.concat(tabs, ignore_index=True)
-    T.round(3).to_csv(os.path.join(BASE, "results", f"band_models{SUF}.csv"),
+    T.round(3).to_csv(os.path.join(BASE, "results", f"band_models_{SPLIT}{SUF}.csv"),
                       index=False)
     I = pd.DataFrame(infos)
     pd.set_option("display.width", 220)
@@ -176,12 +186,13 @@ def figure(T):
     h = [plt.Line2D([], [], color="#2b6cb0", lw=8, label="механика"),
          plt.Line2D([], [], color="#b7791f", lw=8, label="судья")]
     fig.legend(handles=h, loc="lower center", ncol=2, frameon=False)
+    held = ("отложенных пертурбациях" if SPLIT == "perturbation"
+            else "отложенных текстах")
     fig.suptitle("Короткая линейная модель каждой полосы. Признаки — сдвиги "
                  "относительно собственного исходника, стандартизованные;\n"
-                 "отбор пошаговый по R² на отложенных пертурбациях",
-                 fontsize=12)
+                 f"отбор пошаговый по R² на {held}", fontsize=12)
     fig.tight_layout(rect=(0, 0.035, 1, 0.94))
-    path = os.path.join(BASE, "figures", f"band_models{SUF}.png")
+    path = os.path.join(BASE, "figures", f"band_models_{SPLIT}{SUF}.png")
     fig.savefig(path, dpi=150)
     print("\nsaved", os.path.relpath(path, BASE))
 
