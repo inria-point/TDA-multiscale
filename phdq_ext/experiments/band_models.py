@@ -36,7 +36,7 @@ HERE = os.path.dirname(__file__)
 sys.path.insert(0, HERE)
 sys.path.insert(0, os.path.join(HERE, "..", "scripts"))
 from judge import PROPS
-from judge_shift import load
+from judge_shift import NOT_RATED, load
 from mech_props import NAMES as MECH
 from three_bands import BANDS as _B, SUF
 
@@ -67,6 +67,10 @@ def features(D):
             cols.append(c)
             label[c] = meta["ru"]
             family[c] = "судья"
+    if NOT_RATED in D:
+        cols.append(NOT_RATED)
+        label[NOT_RATED] = NOT_RATED
+        family[NOT_RATED] = "судья"
     return cols, label, family
 
 

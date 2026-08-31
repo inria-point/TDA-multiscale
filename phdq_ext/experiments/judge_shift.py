@@ -33,13 +33,35 @@ MIN_N = 15
 OUT = os.path.join(BASE, "figures", f"judge_shift{SUF}")
 
 
-def load():
+# the two complexity scales are conditional by construction: the prompt tells
+# the judge to withhold them when the text is too damaged for the question to
+# mean anything. Dropping those rows would remove the strongest perturbations
+# from every fit -- shuffle_words, both n-gram models and collapse_vocab_60
+# vanish entirely -- so they are filled at the floor of the scale, which is
+# what "no assessable complexity" amounts to, and flagged.
+CONDITIONAL = ["syntax_complexity", "semantic_complexity"]
+FLOOR = 1
+NOT_RATED = "сложность не оценена"
+
+
+def load(fill=True):
     D = pd.read_csv(os.path.join(BASE, "results", f"annotated{SUF}.csv"))
     S = pd.read_csv(os.path.join(BASE, "results", f"judge_sources{SUF}.csv"))
     for f in (D, S):
         f["text_id"] = f["text_id"].astype(str).str.replace("^coling::", "",
                                                             regex=True)
     D = D.merge(S, on="text_id", how="left")
+    if fill:
+        # a row missing the unconditional scales too is a parse failure, not a
+        # judgement, and stays dropped
+        core = [k for k in PROPS if k not in CONDITIONAL and k in D]
+        D = D.dropna(subset=core)
+        D[NOT_RATED] = D[CONDITIONAL].isna().any(axis=1).astype(float)
+        for c in CONDITIONAL:
+            if c in D:
+                D[c] = D[c].fillna(FLOOR)
+            if f"base_{c}" in D:
+                D[f"base_{c}"] = D[f"base_{c}"].fillna(FLOOR)
     for k in PROPS:
         if k in D and f"base_{k}" in D:
             D[f"d_{k}"] = D[k] - D[f"base_{k}"]

@@ -28,6 +28,7 @@ HERE = os.path.dirname(__file__)
 sys.path.insert(0, HERE)
 sys.path.insert(0, os.path.join(HERE, "..", "scripts"))
 from band_models import MAX_FEATURES, MIN_GAIN, N_SPLITS, demean
+from judge_shift import NOT_RATED
 from judge import PROPS
 from judge_shift import load
 from mech_props import NAMES as MECH
@@ -49,6 +50,10 @@ def absolute_features(D):
             cols.append(k)
             label[k] = meta["ru"]
             family[k] = "судья"
+    if NOT_RATED in D:
+        cols.append(NOT_RATED)
+        label[NOT_RATED] = NOT_RATED
+        family[NOT_RATED] = "судья"
     return cols, label, family
 
 
@@ -67,6 +72,17 @@ def with_sources(D, cols):
     ren |= {f"base_{k}": k for k in PROPS if f"base_{k}" in src}
     src = src[["text_id"] + list(ren)].rename(columns=ren)
     src["perturbation"] = "identity"
+    if NOT_RATED in cols:
+        # the flag is derived from the perturbed rows' own nulls, which say
+        # nothing about the sources; read theirs from the raw file
+        raw = pd.read_csv(os.path.join(BASE, "results",
+                                       f"judge_sources{SUF}.csv"))
+        raw["text_id"] = raw["text_id"].astype(str).str.replace(
+            "^coling::", "", regex=True)
+        miss = raw.set_index("text_id")[["base_syntax_complexity",
+                                         "base_semantic_complexity"]]
+        src[NOT_RATED] = (src["text_id"].map(miss.isna().any(axis=1))
+                          .fillna(False).astype(float))
     src = src.merge(A[A["perturbation"] == "identity"],
                     on=["perturbation", "text_id"], how="inner")
     keep = ["perturbation", "text_id"] + cols + BANDS
@@ -106,7 +122,7 @@ def run(sub, target, cols, label, family, tag, mode):
              "коэффициент": b, "R2 накопл.": hist[i]}
             for i, (c, b) in enumerate(zip(chosen, m.coef_))]
     info = {"вариант": tag, "полоса": target, "режим": mode, "n": len(y),
-            "разброс цели (sd)": y.std(),
+            "разброс цели (sd)": y.std(), "среднее цели": y.mean(),
             "R2": 1 - (err ** 2).sum() / (base ** 2).sum(),
             "ошибка: медиана": err.median(),
             "без модели: медиана": base.median(),
@@ -171,9 +187,13 @@ def panel(ax, g, r, unit, title):
     # R2 alone hides the scale, so the median miss is given against the
     # do-nothing baseline that always predicts the average
     gain = 1 - r["ошибка: медиана"] / r["без модели: медиана"]
+    # d is a dimension, not a percentage, so the miss is also given as a share
+    # of the mean d -- otherwise "1.95" reads as suspiciously small
+    share = (f" ({r['ошибка: медиана'] / r['среднее цели']:.0%} от d)"
+             if unit == "единиц d" else "")
     ax.text(0.98, 0.04,
             f"R² {r['R2']:.2f}\n"
-            f"типичный промах {r['ошибка: медиана']:.2f} {unit}\n"
+            f"типичный промах {r['ошибка: медиана']:.2f} {unit}{share}\n"
             f"без модели {r['без модели: медиана']:.2f} → выигрыш {gain:.0%}\n"
             f"худшая десятая: {r['ошибка: 90-й']:.2f} против "
             f"{r['без модели: 90-й']:.2f}",
@@ -188,8 +208,10 @@ def figure(T, I):
     for ax, band in zip(axes, BANDS):
         g = T[(T["вариант"].str.startswith("B")) & (T["полоса"] == band)]
         r = B[B["полоса"] == band].iloc[0]
+        mean = r["среднее цели"]
         panel(ax, g, r, "единиц d",
-              f"{band} масштаб — сама размерность d")
+              f"{band} масштаб — сама размерность d "
+              f"(в среднем d = {mean:.1f})")
     h = [plt.Line2D([], [], color="#2b6cb0", lw=8, label="механика"),
          plt.Line2D([], [], color="#b7791f", lw=8, label="судья")]
     fig.legend(handles=h, loc="lower center", ncol=2, frameon=False)
