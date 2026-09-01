@@ -137,8 +137,22 @@ CHARS: <0-3> | <verbatim quote or ->
 CUT: <0-3> | <verbatim quote or ->
 NATURE: <1-5>
 HUMAN: <0-3>
-DAMAGE: <0-5, overall severity of pipeline damage, from the six scores above
-only; 0 = untouched, 5 = destroyed as data>
+DAMAGE: <0-5, overall severity of pipeline damage, from the scores above only
+and never from how well the document is written. Only the two ends were
+anchored at first and the answers piled up at the bottom, so every level is
+named:
+  0 = nothing found; the document arrived intact
+  1 = isolated blemishes; a reader would pass over them without noticing
+  2 = clearly present but local -- one appended block, a handful of corrupted
+      spots. The document is fully usable
+  3 = systematic: the defect runs through the whole document, at every
+      apostrophe, every formula, every sentence boundary, or an intruding block
+      takes up a real share of the text. Still usable, but a model trained on
+      this would learn the defect along with the content
+  4 = severe: the damage competes with the content. Much of what is here should
+      not be here, and what should be is hard to follow
+  5 = useless as data: what the document meant to say can no longer be
+      recovered>
 VERDICT: keep | keep-with-caveats | drop
 WHY: <one line>"""
 
