@@ -114,8 +114,10 @@ def complete(prompt, model, temperature=0.7, max_tokens=2048, system=None,
             try:
                 os.makedirs(os.path.dirname(USAGE_LOG), exist_ok=True)
                 with open(USAGE_LOG, "a") as f:
-                    f.write(json.dumps({"model": model, "provider": prov,
-                                        **usage}) + "\n")
+                    # a timestamp, so a run can be costed after the fact
+                    # rather than by counting backwards from the end
+                    f.write(json.dumps({"ts": time.time(), "model": model,
+                                        "provider": prov, **usage}) + "\n")
             except OSError:
                 pass
             if use_cache:
