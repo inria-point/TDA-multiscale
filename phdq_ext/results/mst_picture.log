@@ -1,0 +1,57 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/134 [00:00<?, ?it/s]Loading weights: 100%|██████████| 134/134 [00:00<00:00, 18031.91it/s]
+[transformers] [1mModernBertModel LOAD REPORT[0m from: answerdotai/ModernBERT-base
+Key               | Status     |  | 
+------------------+------------+--+-
+head.dense.weight | UNEXPECTED |  | 
+head.norm.weight  | UNEXPECTED |  | 
+decoder.bias      | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+обзор по 120 текстам: чем держится длинное ребро
+
+  40/120
+  80/120
+  120/120
+
+размер меньшей стороны при разрезании ребра, 20% самых длинных
+
+                              доля рёбер, %
+точек в отваливающейся части               
+1                                      60.0
+2                                      17.4
+3                                       7.2
+4                                       4.3
+5                                       2.8
+6                                       1.8
+7                                       0.9
+8                                       0.7
+9                                       0.4
+10                                      0.3
+
+одна точка (лист):          60.0%
+2-5 точек:                  31.8%
+больше 5 точек (кластер):   8.3%
+медиана:                    1
+
+из длинных рёбер со стоком на конце (2.5% всех длинных): медиана меньшей стороны 4, листьев 5%
+
+
+текст 0: 12 самых длинных рёбер
+
+ длина  отн    токен A     токен B             ячейка  отваливается точек
+ 33.46 1.73       Ġthe   Ġnetworks        сток-прочее                   3
+ 29.95 1.55       cons      values         ≠ подслова                   1
+ 29.69 1.54      infty           2        ≠ смешанные                   1
+ 29.26 1.51      Ġdeal  Ġagreement        ≠ смысловые                   1
+ 28.32 1.46     Ġgrace       fully куски одного слова                   1
+ 28.28 1.46         $-           $       ≠ пунктуация                   2
+ 27.99 1.45  Ġdirected  Ġconnected        ≠ смысловые                   1
+ 27.90 1.44    Ġdegrad Ġcircumvent        ≠ смысловые                   1
+ 27.82 1.44        Ġor         Ġin        ≠ служебные                   1
+ 27.78 1.44 Ġcorrectly Ġimpossible        ≠ смысловые                   1
+ 27.57 1.43        for        have         ≠ подслова                   1
+ 27.45 1.42        ens          im         ≠ подслова                   1
+
+рисунок: /Users/admin/Desktop/Research/TDA/phdq_ext/experiments/../figures/mst_picture_0.png
