@@ -46,6 +46,9 @@ def main():
     base = H[H["группа"] == "контроль"]
     col = f"профиль{TH}"
 
+    # one colour scale for both clusters and for the human map, so the three
+    # figures can be laid side by side and read against each other
+    lim = float(os.environ.get("LIM", 1.6))
     fig, axes = plt.subplots(2, 2, figsize=(15.5, 10.5),
                              height_ratios=[2.3, 1], sharey="row")
     for j, cl in enumerate((1, 2)):
@@ -59,7 +62,6 @@ def main():
                         if G[G[col] == p][k].nunique() + base[k].nunique() > 2
                         else 1.0 for p in order] for k in AX])
         ax = axes[0][j]
-        lim = np.abs(M).max()
         im = ax.imshow(M, cmap=CMAP, vmin=-lim, vmax=lim, aspect="auto")
         ax.set_xticks(range(len(order)))
         ax.set_xticklabels([f"{p}\nn={int(n[p])}" for p in order],
@@ -80,7 +82,7 @@ def main():
         for s in ax.spines.values():
             s.set_visible(False)
         ax.set_title(NAME[cl], fontsize=11)
-        fig.colorbar(im, ax=ax, fraction=.03)
+
 
         bx = axes[1][j]
         dm = [G[G[col] == p]["damage"] for p in order]
@@ -106,11 +108,13 @@ def main():
         for s in ("top", "right"):
             bx.spines[s].set_visible(False)
 
+    fig.colorbar(im, ax=list(axes[0]), fraction=.022,
+                 label="разница с человеческим контролем, баллы")
     fig.suptitle(f"Сгенерированный текст: профиль отклонения от человеческого "
                  f"среднего против типа дефекта (порог {TH}%)\n"
                  f"порядок полос {', '.join(B)}; сравнение с человеческим "
                  f"контролем 000; {len(D)} текстов, 33 модели", fontsize=12)
-    fig.tight_layout(rect=(0, 0, 1, 0.93))
+    fig.subplots_adjust(top=0.86, bottom=0.07, hspace=0.42)
     path = os.path.join(BASE, "figures", f"gen_profiles_{TH}.png")
     fig.savefig(path, dpi=150)
     print("saved", os.path.relpath(path, BASE))

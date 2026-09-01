@@ -60,7 +60,8 @@ def main():
 
     fig, (ax, bx) = plt.subplots(2, 1, figsize=(12.5, 8.8),
                                  height_ratios=[2.4, 1])
-    lim = np.abs(M).max()
+    # same scale as the generator maps, so the figures are comparable
+    lim = float(os.environ.get("LIM", 1.6))
     im = ax.imshow(M, cmap=CMAP, vmin=-lim, vmax=lim, aspect="auto")
     labs = [f"{p}\nn={int(n[p])}" for p in order]
     ax.set_xticks(range(len(order)))
