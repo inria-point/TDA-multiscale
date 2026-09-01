@@ -46,7 +46,9 @@ def repair(t):
     t = re.sub(r"([.!?]);\s*,", r"\1", t)                 # wall.; ,  -> wall.
     t = re.sub(r"(?<=[.!?])\s*,+\s*", " ", t)             # . , ,  -> .
     t = re.sub(r",{2,}", ",", t)                          # ,, -> ,
-    t = re.sub(r"\s*,\s*(?=[A-Z][a-z]+ (?:you|the|it|if|are|is))", ". ", t)
+    # a rule for list residue used to sit here and turned "n > 0, Bn is"
+    # into "n > 0. Bn is". The letter-stream check cannot see a comma become a
+    # full stop, so the rule is gone rather than tightened.
     t = re.sub(r"([a-z])\.([A-Z])", r"\1. \2", t)         # film.The -> film. The
     t = re.sub(r"\s{2,}", " ", t)
     return t.strip()
