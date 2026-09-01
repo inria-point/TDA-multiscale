@@ -42,13 +42,21 @@ it, the score is 0."""
 # The anchors are deliberately blatant: the judge needs to learn where the
 # levels sit, and calibrating it on borderline cases teaches it nothing.
 OPS = {
-    "loss": ("утрата", """LOSS -- part of the content was removed.
+    "loss": ("утрата", """LOSS -- content or structure was removed.
+
+  Structure counts. A list whose delimiters are gone, its items running
+  together as one paragraph, has lost as much as a list whose items are gone:
+  the words survive and the document no longer says what they are.
+
   1 = a pointer to something that is not there ("see the table below", and no
-      table follows)
+      table follows); a few boundaries lost
   2 = a heading, a colon or an enumeration opening onto nothing, so the
-      document promises material it never delivers
+      document promises material it never delivers; or an enumeration flattened
+      into running prose so that entries collide -- "Foo, 2019 (Composer: X)
+      Premiere: Y Bar, 2018 (Composer: Z) Premiere: W"
   3 = whole sections gone: a thought begins, breaks off, and the next sentence
-      is about an unrelated subject"""),
+      is about an unrelated subject; or a table reduced to an unreadable run of
+      cell values"""),
     "insert": ("вставка", """INSERT -- foreign material was added that is not
 part of the document.
   1 = an isolated trace: one leftover tag, one reference marker, a signature
@@ -166,7 +174,10 @@ def check_quotes(rec, text):
     bad = []
     for k in OPS:
         if rec.get(k, 0) > 0:
-            q = " ".join(rec.get(f"q_{k}", "").split()).lower().strip('"“”…')
+            # the model often echoes the template's dash before the quote,
+            # and quotes it with whatever punctuation it likes
+            q = " ".join(rec.get(f"q_{k}", "").split()).lower()
+            q = q.lstrip("-–— ").strip('"“”\'`…')
             if not q:
                 bad.append(f"{k}: нет цитаты")
             elif q not in norm:
