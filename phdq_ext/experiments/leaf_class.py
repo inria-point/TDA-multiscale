@@ -78,6 +78,9 @@ def vertices(text, emb, ranks, u_sink, L=cfg.L_DEFAULT, seed=0):
     n = len(t)
     deg = np.bincount(np.concatenate([m.row, m.col]), minlength=n)
     # every vertex's longest incident edge; for a leaf this is its only edge
+    # for a leaf this is its only edge -- its stalk. For an interior vertex it
+    # is merely the longest of several, so the column is named for what it holds
+    # everywhere, and "черешок" is used only where the degree is 1.
     longest = np.zeros(n)
     for a, b, w in zip(m.row, m.col, m.data):
         longest[a] = max(longest[a], w)
@@ -87,10 +90,10 @@ def vertices(text, emb, ranks, u_sink, L=cfg.L_DEFAULT, seed=0):
         "токен": t, "класс": cls, "норма": nrm,
         "лог_ранг": np.log([ranks.get(x, len(ranks)) for x in t]),
         "степень": deg,
-        "черешок": longest,
-        "отн_черешок": longest / m.data.mean(),
+        "макс_ребро": longest,
+        "отн_макс_ребро": longest / m.data.mean(),
         "лист": deg == 1,
-        "длинный лист": (deg == 1) & (longest >= cut),
+        "длинный лист": (deg == 1) & (longest >= cut),  # черешок длинный
         "hapax в тексте": [full[x] == 1 for x in t],
         "один в выборке": [insample[x] == 1 for x in t],
     })
@@ -164,9 +167,9 @@ def main():
 
     print("\nсвойства вершины: длинные листья против остальных\n")
     cmpt = pd.DataFrame({
-        "длинный лист": V[L][["норма", "лог_ранг", "отн_черешок",
+        "длинный лист": V[L][["норма", "лог_ранг", "отн_макс_ребро",
                               "hapax в тексте", "один в выборке"]].mean(),
-        "прочие": V[~L][["норма", "лог_ранг", "отн_черешок",
+        "прочие": V[~L][["норма", "лог_ранг", "отн_макс_ребро",
                          "hapax в тексте", "один в выборке"]].mean(),
     })
     print(cmpt.round(3).to_string())
@@ -213,11 +216,11 @@ def plot(V, comp, P):
     for c, col in [("смысл-редк", "#08306b"), ("смысл-част", "#e6550d"),
                    ("служ", "#6baed6"), ("пункт", "#9e9ac8")]:
         g = V[V["класс"] == c]
-        a.hist(g["отн_черешок"].clip(upper=2.2), bins=40, histtype="step",
+        a.hist(g["отн_макс_ребро"].clip(upper=2.2), bins=40, histtype="step",
                lw=1.8, color=col, label=c, density=True)
-    a.set_xlabel("длина черешка / средняя длина ребра")
+    a.set_xlabel("самое длинное ребро вершины / средняя длина ребра")
     a.set_ylabel("плотность")
-    a.set_title("Самое длинное ребро вершины, по классу")
+    a.set_title("Самое длинное ребро вершины, по классу\n(у листа это его черешок)")
     a.legend(fontsize=9)
 
     a = ax[1]
@@ -225,9 +228,9 @@ def plot(V, comp, P):
     for name, mask, col in [
             ("hapax в тексте", W["hapax в тексте"], "#a63603"),
             ("повторяется", ~W["hapax в тексте"], "#6baed6")]:
-        a.hist(W[mask]["отн_черешок"].clip(upper=2.2), bins=40,
+        a.hist(W[mask]["отн_макс_ребро"].clip(upper=2.2), bins=40,
                histtype="step", lw=2, color=col, label=name, density=True)
-    a.set_xlabel("длина черешка / средняя длина ребра")
+    a.set_xlabel("самое длинное ребро вершины / средняя длина ребра")
     a.set_title("То же, но по однократности в документе")
     a.legend(fontsize=9)
 
