@@ -1,0 +1,61 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/134 [00:00<?, ?it/s]Loading weights: 100%|██████████| 134/134 [00:00<00:00, 23139.56it/s]
+[transformers] [1mModernBertModel LOAD REPORT[0m from: answerdotai/ModernBERT-base
+Key               | Status     |  | 
+------------------+------------+--+-
+decoder.bias      | UNEXPECTED |  | 
+head.dense.weight | UNEXPECTED |  | 
+head.norm.weight  | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+направление стока по 480 токенам
+
+  1/40
+  2/40
+  3/40
+  4/40
+  5/40
+  6/40
+  7/40
+  8/40
+  9/40
+  10/40
+  11/40
+  12/40
+  13/40
+  14/40
+  15/40
+  16/40
+  17/40
+  18/40
+  19/40
+  20/40
+  21/40
+  22/40
+  23/40
+  24/40
+  25/40
+  26/40
+  27/40
+  28/40
+  29/40
+  30/40
+  31/40
+  32/40
+  33/40
+  34/40
+  35/40
+  36/40
+  37/40
+  38/40
+  39/40
+  40/40
+
+40 текстов, 6 зёрен усреднено
+
+           сырой  нормированный  нормированный, %  нормированный, p  без стоков  без стоков, %  без стоков, p  без стоков + норм.  без стоков + норм., %  без стоков + норм., p
+полоса                                                                                                                                                                         
+крупный  16.9975        16.1544           -4.8875            0.0000     18.9749        11.5177            0.0             20.5337                20.6746                    0.0
+мелкий    3.4669         3.4383           -0.6825            0.0115      3.9876        14.8749            0.0              3.9090                12.7749                    0.0
+средний  13.7459        14.0648            2.1275            0.0001     14.3191         4.1385            0.0             14.8931                 8.0688                    0.0
