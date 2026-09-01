@@ -117,6 +117,17 @@ def main():
     for i in range(N_CONTROL):
         jobs.append(("СЛУЧАЙНЫЙ", i,
                      S.sample(K, random_state=500 + i)["id"].tolist()))
+    # the most sensitive form of the question: ignore which bands are off and
+    # draw from everything the filter flags, so the probe has the whole tail to
+    # find a shared property in rather than one profile at a time
+    ex = S[S["профиль"] != "000"]
+    for i in range(N_CONTROL):
+        jobs.append(("ВСЕ ВНЕ НОРМЫ", i,
+                     ex.sample(K, random_state=900 + i)["id"].tolist()))
+    strong = ex.nlargest(max(K * 3, 15), "сила")
+    for i in range(N_CONTROL):
+        jobs.append(("САМЫЕ КРАЙНИЕ", i,
+                     strong.sample(K, random_state=1300 + i)["id"].tolist()))
     body = dict(zip(S["id"], S["text"]))
     # positive control: clusters of texts we damaged ourselves. If the probe
     # cannot name a shared property in five shuffled or looped texts, a null on

@@ -59,6 +59,16 @@ def main():
     T["id"] = T["id"].astype(str)
     T = T.merge(pool[["id", "text"]], on="id", how="inner")
 
+    if os.environ.get("ALL"):
+        # judge the whole corpus: the question "does the worst 10% contain the
+        # defects" needs the other 90% scored too, and at this size that is
+        # cheaper than reasoning about which subset would suffice
+        S = T.copy()
+        S.to_csv(os.path.join(BASE, "results", "outlier_sample.csv"),
+                 index=False)
+        print(f"вся выборка: {len(S)} текстов, "
+              f"{S['профиль'].nunique()} профилей")
+        return
     n = T["профиль"].value_counts()
     keep = n[n >= MIN_GROUP].index
     rng = np.random.default_rng(0)
