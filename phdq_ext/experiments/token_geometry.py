@@ -53,6 +53,9 @@ N_TSNE = int(os.environ.get("N_TSNE", 4000))
 CLASSES = ["пункт", "служ", "смысл-част", "смысл-редк", "подслово", "сток"]
 CCOL = {"пункт": "#9e9ac8", "служ": "#6baed6", "смысл-част": "#e6550d",
         "смысл-редк": "#08306b", "подслово": "#74c476", "сток": "#000000"}
+# hapax as a colour of its own: it is the axis that predicts hanging on a long
+# stalk (leaf_class.py), and the class colouring does not show it at all
+HCOL = {"hapax": "#d7191c", "повторяется": "#9ecae1", "сток": "#000000"}
 
 
 def sample_text(text, emb, ranks, u_sink, L=cfg.L_DEFAULT, seed=0):
@@ -68,7 +71,11 @@ def sample_text(text, emb, ranks, u_sink, L=cfg.L_DEFAULT, seed=0):
     sink = ((v @ u_sink) / nrm > COS_CUT) & (nrm < NORM_CUT)
     cls = ["сток" if s_ else token_class(x, ranks)
            for x, s_ in zip(t, sink)]
-    return v, t, cls
+    full = Counter(toks[i] for i in keep)
+    hap = ["сток" if c == "сток" else
+           ("hapax" if full[x] == 1 else "повторяется")
+           for x, c in zip(t, cls)]
+    return v, t, cls, hap
 
 
 def pair_stats(v, t, cls):
@@ -104,12 +111,12 @@ def main():
         r = sample_text(s, emb, ranks, u_sink, seed=i)
         if r is None:
             continue
-        v, t, cls = r
+        v, t, cls, hap = r
         nrm = np.linalg.norm(v, axis=1)
         centre = v.mean(0)
         cc = ((v @ centre) / (nrm * np.linalg.norm(centre)))
         tok_rows.append(pd.DataFrame({
-            "text": i, "tok": t, "cls": cls, "norm": nrm,
+            "text": i, "tok": t, "cls": cls, "hap": hap, "norm": nrm,
             "cos_centre": cc,
             "dist_centre": np.linalg.norm(v - centre, axis=1),
             "logrank": np.log([ranks.get(x, len(ranks)) for x in t]),
@@ -124,6 +131,7 @@ def main():
             tsne_v.append(v[take])
             tsne_meta.append(pd.DataFrame({"tok": [t[k] for k in take],
                                            "cls": [cls[k] for k in take],
+                                           "hap": [hap[k] for k in take],
                                            "text": i}))
         if (i + 1) % 20 == 0:
             print(f"  {i + 1}/{N_TEXTS}", flush=True)
@@ -252,7 +260,7 @@ def tsne(v, meta):
     print(f"\nt-SNE по {len(v)} токенам...", flush=True)
     xy = TSNE(n_components=2, perplexity=30, init="pca",
               random_state=0).fit_transform(v)
-    fig, ax = plt.subplots(1, 2, figsize=(15, 7))
+    fig, ax = plt.subplots(1, 3, figsize=(21, 7))
     a = ax[0]
     for c in CLASSES:
         m = (meta["cls"] == c).values
@@ -263,9 +271,20 @@ def tsne(v, meta):
     a.set_xticks([])
     a.set_yticks([])
 
+    a = ax[1]
+    for h in ("повторяется", "hapax", "сток"):
+        m = (meta["hap"] == h).values
+        if m.sum():
+            a.scatter(xy[m, 0], xy[m, 1], s=7, alpha=0.65, c=HCOL[h], label=h,
+                      linewidths=0)
+    a.legend(fontsize=9, markerscale=2.5)
+    a.set_title("цвет — однократность токена в документе")
+    a.set_xticks([])
+    a.set_yticks([])
+
     # the same map coloured by norm: if the classes separate, is it because
     # they sit in different directions or at different radii?
-    a = ax[1]
+    a = ax[2]
     n = np.linalg.norm(v, axis=1)
     s = a.scatter(xy[:, 0], xy[:, 1], s=7, c=n, cmap="magma", linewidths=0)
     fig.colorbar(s, ax=a, fraction=0.046, label="‖v‖")
@@ -277,7 +296,8 @@ def tsne(v, meta):
     fig.savefig(out, dpi=150, bbox_inches="tight")
     print(f"рисунок: {out}")
     pd.DataFrame({"x": xy[:, 0], "y": xy[:, 1], "tok": meta["tok"],
-                  "cls": meta["cls"], "norm": n}).to_csv(
+                  "cls": meta["cls"], "hap": meta["hap"], "text": meta["text"],
+                  "norm": n}).to_csv(
         os.path.join(BASE, "results", "token_tsne.csv"), index=False)
 
 

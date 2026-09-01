@@ -36,6 +36,7 @@ def main():
         rows.append({"остров": c, "точек": len(g), "главный токен": tok,
                      "чистота, %": n / len(g) * 100,
                      "класс": Counter(g["cls"]).most_common(1)[0][0],
+                     "hapax, %": (g["hap"] == "hapax").mean() * 100,
                      "норма": g["norm"].mean()})
     r = pd.DataFrame(rows).sort_values("точек", ascending=False)
     pd.set_option("display.width", 200)
@@ -51,6 +52,11 @@ def main():
           f"медианная чистота {isl['чистота, %'].median():.0f}%")
     print(f"крупных групп: {len(big)}, "
           f"чистота {big['чистота, %'].round(0).tolist()}")
+    print(f"\nhapax: континент {big[big['точек'] > 500]['hapax, %'].mean():.0f}%, "
+          f"малые острова {isl['hapax, %'].median():.0f}% (медиана), "
+          f"вне групп {(d[d['остров'] < 0]['hap'] == 'hapax').mean() * 100:.0f}%")
+    print("Континент — это токены, употреблённые один раз; остров существует "
+          "лишь там, где токен повторяется.")
     print("\nдоля точек класса, не попавших ни в одну плотную группу, %")
     print((d[d["остров"] < 0]["cls"].value_counts()
            / d["cls"].value_counts() * 100).round(0).to_string())

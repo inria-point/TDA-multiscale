@@ -26,6 +26,12 @@ Colours are the ones already in use, so the three figures read together: nodes
 and dendrogram leaves take the six token classes of token_geometry.py, tree edges
 take the thirteen cells of edge_taxonomy.py.
 
+The tree is drawn twice over one layout: once by token class, once by whether
+the token occurs only once in the document. The second colouring is there because
+hapax-ness, not word class, is what predicts hanging on a long stalk
+(leaf_class.py) -- so it should be visible as the shape of the tree, and the two
+panels share coordinates so the readings can be laid over each other.
+
 Sinks are marked rather than removed: the point mass and the long bridge the MST
 needs to attach it are exactly the kind of structure this picture is for.
 """
@@ -59,6 +65,9 @@ N_TEXTS = int(os.environ.get("N_TEXTS", 120))
 CCOL = {"пункт": "#9e9ac8", "служ": "#6baed6", "смысл-част": "#e6550d",
         "смысл-редк": "#08306b", "подслово": "#74c476", "сток": "#000000"}
 CLASSES = list(CCOL)
+# hapax gets a colour of its own rather than an outline: it is a class of vertex,
+# not an annotation on one
+HCOL = {"hapax": "#d7191c", "повторяется": "#9ecae1", "сток": "#000000"}
 
 
 def one_text(text, emb, ranks, u_sink, L=cfg.L_DEFAULT, seed=0):
@@ -67,6 +76,7 @@ def one_text(text, emb, ranks, u_sink, L=cfg.L_DEFAULT, seed=0):
     keep = [i for i, t in enumerate(toks) if t not in SKIP]
     if len(keep) < L:
         return None
+    full = Counter(toks[i] for i in keep)
     rng = np.random.default_rng(seed)
     idx = np.array(keep)[rng.choice(len(keep), size=L, replace=False)]
     wid = np.cumsum([x.startswith(("Ġ", "▁")) for x in toks])[idx]
@@ -75,9 +85,12 @@ def one_text(text, emb, ranks, u_sink, L=cfg.L_DEFAULT, seed=0):
     nrm = np.linalg.norm(v, axis=1)
     sink = ((v @ u_sink) / nrm > COS_CUT) & (nrm < NORM_CUT)
     cls = ["сток" if s_ else token_class(x, ranks) for x, s_ in zip(t, sink)]
+    hap = ["сток" if c == "сток" else
+           ("hapax" if full[x] == 1 else "повторяется")
+           for x, c in zip(t, cls)]
     d = squareform(pdist(v))
     m = minimum_spanning_tree(d).tocoo()
-    return v, t, cls, wid, d, m
+    return v, t, cls, hap, wid, d, m
 
 
 def smaller_side(rows, cols, lens, n):
@@ -126,7 +139,7 @@ def survey(emb, ranks, u_sink, hum):
         r = one_text(s, emb, ranks, u_sink, seed=i)
         if r is None:
             continue
-        _, t, cls, _, _, m = r
+        _, t, cls, _, _, _, m = r
         o = np.argsort(m.data)
         lens, ra, ca = m.data[o], m.row[o], m.col[o]
         n = len(t)
@@ -172,11 +185,11 @@ def main():
               f"листьев {(ss['меньшая сторона'] == 1).mean() * 100:.0f}%")
 
     r = one_text(hum[TEXT], emb, ranks, u_sink, seed=TEXT)
-    v, t, cls, wid, d, m = r
-    draw(v, t, cls, wid, d, m, S, long)
+    v, t, cls, hap, wid, d, m = r
+    draw(v, t, cls, hap, wid, d, m, S, long)
 
 
-def draw(v, t, cls, wid, d, m, S, long):
+def draw(v, t, cls, hap, wid, d, m, S, long):
     n = len(t)
     o = np.argsort(m.data)
     lens, ra, ca = m.data[o], m.row[o], m.col[o]
@@ -193,8 +206,8 @@ def draw(v, t, cls, wid, d, m, S, long):
                     "отваливается точек": small[j]})
     print(pd.DataFrame(tab).round(2).to_string(index=False))
 
-    fig = plt.figure(figsize=(15, 13))
-    gs = fig.add_gridspec(2, 2, height_ratios=[1, 1.35])
+    fig = plt.figure(figsize=(19, 13))
+    gs = fig.add_gridspec(2, 3, height_ratios=[1, 1.35])
 
     # --- dendrogram: exact redrawing of this MST -------------------------
     ax = fig.add_subplot(gs[0, :])
@@ -210,16 +223,26 @@ def draw(v, t, cls, wid, d, m, S, long):
         ax.axhline(h, color=col, lw=1.2, ls="--")
         ax.text(0.004, h, f"{lab} ({p}-й перц.)", color=col, va="bottom",
                 ha="left", fontsize=9, transform=ax.get_yaxis_transform())
-    # a strip of class colours under the leaves, in dendrogram order
-    y0 = -0.055 * lens.max()
-    ax.scatter([5 + 10 * i for i in range(n)], [y0] * n, marker="s", s=9,
-               c=[CCOL[cls[i]] for i in dd["leaves"]], linewidths=0,
-               clip_on=False)
-    ax.set_ylim(y0 * 1.6, None)
+    # two strips under the leaves, in dendrogram order: token class, then
+    # hapax-ness. The second is the one that lines up with the tall spikes.
+    xs = [5 + 10 * i for i in range(n)]
+    y0 = -0.05 * lens.max()
+    y1 = -0.105 * lens.max()
+    ax.scatter(xs, [y0] * n, marker="s", s=9, linewidths=0, clip_on=False,
+               c=[CCOL[cls[i]] for i in dd["leaves"]])
+    ax.scatter(xs, [y1] * n, marker="s", s=9, linewidths=0, clip_on=False,
+               c=[HCOL[hap[i]] for i in dd["leaves"]])
+    ax.text(-0.004, y0, "класс ", ha="right", va="center", fontsize=8,
+            transform=ax.get_yaxis_transform())
+    ax.text(-0.004, y1, "hapax ", ha="right", va="center", fontsize=8,
+            transform=ax.get_yaxis_transform())
+    ax.set_ylim(y1 * 1.5, None)
     ax.set_xticks([])
     ax.legend(handles=[plt.Line2D([], [], marker="s", ls="", color=CCOL[c],
-                                  label=c) for c in CLASSES],
-              fontsize=8.5, loc="upper left", ncol=2)
+                                  label=c) for c in CLASSES]
+              + [plt.Line2D([], [], marker="s", ls="", color=HCOL[h],
+                            label=h) for h in ("hapax", "повторяется")],
+              fontsize=8.5, loc="upper left", ncol=4)
 
     # --- what comes off when an edge is cut ------------------------------
     ax = fig.add_subplot(gs[1, 0])
@@ -235,8 +258,7 @@ def draw(v, t, cls, wid, d, m, S, long):
     ax.text(0.97, 0.9, f"одиночная точка: {frac:.0f}%", transform=ax.transAxes,
             ha="right", fontsize=11)
 
-    # --- the tree drawn ---------------------------------------------------
-    ax = fig.add_subplot(gs[1, 1])
+    # --- the tree drawn, twice over one layout ----------------------------
     G = nx.Graph()
     G.add_nodes_from(range(n))
     for a, b, w in zip(ra, ca, lens):
@@ -246,25 +268,52 @@ def draw(v, t, cls, wid, d, m, S, long):
     # edge colour is the taxonomy cell, exactly as in edge_taxonomy.png; edge
     # width is the length, so the two readings do not compete for one channel
     w_scale = 0.5 + 3.0 * (lens / lens.max())
-    for k, (a, b) in enumerate(zip(ra, ca)):
-        ax.plot(*zip(P[a], P[b]), color=COLORS[cells[k]], lw=w_scale[k],
-                zorder=1, solid_capstyle="round")
     deg = np.bincount(np.concatenate([ra, ca]), minlength=n)
-    ax.scatter(P[:, 0], P[:, 1], s=12 + 9 * deg, zorder=2, linewidths=0.4,
-               edgecolors="white", c=[CCOL[c] for c in cls])
     seen = [c for c in COLORS if c in set(cells)]
-    ax.legend(handles=[plt.Line2D([], [], color=COLORS[c], lw=2.5, label=c)
-                       for c in seen], fontsize=8, loc="upper left",
-              bbox_to_anchor=(1.0, 1.0), title="ребро", title_fontsize=8.5,
-              frameon=False)
-    ax.set_title("Само дерево (Kamada-Kawai по метрике дерева).\n"
-                 "Цвет ребра — ячейка таксономии, толщина — длина")
-    ax.set_xticks([])
-    ax.set_yticks([])
-    for s in ax.spines.values():
-        s.set_visible(False)
+    panels = [
+        (gs[1, 1], [CCOL[c] for c in cls],
+         "Цвет узла — класс токена",
+         [(CCOL[c], c) for c in CLASSES if c in set(cls)], True),
+        (gs[1, 2], [HCOL[h] for h in hap],
+         "Цвет узла — однократность токена в документе",
+         [(HCOL[h], h) for h in HCOL if h in set(hap)], False),
+    ]
+    for slot, node_c, sub, keys, edge_legend in panels:
+        ax = fig.add_subplot(slot)
+        for k, (a, b) in enumerate(zip(ra, ca)):
+            ax.plot(*zip(P[a], P[b]), color=COLORS[cells[k]], lw=w_scale[k],
+                    zorder=1, solid_capstyle="round")
+        ax.scatter(P[:, 0], P[:, 1], s=14 + 9 * deg, zorder=2, linewidths=0.4,
+                   edgecolors="white", c=node_c)
+        h1 = [plt.Line2D([], [], marker="o", ls="", color=c, label=lab,
+                         markersize=7) for c, lab in keys]
+        leg = ax.legend(handles=h1, fontsize=8.5, loc="upper left",
+                        title="узел", title_fontsize=8.5, framealpha=0.9)
+        if edge_legend:
+            ax.add_artist(leg)
+            ax.legend(handles=[plt.Line2D([], [], color=COLORS[c], lw=2.5,
+                                          label=c) for c in seen],
+                      fontsize=7.5, loc="lower left", title="ребро",
+                      title_fontsize=8, framealpha=0.9)
+        ax.set_title(sub, fontsize=11)
+        ax.set_xticks([])
+        ax.set_yticks([])
+        for sp in ax.spines.values():
+            sp.set_visible(False)
+
+    # how much of the long end the hapax vertices actually account for
+    hp = np.array([h == "hapax" for h in hap])
+    cut = np.percentile(lens, 80)
+    longm = lens >= cut
+    print(f"\nтекст {TEXT}: hapax — {hp.mean() * 100:.0f}% вершин; "
+          f"у {(hp[ra[longm]] | hp[ca[longm]]).mean() * 100:.0f}% длинных рёбер "
+          f"хотя бы один конец hapax "
+          f"(у коротких {(hp[ra[~longm]] | hp[ca[~longm]]).mean() * 100:.0f}%)")
 
     fig.tight_layout()
+    fig.text(0.62, 0.005, "Оба дерева — одна раскладка (Kamada-Kawai по "
+             "метрике дерева). Цвет ребра — ячейка таксономии, толщина — длина.",
+             ha="center", fontsize=9, color="#555")
     out = os.path.join(BASE, "figures", f"mst_picture_{TEXT}.png")
     fig.savefig(out, dpi=150, bbox_inches="tight")
     print(f"\nрисунок: {out}")
