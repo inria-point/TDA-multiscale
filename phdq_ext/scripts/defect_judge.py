@@ -55,7 +55,12 @@ part of the document.
   2 = service material recurring through the text: markup fragments,
       navigation, cookie notices, a site footer, an appended standard block
   3 = the inserted material displaces the content, taking up as much room as
-      the document itself"""),
+      the document itself
+
+  Machine-generated material counts as insertion even when it was genuinely on
+  the source page: event feeds, catalogues, listings, navigation, automated
+  summaries. The question is not whether the page was intact but whether the
+  document is usable as text."""),
     "join": ("склейка", """JOIN -- pieces that do not belong together were
 concatenated.
   1 = a visible seam: the register or subject shifts abruptly once
@@ -89,8 +94,10 @@ corrupted, independently of what they say.
   3 = neither beginning nor end is present: a fragment cut from the middle"""),
 }
 
-NATURE = """What the document is by nature. This is not a defect -- a catalogue
-is a legitimate document -- but it must be recorded.
+# "not a defect" was read as a licence: the judge answered "a mixed document by
+# nature" and closed the case on a match report glued to a live event feed.
+NATURE = """Record the form of the document. This is description only and moves
+the damage score in neither direction.
   1 = continuous prose
   2 = prose with formal apparatus: headings, citations, quoted blocks
   3 = predominantly an enumeration: list, table, catalogue, running commentary
