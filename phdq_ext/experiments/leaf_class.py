@@ -174,6 +174,29 @@ def main():
     })
     print(cmpt.round(3).to_string())
 
+    # --- 2b. the mirror question: how many of the leaves are hapax? ---------
+    W0 = V[V["класс"] != "сток"]
+    print("\nдоля hapax по роли вершины в дереве "
+          f"(базовый уровень {W0['hapax в тексте'].mean() * 100:.1f}%)\n")
+    roles = [("лист на длинном черешке", W0["длинный лист"]),
+             ("лист (любой)", W0["степень"] == 1),
+             ("лист на коротком черешке",
+              (W0["степень"] == 1) & ~W0["длинный лист"]),
+             ("внутренняя вершина", W0["степень"] > 1),
+             ("узел степени >= 4", W0["степень"] >= 4)]
+    print(pd.DataFrame([
+        {"роль": nm, "доля вершин, %": m.mean() * 100,
+         "hapax, %": W0[m]["hapax в тексте"].mean() * 100}
+        for nm, m in roles]).set_index("роль").round(1).to_string())
+    # being a leaf is not the property -- being a *distant* leaf is
+    print(pd.DataFrame([
+        {"токен": lab, "лист, %": (g["степень"] == 1).mean() * 100,
+         "длинный лист, %": g["длинный лист"].mean() * 100,
+         "средняя степень": g["степень"].mean()}
+        for lab, g in [("hapax", W0[W0["hapax в тексте"]]),
+                       ("повторяется", W0[~W0["hapax в тексте"]])]
+    ]).set_index("токен").round(2).to_string())
+
     # --- 3. which token property predicts it -------------------------------
     print("\n" + "=" * 70)
     print("чем такой лист опознаётся заранее, по свойству токена\n")

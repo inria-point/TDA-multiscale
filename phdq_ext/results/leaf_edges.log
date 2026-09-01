@@ -1,0 +1,55 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/134 [00:00<?, ?it/s]Loading weights: 100%|██████████| 134/134 [00:00<00:00, 16654.42it/s]
+[transformers] [1mModernBertModel LOAD REPORT[0m from: answerdotai/ModernBERT-base
+Key               | Status     |  | 
+------------------+------------+--+-
+head.dense.weight | UNEXPECTED |  | 
+head.norm.weight  | UNEXPECTED |  | 
+decoder.bias      | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+  40/120
+  80/120
+  120/120
+
+72000 рёбер, 120 текстов
+
+по 5%-бинам длины ребра
+
+     длина/средняя  черешок, %  хотя бы 1 hapax, %  оба hapax, %  хотя бы 1 одиночка, %
+bin                                                                                    
+0              0.3        49.0                 0.0           0.0                    0.0
+1              0.5        49.7                 0.1           0.0                    0.1
+2              0.6        46.3                 0.1           0.1                    0.2
+3              0.6        47.5                 0.9           0.3                    1.0
+4              0.7        47.3                 2.4           0.7                    3.4
+5              0.8        48.2                 8.0           3.3                   11.6
+6              0.9        46.2                21.6          10.0                   29.1
+7              1.0        38.1                40.1          19.4                   52.4
+8              1.0        33.8                53.4          26.5                   67.9
+9              1.1        29.8                60.6          32.6                   76.2
+10             1.1        28.3                66.0          33.4                   81.7
+11             1.2        29.8                65.8          33.1                   82.2
+12             1.2        32.0                64.8          32.8                   82.5
+13             1.2        35.6                68.0          35.1                   83.2
+14             1.2        41.6                65.8          33.7                   84.1
+15             1.2        48.4                67.1          34.0                   85.9
+16             1.3        53.9                67.4          34.3                   86.5
+17             1.3        58.7                67.2          33.1                   87.0
+18             1.4        65.2                68.9          35.2                   89.4
+19             1.5        64.1                61.3          29.3                   83.7
+
+по всему дереву: черешков 44.7%, хотя бы 1 hapax 42.5%, оба hapax 21.3%
+
+сведено к полосам
+
+         черешок, %  хотя бы 1 hapax, %  оба hapax, %  хотя бы 1 одиночка, %
+крупный        52.5                66.2          33.3                   85.6
+мелкий         47.7                 3.5           1.6                    4.7
+средний        40.2                63.2          32.1                   80.2
+
+доля hapax среди концов рёбер: 31.9%
+случайное размещение дало бы «хотя бы один» 53.6% рёбер и «оба» 10.2%; наблюдается 42.5% и 21.3%
+
+рисунок: /Users/admin/Desktop/Research/TDA/phdq_ext/experiments/../figures/leaf_edges.png
