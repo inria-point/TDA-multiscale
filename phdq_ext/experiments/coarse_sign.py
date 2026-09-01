@@ -33,6 +33,9 @@ BASE = os.path.join(HERE, "..")
 B = list(BANDS)
 MODEL = os.environ.get("JUDGE_MODEL", "gemini-3.6-flash")
 PER_GROUP = int(os.environ.get("PER_GROUP", 40))
+# which band's sign is being tested; the coarse one is the hypothesis, the
+# other two are the check that the effect is not simply "any band is unusual"
+BAND = os.environ.get("BAND", "крупный")
 
 
 def sample():
@@ -43,8 +46,8 @@ def sample():
     T = T.merge(pool[["id", "text"]], on="id")
     pre = "pct_" if os.environ.get("BASELINE") == "genre" else "all_"
     T["центр"] = T[[f"{pre}{b}" for b in B]].abs().max(axis=1)
-    parts = [T.nlargest(PER_GROUP, f"{pre}крупный").assign(группа="крупная вверх"),
-             T.nsmallest(PER_GROUP, f"{pre}крупный").assign(группа="крупная вниз"),
+    parts = [T.nlargest(PER_GROUP, f"{pre}{BAND}").assign(группа=f"{BAND} вверх"),
+             T.nsmallest(PER_GROUP, f"{pre}{BAND}").assign(группа=f"{BAND} вниз"),
              T.nsmallest(PER_GROUP, "центр").assign(группа="контроль")]
     return pd.concat(parts).drop_duplicates("id")
 
@@ -75,7 +78,8 @@ def main():
             except Exception as exc:
                 print("  ошибка:", str(exc)[:110], flush=True)
     D = pd.DataFrame(rows)
-    suf = "_genre" if os.environ.get("BASELINE") == "genre" else ""
+    suf = ("_genre" if os.environ.get("BASELINE") == "genre" else "")
+    suf += "" if BAND == "крупный" else f"_{BAND}"
     D.to_csv(os.path.join(BASE, "results", f"coarse_sign{suf}.csv"),
              index=False)
 
@@ -90,12 +94,12 @@ def main():
     print("\n" + G.round(2).to_string())
     ctl = D[D["группа"] == "контроль"]["damage"]
     print("\nпротив контроля:")
-    for g in ("крупная вверх", "крупная вниз"):
+    for g in (f"{BAND} вверх", f"{BAND} вниз"):
         a = D[D["группа"] == g]["damage"]
         print(f"  {g:14s} урон {a.mean():.2f} против {ctl.mean():.2f}, "
               f"p={st.mannwhitneyu(a, ctl).pvalue:.3f}")
-    a = D[D["группа"] == "крупная вверх"]["damage"]
-    b = D[D["группа"] == "крупная вниз"]["damage"]
+    a = D[D["группа"] == f"{BAND} вверх"]["damage"]
+    b = D[D["группа"] == f"{BAND} вниз"]["damage"]
     print(f"  вверх против вниз: {a.mean():.2f} против {b.mean():.2f}, "
           f"p={st.mannwhitneyu(a, b).pvalue:.3f}")
     print(f"\nнеподтверждённых цитат: {(D['плохие цитаты'] != '').sum()}/{len(D)}")
