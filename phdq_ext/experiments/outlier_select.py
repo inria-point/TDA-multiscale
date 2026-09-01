@@ -26,12 +26,21 @@ from three_bands import BANDS
 
 BASE = os.path.join(HERE, "..")
 B = list(BANDS)
-TH = float(os.environ.get("HINGE", 10.0))
-MIN_GROUP = 20          # a profile too rare to describe is not worth judging
-PER_GROUP = int(os.environ.get("PER_GROUP", 24))
+TH = float(os.environ.get("HINGE", 20.0))
+# genre means make the comparison fair but leave the tails too thin to compare
+# profiles against each other: at 20% no genre-relative profile reaches twenty
+# texts. Against the corpus mean the same threshold leaves 209 texts out of
+# norm in groups of 8 to 38, at the cost that genre itself now counts as
+# deviation -- which the genre breakdown of each profile makes checkable.
+BASELINE = os.environ.get("BASELINE", "corpus")
+MIN_GROUP = int(os.environ.get("MIN_GROUP", 10))
+PER_GROUP = int(os.environ.get("PER_GROUP", 40))
 
 
 def hinge(T):
+    if BASELINE == "corpus":
+        for c in ["общая"] + B:
+            T[f"pct_{c}"] = (T[c] - T[c].mean()) / T[c].mean() * 100
     P = T[[f"pct_{b}" for b in B]].values
     H = np.sign(P) * np.clip(np.abs(P) - TH, 0, None)
     T = T.copy()
@@ -66,12 +75,18 @@ def main():
     S.to_csv(path, index=False)
 
     pd.set_option("display.width", 200)
-    print(f"порог {TH:.0f}%; профилей с n>={MIN_GROUP}: {len(keep)}; "
-          f"отобрано {len(S)} текстов\n")
+    print(f"база: {BASELINE}; порог {TH:.0f}%; "
+          f"профилей с n>={MIN_GROUP}: {len(keep)}; "
+          f"отобрано {len(S)} из {len(T)} текстов\n")
     r = S.groupby("профиль").agg(
         n=("id", "size"), сила=("сила", "mean"),
         **{b: (f"pct_{b}", "mean") for b in B})
     print(r.round(1).sort_values("сила", ascending=False).to_string())
+    print("\nжанровый состав профилей (проверка, не ловим ли мы жанр):")
+    for p in r.sort_values("n", ascending=False).index:
+        g = S[S["профиль"] == p]
+        print(f"  {p} n={len(g):3d}  " + ", ".join(
+            f"{k}:{n}" for k, n in g["sub_source"].value_counts().head(4).items()))
     print(f"\nжанров: {S['sub_source'].nunique()}; "
           f"слов в тексте: медиана {S['text'].str.split().str.len().median():.0f}")
     print(f"saved {path}")
