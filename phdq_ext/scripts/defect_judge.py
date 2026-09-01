@@ -41,43 +41,43 @@ replaced by rendering junk is damaged, however well its sentences read.
 
 Score each operation from 0 to 3. Every score above 0 must be justified by
 quoting the offending text verbatim, up to fifteen words. If you cannot quote
-it, the score is 0."""
+it, the score is 0.
+
+Charge each piece of damage to one axis only -- the one that names what
+happened. A stripped link that leaves a stray space before a full stop is WEB,
+not also CHARS."""
 
 # The anchors are deliberately blatant: the judge needs to learn where the
 # levels sit, and calibrating it on borderline cases teaches it nothing.
 OPS = {
-    "loss": ("утрата", """LOSS -- content or structure was removed.
-
-  Structure counts. A list whose delimiters are gone, its items running
-  together as one paragraph, has lost as much as a list whose items are gone:
-  the words survive and the document no longer says what they are.
-
-  1 = a pointer to something that is not there ("see the table below", and no
-      table follows); a few boundaries lost
-  2 = a heading, a colon or an enumeration opening onto nothing, so the
-      document promises material it never delivers; or an enumeration flattened
-      into running prose so that entries collide -- "Foo, 2019 (Composer: X)
-      Premiere: Y Bar, 2018 (Composer: Z) Premiere: W"
+    "loss": ("утрата содержания", """LOSS -- part of what the document said is
+gone. Not formatting and not markup, which belong to WEB: meaning the document
+promises and does not deliver.
+  1 = a pointer to material that is not there ("see the table below", and no
+      table follows)
+  2 = a heading, a colon or an enumeration opening onto nothing
   3 = whole sections gone: a thought begins, breaks off, and the next sentence
-      is about an unrelated subject; or a table reduced to an unreadable run of
-      cell values"""),
-    "unity": ("цельность", """UNITY -- does the document hold together as one
-readable object, or has it come apart? Material foreign to it and material
-joined onto it are the same failure seen from two sides, and are scored
-together.
-  0 = one object: everything in it belongs to it
-  1 = one object with a blemish: an isolated leftover tag, a signature, one
-      abrupt transition. A reader passes over it without losing the thread
-  2 = noticeably composite: an appended standard block, a second document run
-      on after the first, several separate pieces strung together. A reader has
-      to skip past material that is not part of what they are reading
-  3 = it does not hold together at all: a container of unrelated fragments with
-      no single document in it
+      is about an unrelated subject"""),
+    "web": ("парсинг веб-страницы", """WEB -- damage from turning a web page
+into a document: delimiters lost, service blocks kept, separate pieces of the
+page run together, markup left behind. This axis names where the damage came
+from; the axes below describe other kinds.
+  1 = small: list or paragraph separators gone so entries run together, an
+      isolated leftover tag or bracket where a link was, a signature or a
+      single service line. Nothing here obstructs understanding
+  2 = medium: pieces of the page that are not the document have been kept or
+      joined on -- a moderator footer, a navigation block, several separate
+      answers on one topic strung into one body, an automated feed appended to
+      an article. The document is still followable and its sense recoverable,
+      but a reader has to skip past material that is not part of it
+  3 = large: there is more junk than document. Menus, boilerplate and fragments
+      of unrelated pages crowd out the text, and what the document was meant to
+      say can no longer be made out
 
-  Machine-generated material counts here even when it genuinely sat on the
-  source page: event feeds, catalogues, listings, navigation, automated
-  summaries. The question is not whether the page was intact but whether the
-  document is usable as text."""),
+  Machine-generated blocks count even when they genuinely sat on the source
+  page: event feeds, catalogues, listings, navigation, automated summaries. The
+  question is not whether the page was intact but whether the document is
+  usable as text."""),
     "dup": ("дублирование", """DUP -- the same content appears more than once.
   1 = a phrase or sentence repeats
   2 = a paragraph repeats verbatim
@@ -85,19 +85,23 @@ together.
 
   Do not score rhetorical repetition a writer chose, such as an anaphora or a
   refrain. Score only repetition that looks mechanical."""),
-    "chars": ("искажение символов", """CHARS -- the way words are written was
-corrupted, independently of what they say: lost or added spaces, spaces before
-punctuation, clitics split off as separate words, words fused across a
-boundary, hard line breaks inside sentences, stray characters, broken encoding,
-a class of element mangled by the parser wherever it occurs.
+    "chars": ("искажение записи слов", """CHARS -- the words are all there but
+written wrongly: clitics split off (`do n't`), spaces lost between sentences
+(`film.The`), spaces added around apostrophes and punctuation by a tokeniser,
+hard line breaks inside sentences, stray characters, broken encoding.
 
-Score by how far it spreads and what it costs the reader, not by how ugly any
-one instance is.
-  1 = isolated: a handful of instances in the whole document; reading is
-      unaffected
-  2 = throughout the document, systematically -- the same failure at every
-      sentence boundary, at every apostrophe, at every formula; reading slows
-      but the text is still readable
+Ordinary html residue -- footers, stripped links, lost separators -- is WEB.
+CHARS is for systematic corruption that goes beyond it: formulas that fell out
+or were replaced by rendering junk, a broken encoding turning text to mojibake,
+a tokeniser applied and not undone, an element class the parser mangled
+wherever it occurs. The mark of CHARS is that the same failure repeats at every
+instance of its kind.
+
+Score by extent, counting instances rather than judging ugliness.
+  1 = isolated: fewer than about five instances in the document
+  2 = systematic: most occurrences of the affected element are damaged -- every
+      apostrophe, every sentence boundary, every line end. Reading slows but
+      the text is readable
   3 = readability is destroyed: the words can no longer be reliably made
       out"""),
     "cut": ("обрезка", """CUT -- the document's boundaries were lost.
@@ -126,8 +130,8 @@ damage total.
 FORMAT = """Answer in exactly these lines, each beginning with its tag. Use "-"
 where no quotation is required.
 
+WEB: <0-3> | <verbatim quote or ->
 LOSS: <0-3> | <verbatim quote or ->
-UNITY: <0-3> | <verbatim quote or ->
 DUP: <0-3> | <verbatim quote or ->
 CHARS: <0-3> | <verbatim quote or ->
 CUT: <0-3> | <verbatim quote or ->
