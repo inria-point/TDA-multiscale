@@ -9,9 +9,13 @@ excellent data.
 
 Three design choices, each answering a specific way that attempt failed.
 
-The list is of *operations* rather than of artefacts. A pipeline can only lose,
-insert, join, duplicate, corrupt or truncate; every concrete trace -- MathML
-residue, a moderator footer, `do n't`, a flattened table -- is one of those six.
+The list is of *operations* rather than of artefacts. A pipeline can only lose
+material, break the document's unity, duplicate, corrupt the writing or
+truncate; every concrete trace -- MathML residue, a moderator footer, `do n't`,
+a flattened table -- is one of those five. Insertion and concatenation were
+separate at first and are now one score, because they are the same failure seen
+from two sides: a reader does not care whether the foreign block arrived by
+insertion or by joining, only whether the document still reads as one thing.
 Naming the operations rather than the traces is what lets the same judge work on
 a corpus whose artefacts we have never seen.
 
@@ -57,25 +61,23 @@ OPS = {
   3 = whole sections gone: a thought begins, breaks off, and the next sentence
       is about an unrelated subject; or a table reduced to an unreadable run of
       cell values"""),
-    "insert": ("вставка", """INSERT -- foreign material was added that is not
-part of the document.
-  1 = an isolated trace: one leftover tag, one reference marker, a signature
-  2 = service material recurring through the text: markup fragments,
-      navigation, cookie notices, a site footer, an appended standard block
-  3 = the inserted material displaces the content, taking up as much room as
-      the document itself
+    "unity": ("цельность", """UNITY -- does the document hold together as one
+readable object, or has it come apart? Material foreign to it and material
+joined onto it are the same failure seen from two sides, and are scored
+together.
+  0 = one object: everything in it belongs to it
+  1 = one object with a blemish: an isolated leftover tag, a signature, one
+      abrupt transition. A reader passes over it without losing the thread
+  2 = noticeably composite: an appended standard block, a second document run
+      on after the first, several separate pieces strung together. A reader has
+      to skip past material that is not part of what they are reading
+  3 = it does not hold together at all: a container of unrelated fragments with
+      no single document in it
 
-  Machine-generated material counts as insertion even when it was genuinely on
-  the source page: event feeds, catalogues, listings, navigation, automated
+  Machine-generated material counts here even when it genuinely sat on the
+  source page: event feeds, catalogues, listings, navigation, automated
   summaries. The question is not whether the page was intact but whether the
   document is usable as text."""),
-    "join": ("склейка", """JOIN -- pieces that do not belong together were
-concatenated.
-  1 = a visible seam: the register or subject shifts abruptly once
-  2 = two distinct documents run together with no transition, or several
-      separate answers strung into one body
-  3 = the file is a heap of unrelated fragments with no single document in
-      it"""),
     "dup": ("дублирование", """DUP -- the same content appears more than once.
   1 = a phrase or sentence repeats
   2 = a paragraph repeats verbatim
@@ -84,18 +86,20 @@ concatenated.
   Do not score rhetorical repetition a writer chose, such as an anaphora or a
   refrain. Score only repetition that looks mechanical."""),
     "chars": ("искажение символов", """CHARS -- the way words are written was
-corrupted, independently of what they say.
-  1 = an isolated failure: one lost space, one stray character
-  2 = systematic: spaces before punctuation, clitics split off as separate
-      words, words fused across a sentence boundary, hard line breaks in the
-      middle of sentences -- or a whole class of element mangled by the parser
-      wherever it occurs: every formula, every table cell, every link
-  3 = the writing is barely legible: broken encoding, mojibake, every character
-      separated, or the parser's failure has swallowed most of the document
+corrupted, independently of what they say: lost or added spaces, spaces before
+punctuation, clitics split off as separate words, words fused across a
+boundary, hard line breaks inside sentences, stray characters, broken encoding,
+a class of element mangled by the parser wherever it occurs.
 
-  A systematic failure scores higher than an isolated one even when each
-  instance is small: one lost space is noise, the same loss at every sentence
-  boundary is a broken pipeline."""),
+Score by how far it spreads and what it costs the reader, not by how ugly any
+one instance is.
+  1 = isolated: a handful of instances in the whole document; reading is
+      unaffected
+  2 = throughout the document, systematically -- the same failure at every
+      sentence boundary, at every apostrophe, at every formula; reading slows
+      but the text is still readable
+  3 = readability is destroyed: the words can no longer be reliably made
+      out"""),
     "cut": ("обрезка", """CUT -- the document's boundaries were lost.
   1 = the ending is unfinished but the document is substantially whole
   2 = it breaks off mid-sentence, or begins mid-sentence
@@ -123,8 +127,7 @@ FORMAT = """Answer in exactly these lines, each beginning with its tag. Use "-"
 where no quotation is required.
 
 LOSS: <0-3> | <verbatim quote or ->
-INSERT: <0-3> | <verbatim quote or ->
-JOIN: <0-3> | <verbatim quote or ->
+UNITY: <0-3> | <verbatim quote or ->
 DUP: <0-3> | <verbatim quote or ->
 CHARS: <0-3> | <verbatim quote or ->
 CUT: <0-3> | <verbatim quote or ->
