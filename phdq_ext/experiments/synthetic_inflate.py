@@ -62,6 +62,7 @@ for r in [0.15,0.20,0.232,0.271,0.32,0.40]:
                 **cfg.qphd_kwargs(L=L,pool=X,replicates=16))
         rows.append(dict(радиус=r,факт=got,**bands_of(df)))
 D=pd.DataFrame(rows)
+D.to_csv('results/synthetic_inflate.csv',index=False)
 g=D.groupby('радиус')[['факт']+B].mean()
 base=g.loc[0.232]
 for b in B: g[b+' %']=(g[b]-base[b])/base[b]*100
