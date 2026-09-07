@@ -191,7 +191,10 @@ def main():
              "них нет, ближайший сосед всегда чужой.",
              ha="center", fontsize=9, color="#666")
     fig.subplots_adjust(bottom=0.15, top=0.94)
-    out = os.path.join(BASE, "figures", "cells_projection.png")
+    # the filename carries the setting: re-running with a different k must not
+    # silently overwrite the picture made with the previous one
+    tag = "" if (MIN_K, N_TYPES) == (3, 10) else f"_k{MIN_K}_n{N_TYPES}"
+    out = os.path.join(BASE, "figures", f"cells_projection{tag}.png")
     fig.savefig(out, dpi=150, bbox_inches="tight", facecolor="white")
     print(f"рисунок: {out}")
 
