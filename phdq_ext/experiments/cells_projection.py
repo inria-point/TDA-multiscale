@@ -48,6 +48,14 @@ from sink_cluster import sink_direction
 
 BASE = os.path.join(HERE, "..")
 CONTENT = {"смысл-част", "смысл-редк"}
+# CLASSES=all keeps every class, not just content words, and tells them apart by
+# marker shape rather than colour -- colour stays the token type, so a cell is
+# still one colour and the class is readable on top of it
+ALL_CLASSES = os.environ.get("CLASSES", "content") == "all"
+MARKER = {"смысл-част": "o", "смысл-редк": "o", "служ": "s", "пункт": "^",
+          "подслово": "D", "сток": "*"}
+MARK_LABEL = [("o", "смысловое"), ("s", "служебное"), ("^", "пунктуация"),
+              ("D", "подслово"), ("*", "сток внимания")]
 PROJ = os.environ.get("PROJ", "tsne")
 PERP = float(os.environ.get("PERP", 30))
 MIN_K = int(os.environ.get("MIN_K", 3))
@@ -64,12 +72,21 @@ def collect(text, emb, ranks, u_sink, rng):
     v, t = e[keep], [toks[i] for i in keep]
     nrm = np.linalg.norm(v, axis=1)
     sink = ((v @ u_sink) / nrm > COS_CUT) & (nrm < NORM_CUT)
+    cls_of = ["сток" if sink[j] else token_class(t[j], ranks)
+              for j in range(len(t))]
     ok = [j for j in range(len(t))
-          if not sink[j] and token_class(t[j], ranks) in CONTENT]
+          if ALL_CLASSES or (not sink[j] and cls_of[j] in CONTENT)]
     v, t = v[ok], [t[j] for j in ok]
+    cls_of = [cls_of[j] for j in ok]
+    # sink occurrences are pooled into one cell regardless of which token they
+    # are: geometrically they are a single point mass (norm 26 against 38), and
+    # leaving them inside their token's cell drags that cell across the page
+    tcls = {}
     where = defaultdict(list)
     for j, x in enumerate(t):
-        where[x].append(j)
+        key = "⟨сток⟩" if cls_of[j] == "сток" else x
+        where[key].append(j)
+        tcls[key] = cls_of[j]
     multi = sorted([(len(ix), x) for x, ix in where.items() if len(ix) >= MIN_K],
                    reverse=True)[:N_TYPES]
     singles = [ix[0] for x, ix in where.items() if len(ix) == 1]
@@ -85,7 +102,9 @@ def collect(text, emb, ranks, u_sink, rng):
     for j in singles:
         idx.append(j)
         lab.append(None)
-    return v[idx], lab, [x for _, x in multi]
+    # the class of every returned point, so singletons can keep their marker
+    pcls = [cls_of[j] for j in idx]
+    return v[idx], lab, [x for _, x in multi], tcls, pcls
 
 
 def main():
@@ -103,7 +122,7 @@ def main():
             best = (i, r)
     if best is None:
         raise SystemExit("не нашлось текста с достаточным числом повторов")
-    ti, (V, lab, types) = best
+    ti, (V, lab, types, tcls, pcls) = best
     print(f"текст {ti}: {len(types)} типов с k>={MIN_K}, "
           f"{sum(x is None for x in lab)} одиночек, {len(V)} точек")
 
@@ -154,8 +173,19 @@ def main():
 
     fig, ax = plt.subplots(figsize=(11, 8.6))
     m = np.array([x is None for x in lab])
-    ax.scatter(XY[m, 0], XY[m, 1], s=42, c=SING_COL, zorder=2, linewidths=0.5,
-               edgecolors="white", label="однократное слово")
+    if ALL_CLASSES:
+        # singletons keep their class marker too, so it is visible that a
+        # once-used punctuation mark is a different object from a once-used noun
+        for c_, mk in MARKER.items():
+            q = m & (np.array(pcls) == c_)
+            if q.any():
+                ax.scatter(XY[q, 0], XY[q, 1], s=44, c=SING_COL, zorder=2,
+                           linewidths=0.5, edgecolors="white", marker=mk)
+        ax.scatter([], [], s=42, c=SING_COL, label="однократный токен")
+    else:
+        ax.scatter(XY[m, 0], XY[m, 1], s=42, c=SING_COL, zorder=2,
+                   linewidths=0.5, edgecolors="white",
+                   label="однократное слово")
     # tab10 index 7 is grey and would collide with the singletons, which are
     # the one colour that must stay unambiguous; index 8 is an olive that is
     # hard to read on white. With many cells the palette repeats, so each cell
@@ -173,19 +203,27 @@ def main():
         for pt in XY[sel]:
             ax.plot([c[0], pt[0]], [c[1], pt[1]], color=col, lw=1.1,
                     alpha=0.75, zorder=1)
-        ax.scatter(XY[sel, 0], XY[sel, 1], s=52, color=col, zorder=3,
-                   linewidths=0.6, edgecolors="white")
+        mk = MARKER.get(tcls.get(x, "смысл-редк"), "o") if ALL_CLASSES else "o"
+        ax.scatter(XY[sel, 0], XY[sel, 1], s=64 if mk in "^*" else 52,
+                   color=col, zorder=3, linewidths=0.6, edgecolors="white",
+                   marker=mk)
         ax.scatter(*c, marker="X", s=150, color=col, zorder=5, linewidths=1.3,
                    edgecolors="white")
         if q < N_LABEL:
-            ax.annotate(x.lstrip("Ġ▁"), c, (0, 20), textcoords="offset points",
+            ax.annotate(x.lstrip("Ġ▁") if x != "⟨сток⟩" else "сток",
+                    c, (0, 20), textcoords="offset points",
                         fontsize=11.5, color=col, ha="center", weight="bold",
                         zorder=6,
                         bbox=dict(boxstyle="round,pad=0.18", fc="white",
                                   ec="none", alpha=0.75))
     ax.scatter([], [], marker="X", s=140, color="#444", label="центр ячейки")
-    ax.legend(fontsize=10.5, loc="best", frameon=False)
-    ax.set_title(f"Ячейки смысловых слов (k ≥ {MIN_K}), текст {ti}: "
+    if ALL_CLASSES:
+        for mk, nm in MARK_LABEL:
+            ax.scatter([], [], marker=mk, s=52, color="#555", label=nm)
+    ax.legend(fontsize=10, loc="upper left", frameon=False,
+              ncol=2 if ALL_CLASSES else 1)
+    ax.set_title(f"Ячейки {'всех токенов' if ALL_CLASSES else 'смысловых слов'}"
+                 f" (k ≥ {MIN_K}), текст {ti}: "
                  f"{len(types)} типов, центр — крестом, спицы — принадлежность "
                  "ячейке", fontsize=13, pad=12)
     ax.set_xticks([])
@@ -216,8 +254,8 @@ def main():
     fig.subplots_adjust(bottom=0.15, top=0.94)
     # the filename carries the setting: re-running with a different k must not
     # silently overwrite the picture made with the previous one
-    tag = ("" if (MIN_K, N_TYPES, PROJ) == (3, 10, "tsne")
-           else f"_k{MIN_K}_n{N_TYPES}_{PROJ}")
+    tag = ("" if (MIN_K, N_TYPES, PROJ, ALL_CLASSES) == (3, 10, "tsne", False)
+           else f"{'_all' if ALL_CLASSES else ''}_k{MIN_K}_n{N_TYPES}_{PROJ}")
     out = os.path.join(BASE, "figures", f"cells_projection{tag}.png")
     fig.savefig(out, dpi=150, bbox_inches="tight", facecolor="white")
     print(f"рисунок: {out}")
