@@ -37,7 +37,7 @@ import numpy as np
 import pandas as pd
 from scipy.spatial.distance import pdist, squareform
 from scipy.stats import spearmanr
-from sklearn.manifold import MDS
+from sklearn.manifold import MDS, TSNE
 
 HERE = os.path.dirname(__file__)
 sys.path.insert(0, HERE)
@@ -48,6 +48,8 @@ from sink_cluster import sink_direction
 
 BASE = os.path.join(HERE, "..")
 CONTENT = {"смысл-част", "смысл-редк"}
+PROJ = os.environ.get("PROJ", "tsne")
+PERP = float(os.environ.get("PERP", 30))
 MIN_K = int(os.environ.get("MIN_K", 3))
 N_TYPES = int(os.environ.get("N_TYPES", 10))
 N_SING = int(os.environ.get("N_SING", 30))
@@ -106,8 +108,12 @@ def main():
           f"{sum(x is None for x in lab)} одиночек, {len(V)} точек")
 
     D = squareform(pdist(V))
-    XY = MDS(n_components=2, dissimilarity="precomputed", random_state=0,
-             normalized_stress=False, n_init=8).fit_transform(D)
+    if PROJ == "mds":
+        XY = MDS(n_components=2, dissimilarity="precomputed", random_state=0,
+                 normalized_stress=False, n_init=8).fit_transform(D)
+    else:
+        XY = TSNE(n_components=2, metric="precomputed", init="random",
+                  perplexity=PERP, random_state=0).fit_transform(D)
     iu = np.triu_indices(len(V), 1)
     faith = spearmanr(squareform(pdist(XY))[iu], D[iu]).statistic
     # three separate questions, and they do not have the same answer
@@ -127,9 +133,24 @@ def main():
         m = L != "None"
         return (L[DD.argmin(1)][m] == L[m]).mean() * 100
 
+    def whole(M):
+        """Доля своих среди k-1 ближайших соседей — цела ли ячейка."""
+        DD = squareform(pdist(M))
+        np.fill_diagonal(DD, np.inf)
+        L = np.array([str(x) for x in lab])
+        out = []
+        for x in types:
+            idx = np.where(L == str(x))[0]
+            k = len(idx)
+            out.append(np.mean([np.isin(np.argsort(DD[i])[:k - 1], idx).sum()
+                                for i in idx]) / (k - 1))
+        return float(np.mean(out)) * 100
+
     nn_true, nn_drawn = own_nn(V), own_nn(XY)
-    print(f"верность: расстояния {faith:.3f}, радиус ячейки {rad_r:+.3f}, "
-          f"сосед своего типа {nn_true:.0f}% -> {nn_drawn:.0f}%")
+    wh_true, wh_drawn = whole(V), whole(XY)
+    print(f"верность ({PROJ}): расстояния {faith:.3f}, радиус ячейки "
+          f"{rad_r:+.3f}, сосед своего типа {nn_true:.0f}% -> {nn_drawn:.0f}%, "
+          f"ячейка цела {wh_true:.0f}% -> {wh_drawn:.0f}%")
 
     fig, ax = plt.subplots(figsize=(11, 8.6))
     m = np.array([x is None for x in lab])
@@ -172,19 +193,21 @@ def main():
     ax.set_aspect("equal")
     for s in ax.spines.values():
         s.set_visible(False)
+    name = "t-SNE" if PROJ != "mds" else "метрический MDS"
     fig.text(0.5, 0.062,
-             "Метрический MDS по настоящим расстояниям, не t-SNE: t-SNE волен "
-             "растаскивать группы, а здесь проверяется именно то, что они и так "
-             "порознь.  Верность: расстояния "
-             f"{faith:.2f} (Спирмен); ближайший сосед — свой тип в "
-             f"{nn_true:.0f}% случаев в настоящем пространстве и "
-             f"{nn_drawn:.0f}% на рисунке.",
+             f"{name} по настоящим расстояниям"
+             + (f", перплексия {PERP:.0f}. " if PROJ != "mds" else ". ")
+             + f"Ячейки держатся: свой тип среди k−1 ближайших соседей в "
+             f"{wh_true:.0f}% случаев в настоящем пространстве и "
+             f"{wh_drawn:.0f}% на рисунке; ближайший сосед свой — "
+             f"{nn_true:.0f}% и {nn_drawn:.0f}%.",
              ha="center", fontsize=9, color="#666")
     fig.text(0.5, 0.032,
-             "Размер ячейки проекция НЕ передаёт: корреляция настоящего радиуса "
-             f"с нарисованным здесь {rad_r:+.2f}, но она скачет от +0.86 до "
-             "−0.25 при смене числа показанных типов. Какая ячейка на вид "
-             "рыхлее — не факт о данных.",
+             "Чего по картинке читать нельзя: насколько ячейки разнесены "
+             f"(общие расстояния переданы на {faith:.2f} — t-SNE преувеличивает "
+             "разрывы) и какая ячейка рыхлее (радиус "
+             f"{rad_r:+.2f}). Разнесённость держится на числах: зазор 1.64 "
+             "радиуса, раздел 5.",
              ha="center", fontsize=8.8, color=ACCENT_WARN)
     fig.text(0.5, 0.006,
              "Однократные слова — это ячейки из одной точки: своего центра у "
@@ -193,7 +216,8 @@ def main():
     fig.subplots_adjust(bottom=0.15, top=0.94)
     # the filename carries the setting: re-running with a different k must not
     # silently overwrite the picture made with the previous one
-    tag = "" if (MIN_K, N_TYPES) == (3, 10) else f"_k{MIN_K}_n{N_TYPES}"
+    tag = ("" if (MIN_K, N_TYPES, PROJ) == (3, 10, "tsne")
+           else f"_k{MIN_K}_n{N_TYPES}_{PROJ}")
     out = os.path.join(BASE, "figures", f"cells_projection{tag}.png")
     fig.savefig(out, dpi=150, bbox_inches="tight", facecolor="white")
     print(f"рисунок: {out}")
