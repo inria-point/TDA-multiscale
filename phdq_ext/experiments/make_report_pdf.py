@@ -80,14 +80,14 @@ def page(pdf, title, body, image=None, caption=None, subtitle=None,
             # from the text, so a short wide figure does not float
             bottom = 0.05 + cap_h + (avail_h - want_h) / 2
             ax = fig.add_axes([(1 - box_w) / 2, bottom, box_w, want_h])
-            ax.imshow(img)
+            ax.imshow(img, interpolation="none")
             ax.axis("off")
             cy = bottom - 0.014
             for line in cap_lines:
                 fig.text(0.5, cy, line, fontsize=8.2, color=GREY,
                          ha="center", va="top")
                 cy -= 0.016
-    pdf.savefig(fig)
+    pdf.savefig(fig, dpi=400)
     plt.close(fig)
 
 
@@ -137,7 +137,7 @@ def title_page(pdf):
     fig.text(0.07, 0.06,
              "Полный разбор с таблицами: phdq_ext/results/GEOMETRY.md\n"
              "Скрипты: phdq_ext/experiments/", fontsize=8.5, color=GREY)
-    pdf.savefig(fig)
+    pdf.savefig(fig, dpi=400)
     plt.close(fig)
 
 
@@ -473,7 +473,7 @@ def synthetic_panel():
                  fontsize=11)
     ax.legend(fontsize=9)
     fig.tight_layout()
-    fig.savefig(os.path.join(FIG, "synthetic_inflate.png"), dpi=150)
+    fig.savefig(os.path.join(FIG, "synthetic_inflate.png"), dpi=300)
     plt.close(fig)
     return True
 
