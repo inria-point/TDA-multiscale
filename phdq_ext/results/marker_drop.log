@@ -1,0 +1,13 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+  10 текстов
+  20 текстов
+  30 текстов
+  40 текстов
+  50 текстов
+
+50 текстов, 3 зерна
+
+полоса        исходный      маркер   без маркера   сдвиг маркера  сдвиг без него         p
+крупный          16.79       16.64         16.52           +0.0%           -1.6%   3.4e-01
+мелкий            3.44        5.86          3.82          +71.2%          +11.3%   9.8e-09
+средний          13.78       11.44         13.72          -17.0%           -0.4%   6.5e-01

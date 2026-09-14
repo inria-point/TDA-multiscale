@@ -1,0 +1,24 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/137 [00:00<?, ?it/s]Loading weights: 100%|██████████| 137/137 [00:00<00:00, 16774.77it/s]
+1. Косинус оси со строками матрицы эмбеддингов
+
+   ближе всего к оси:
+     'otoxin'  'ĠFish'  'unit'  'units'  'ĠWeiss'  'ĠWells'  'ĠHoe'  'ago'  'SEE'  'ĠCyn'  'ĠPete'  'ĠDennis'  'ĠRhodes'  'ĠWagner'  'ĠMedia'  'Ġfish'  'ĠTenth'  'ĠWelch'  'ĠGE'  'une'  'Ox'  'ĠFISH'  'ĠTriton'  'ĠBath'  '698'
+   дальше всего (противоположный конец):
+     'Ġgenre'  'Ġare'  'Ġfavored'  'Ġin'  'Ġlost'  'Ġlifetime'  'Ġlikely'  'Ġlose'  'Ġmainstream'  'Rb'  'Ġa'  'Ġradar'  'Ġhave'  'Ġimmune'  'Ġfavor'  'Ġit'  'Ġwith'  'ffic'  'Ġlargely'  'Ġrelatively'  'į'  'Ġthan'  'Ġgained'  'Ġformer'  '[MASK]'
+
+2. Что поднимается в предсказании при сдвиге вдоль оси (через head, на реальных состояниях)
+
+   растут сильнее всего:
+     'ĠThroughout'  '.).'  'ĠNevertheless'  'ĠWhilst'  'ĠThough'  '!).'  'ĠBeginning'  'ĠAlong'  'ĠWithin'  'ĠTogether'  'ĠUsing'  'ĠDiseases'  'ĠLastly'  'ĠYears'  'ĠThereafter'  'ĠWritten'  'ĠUpon'  'ĠEssays'  'ĠDifferences'  'ĠUsed'  ')!'  'ĠAmong'  'ĠDuring'  'ĠTaking'  'ĠAround'
+   падают сильнее всего:
+     'ãĥŀ'  'Ġ62'  'Ġ32'  'acer'  '552'  'Ġbullet'  'Ġ87'  'Ġ37'  'Ġ80'  'ĠICP'  'Ġ302'  'ĠPaula'  'Ġpuck'  'Ġ152'  'Ġcolor'  'ring'  'Ġ51'  'Ġ52'  'ab'  'ĠCCR'  'Ġradar'  'omer'  'Ġlaser'  'Rb'  'Pa'
+
+3. Чей собственный снос в НЕИСПОРЧЕННОМ тексте уже лежит вдоль оси
+
+   всегда «бессмысленные» (снос вдоль оси больше всех):
+     'ĠR'  'Ġwas'  'Ġcould'  'Ġso'  'Ġwill'  'Ġwho'  'Ġwhere'  ',"'  'ĠThey'  'I'  'Ġpeople'  'Ġif'  'Ġbut'  'Ġboth'  'Ġgiven'  'Ġnot'  'Ġno'  'Ġother'  'Ġfirst'  'Ġmuch'  'Ġis'  'Ġgot'  'able'  'Ġthrough'  'Ġtakes'
+   всегда «осмысленные» (снос против оси):
+     'Ġthe'  'âĢĻ'  'Ġ\\'  '.'  'Ġto'  'Ċ'  '-'  '_'  ']'  'The'  'Ġ'  'Ġthere'  ','  'r'  'Ġof'  'the'  'ĠThe'  'Ġ.'  'Ġbe'  ')'  '?'  'Ġand'  'Ġa'  'Ġin'  'Ġ,'
+
+   медиана по 636 типам: -0.000; доля типов со сносом вдоль оси: 43%

@@ -1,0 +1,40 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+тема вписана                100 текстов  (inject_topic)
+меньше мыслей               119 текстов  (ideas_down_v2)
+одна тема                   119 текстов  (topics_down_v2)
+беднее словарь              119 текстов  (lexical_diversity_down_s)
+без синонимов               100 текстов  (syn_none)
+термин в той же обёртке      85 текстов  (context_locked)
+каждое предложение о своём  120 текстов  (topics_up_hard)
+богаче словарь              119 текстов  (lexical_diversity_up_s)
+ни одного слова дважды      100 текстов  (syn_max)
+редкие синонимы             119 текстов  (words_rare_s)
+художественный стиль        120 текстов  (style_literary_T1.3)
+анафора                      87 текстов  (style_anaphora)
+поле: значение               89 текстов  (style_record_fields)
+перемешивание               120 текстов  (shuffle_words)
+чужие хапаксы               120 текстов  (hapax_swap_wide)
+Loading weights:   0%|          | 0/134 [00:00<?, ?it/s]Loading weights: 100%|██████████| 134/134 [00:00<00:00, 6690.91it/s]
+[transformers] [1mModernBertModel LOAD REPORT[0m from: answerdotai/ModernBERT-base
+Key               | Status     |  | 
+------------------+------------+--+-
+decoder.bias      | UNEXPECTED |  | 
+head.norm.weight  | UNEXPECTED |  | 
+head.dense.weight | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+
+16 условий x 50 текстов x 3 зёрен
+  5 текстов, 231 строк
+  10 текстов, 447 строк
+  15 текстов, 669 строк
+  20 текстов, 897 строк
+  25 текстов, 1119 строк
+  30 текстов, 1350 строк
+  35 текстов, 1569 строк
+  40 текстов, 1794 строк
+  45 текстов, 2025 строк
+  50 текстов, 2250 строк
+
+/Users/admin/Desktop/Research/TDA/phdq_ext/experiments/../results/pert_geometry_llm.csv: 2250 строк, 33–50 текстов на условие

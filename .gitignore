@@ -17,3 +17,8 @@ data_completion.zip
 # COLING parquet: 234 MB, re-downloadable from HF
 coling/dev.parquet
 phdq_ext/results/api_usage.jsonl
+
+# поштучные выгрузки: 120 МБ промежуточных данных, пересоздаются своими
+# скриптами из кэша эмбеддингов (petiole_dump.py, token_projection_dump.py)
+phdq_ext/results/petiole_dump.csv
+phdq_ext/results/token_projection.csv

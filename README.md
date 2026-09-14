@@ -6,6 +6,9 @@ which properties of a text causally determine the dimension it measures.
 
 **Start here:**
 
+- [EXPERIMENTS.md](EXPERIMENTS.md) — **every stage of the work in one place**: what was
+  measured, what was found, and which document holds the detail. Start here if you are
+  picking the project up.
 - [phdq_ext/OVERVIEW.md](phdq_ext/OVERVIEW.md) — every figure and experiment in one table
 - [phdq_ext/report/qphd_report.pdf](phdq_ext/report/qphd_report.pdf) — the write-up, 7 pages
 - [phdq_ext/README.md](phdq_ext/README.md) — method, formulas and findings in detail (Russian)

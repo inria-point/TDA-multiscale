@@ -1,0 +1,24 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/134 [00:00<?, ?it/s]Loading weights: 100%|██████████| 134/134 [00:00<00:00, 20092.83it/s]
+[transformers] [1mModernBertModel LOAD REPORT[0m from: answerdotai/ModernBERT-base
+Key               | Status     |  | 
+------------------+------------+--+-
+head.norm.weight  | UNEXPECTED |  | 
+decoder.bias      | UNEXPECTED |  | 
+head.dense.weight | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+13 условий x 50 текстов x 3 зёрен
+  5 текстов, 195 строк
+  10 текстов, 390 строк
+  15 текстов, 585 строк
+  20 текстов, 780 строк
+  25 текстов, 975 строк
+  30 текстов, 1170 строк
+  35 текстов, 1365 строк
+  40 текстов, 1560 строк
+  45 текстов, 1755 строк
+  50 текстов, 1950 строк
+
+/Users/admin/Desktop/Research/TDA/phdq_ext/experiments/../results/pert_geometry.csv: 1950 строк

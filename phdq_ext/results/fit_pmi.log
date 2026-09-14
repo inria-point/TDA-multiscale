@@ -1,0 +1,24 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/134 [00:00<?, ?it/s]Loading weights: 100%|██████████| 134/134 [00:00<00:00, 7206.34it/s]
+[transformers] [1mModernBertModel LOAD REPORT[0m from: answerdotai/ModernBERT-base
+Key               | Status     |  | 
+------------------+------------+--+-
+head.norm.weight  | UNEXPECTED |  | 
+head.dense.weight | UNEXPECTED |  | 
+decoder.bias      | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+Loading weights:   0%|          | 0/137 [00:00<?, ?it/s]Loading weights: 100%|██████████| 137/137 [00:00<00:00, 16575.89it/s]
+униграммы по 650 текстам, 359706 токенов
+домашних векторов: 2989 типов (>= 5 вхождений в 200 текстах)
+  5 текстов, 3015 токенов
+  10 текстов, 6030 токенов
+  15 текстов, 9045 токенов
+  20 текстов, 12060 токенов
+  25 текстов, 15075 токенов
+  30 текстов, 18090 токенов
+  35 текстов, 21105 токенов
+  40 текстов, 24120 токенов
+
+results/fit_pmi.csv: 24120 токенов

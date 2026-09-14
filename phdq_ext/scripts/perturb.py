@@ -1094,4 +1094,9 @@ PERTURBATIONS.update({
     "hapax_swap_wide_50": lambda t, rng: swap_hapax(t, rng, wide=True,
                                                     share=0.5),
     "hapax_swap_local": lambda t, rng: swap_hapax(t, rng, wide=False),
+    # dose-matched control for inject_topic, which works in 20 foreign words:
+    # at share 1.0 the swap replaces about 102 of them, five times as many, so
+    # the two cannot be compared without this
+    "hapax_swap_wide_20w": lambda t, rng: swap_hapax(t, rng, wide=True,
+                                                     share=0.2),
 })
