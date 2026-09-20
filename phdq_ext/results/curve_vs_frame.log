@@ -1,0 +1,14 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+  механические: 10
+  механические: 20
+  механические: 30
+  механические: 40
+  механические: 50
+  LLM: 10
+  LLM: 20
+  LLM: 30
+  LLM: 40
+  LLM: 50
+
+71001 строк, 27 условий
+ГОТОВО
